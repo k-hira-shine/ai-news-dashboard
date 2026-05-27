@@ -29,16 +29,12 @@ header .meta { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
 .toc a { padding: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--accent); text-decoration: none; font-size: 0.88rem; }
 .toc a:hover { background: rgba(66,133,244,0.15); }
 .overview { margin-bottom: 32px; }
-.ov-hero { background: linear-gradient(135deg, rgba(66,133,244,0.15), rgba(167,139,250,0.12)); border: 1px solid rgba(167,139,250,0.35); border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; }
-.ov-tagline { font-size: 1.05rem; color: var(--text); line-height: 1.55; margin-bottom: 8px; }
-.ov-source { font-size: 0.8rem; color: var(--muted); }
+.ov-source { font-size: 0.8rem; color: var(--muted); margin-bottom: 16px; }
 .ov-source a { color: #60a5fa; }
-.overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-.ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
-.ov-card h3 { font-size: 0.95rem; margin-bottom: 8px; color: var(--text); }
-.ov-card-desc { font-size: 0.87rem; color: #cbd5e1; line-height: 1.65; }
-.ov-card ul { padding-left: 1.1rem; font-size: 0.86rem; color: #cbd5e1; }
-.ov-card li { margin: 6px 0; line-height: 1.55; }
+.ov-list { display: flex; flex-direction: column; gap: 0; }
+.ov-list dt { font-size: 0.95rem; font-weight: 700; color: var(--text); padding: 14px 18px 6px; border-top: 1px solid var(--border); margin-top: 4px; }
+.ov-list dt:first-child { border-top: none; margin-top: 0; }
+.ov-list dd { font-size: 0.9rem; color: #cbd5e1; line-height: 1.65; padding: 2px 18px 2px 36px; margin: 0; }
 .section { margin-top: 28px; }
 .section h2 { font-size: 1.15rem; margin-bottom: 6px; }
 .section .hint { color: var(--muted); font-size: 0.84rem; margin-bottom: 14px; }
@@ -75,7 +71,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 24
 </nav>
 <header>
   <h1>🎬 Gemini Omni</h1>
-  <p class="meta">Last updated: 2026-05-28 00:07 JST ｜ 実使用ポスト 176件 ｜ Apify 収集コスト目安 $0.04</p>
+  <p class="meta">Last updated: 2026-05-28 00:12 JST ｜ 実使用ポスト 176件 ｜ Apify 収集コスト目安 $0.04</p>
 </header>
 <div class="container">
   <nav class="toc">
@@ -84,70 +80,45 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 24
   </nav>
   
 <section class="overview" id="overview">
+  <p class="ov-source">出典: <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni/" target="_blank" rel="noopener">Google 公式ブログ「Introducing Gemini Omni」</a>（2026年5月19日, Google I/O）</p>
 
-  <div class="ov-hero">
-    <p class="ov-tagline">「<strong>なんでも入力して、なんでも作れる</strong>」モデル — まずは動画から</p>
-    <p class="ov-source">出典: <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni/" target="_blank" rel="noopener">Google 公式ブログ「Introducing Gemini Omni」</a>（2026年5月19日, Google I/O）</p>
-  </div>
+  <dl class="ov-list">
 
-  <div class="overview-grid">
+    <dt>🤔 そもそも何？</dt>
+    <dd>去年の <strong>Nano Banana（画像生成）の動画版</strong>。テキスト・画像・音声・動画を組み合わせて入力し、高品質な動画を生成・編集できる。</dd>
+    <dd>既存の動画 AI（Veo など）は「テキスト/画像 → 動画」だけだったが、Omni は<strong>動画を入力にして動画を編集・リミックス</strong>できる点が最大の違い。</dd>
 
-    <article class="ov-card">
-      <h3>🤔 そもそも何が新しいの？</h3>
-      <p class="ov-card-desc">去年の <strong>Nano Banana</strong>（画像生成）の動画版です。テキスト・画像・音声・動画を好きに組み合わせて入力し、そこから高品質な動画を生成・編集できます。既存の動画生成 AI（Veo など）はテキストや画像 → 動画だけでしたが、Omni は<strong>動画を入力として動画を編集・リミックス</strong>できる点が最大の違いです。</p>
-    </article>
+    <dt>📦 モデルの種類</dt>
+    <dd><strong>Gemini Omni Flash</strong>（今すぐ使える） — 最初にリリースされた実用モデル。動画生成・編集に対応。</dd>
+    <dd><strong>Gemini Omni Pro</strong>（近日公開予定） — キーノートで言及のみ。詳細は未発表。</dd>
+    <dd>将来的には動画以外（画像・音声）の出力にも対応予定。</dd>
 
-    <article class="ov-card">
-      <h3>📦 モデルの種類</h3>
-      <ul>
-        <li><strong>Gemini Omni Flash</strong>（今すぐ使える）<br>— 最初にリリースされた実用モデル。動画生成・編集に対応。</li>
-        <li><strong>Gemini Omni Pro</strong>（近日公開予定）<br>— キーノートで言及のみ。詳細は未発表。</li>
-        <li>将来的には動画以外（画像・音声）の出力にも対応予定。</li>
-      </ul>
-    </article>
+    <dt>🎯 できること（公式より）</dt>
+    <dd>テキスト・写真・音声・動画を混ぜて動画を生成できる。</dd>
+    <dd>「背景を変えて」「この人物を追加して」など<strong>会話形式で動画を編集</strong>できる。</dd>
+    <dd>人物・キャラクターの顔や声を複数シーンで統一する<strong>キャラクター一貫性</strong>機能あり。</dd>
+    <dd>自分の顔・声を使った AI アバター動画の作成も可能。</dd>
+    <dd>生成動画には自動的に <strong>SynthID 透かし</strong>が入り、AI 生成かどうかを検証できる。</dd>
 
-    <article class="ov-card">
-      <h3>🎯 できること（公式より）</h3>
-      <ul>
-        <li>テキスト・写真・音声・動画を混ぜて動画を生成</li>
-        <li>「背景を変えて」「この人物を追加して」など<strong>会話で動画を編集</strong></li>
-        <li>人物・キャラクターの顔や声を複数シーンで統一（<strong>キャラクター一貫性</strong>）</li>
-        <li>自分の顔・声を使った AI アバター動画の作成</li>
-        <li>生成動画には自動的に <strong>SynthID 透かし</strong>が入り、AI生成と検証可能</li>
-      </ul>
-    </article>
+    <dt>📱 どこで使えるか</dt>
+    <dd><strong>Gemini アプリ</strong> — Google AI Plus / Pro / Ultra プラン（有料）で利用可。</dd>
+    <dd><strong>Google Flow</strong> — 映像クリエイター向け AI 制作スタジオ。Google AI サブスクで利用可。</dd>
+    <dd><strong>YouTube Shorts / YouTube Create</strong> — 18歳以上なら<strong>無料</strong>で利用可。</dd>
+    <dd><strong>API（開発者向け）</strong> — 「数週間以内」に公開予定と発表済み。</dd>
 
-    <article class="ov-card">
-      <h3>📱 どこで使えるか</h3>
-      <ul>
-        <li><strong>Gemini アプリ</strong> — Google AI Plus / Pro / Ultra プラン（有料）</li>
-        <li><strong>Google Flow</strong> — 映像クリエイター向けの AI 制作スタジオ。Google AI サブスクで利用可。</li>
-        <li><strong>YouTube Shorts / YouTube Create</strong> — 18歳以上なら<strong>無料</strong>で利用可。</li>
-        <li><strong>API（開発者向け）</strong> — 「数週間以内」に公開予定と発表済み。</li>
-      </ul>
-    </article>
+    <dt>⚠️ 現時点の制限</dt>
+    <dd>生成できる動画は<strong>最大10秒</strong>。公式は「モデルの限界ではなく設計上の判断」と説明しており、延長は近日予定。</dd>
+    <dd>レート制限が厳しめ。Pro プランでも数プロンプトで消費量が多いという報告あり。</dd>
+    <dd>スタイル転送・物理表現（ジャンプ・回転など）は苦手な場合がある。</dd>
+    <dd>Seedance 2.0 との比較では「見た目は良いが、演出・カメラワークは Seedance の方が上」という実使用レビューも。</dd>
 
-    <article class="ov-card">
-      <h3>⚠️ 現時点の制限（公式・ユーザー報告）</h3>
-      <ul>
-        <li>生成できる動画は <strong>最大10秒</strong>（公式は「モデルの限界ではなく設計上の判断」と説明。延長は近日予定）</li>
-        <li>レート制限が厳しめ（Pro プランでも数プロンプトで消費量が多いという報告あり）</li>
-        <li>スタイル転送・物理表現（ジャンプ・回転など）は苦手な場合あり</li>
-        <li>Seedance 2.0 との比較では「見た目は良い。ただ演出・カメラワークは Seedance の方が上」という実使用レビューも</li>
-      </ul>
-    </article>
+    <dt>🔥 実際に使われている場面（ユーザー報告・176件より）</dt>
+    <dd><strong>動画編集・リミックス（52件）</strong> — 背景変更・スタイル変換・別アングル生成など。</dd>
+    <dd><strong>Google Flow × Agent モード（46件）</strong> — 1プロンプトで複数ショットを自動生成。</dd>
+    <dd><strong>UGC 広告・商品動画（30件）</strong> — 1本の素材から複数バリエーションを量産。</dd>
+    <dd><strong>他モデルとの比較検証（20件）</strong> — Seedance 2.0 と同条件で比較するレビューが多数。</dd>
 
-    <article class="ov-card">
-      <h3>🔥 実際に使われている場面（ユーザー報告）</h3>
-      <ul>
-        <li><strong>動画編集・リミックス</strong>（52件）— 背景変更・スタイル変換・別アングル生成など</li>
-        <li><strong>Google Flow × Agent モード</strong>（46件）— 1プロンプトで複数ショットを自動生成</li>
-        <li><strong>UGC 広告・商品動画</strong>（30件）— 1本の素材から複数バリエーションを量産</li>
-        <li><strong>他モデルとの比較検証</strong>（20件）— Seedance 2.0 と同条件で比較するレビューが多数</li>
-      </ul>
-    </article>
-
-  </div>
+  </dl>
 </section>
   <section class="section" id="posts">
     <h2>収集ポスト（動画付き・海外）</h2>
