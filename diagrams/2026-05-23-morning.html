@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News 図解版 2026-05-23 朝便</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --ink: #1a1a2e;
+    --ink2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --accent: #6366f1;
+    --gold: #f59e0b;
+    --silver: #94a3b8;
+    --bronze: #b45309;
+    --cat-model: #10b981;
+    --cat-biz: #f59e0b;
+    --cat-reg: #ec4899;
+    --cat-research: #6366f1;
+    --cat-fund: #f97316;
+    --cat-usecase: #3b82f6;
+    --cat-default: #64748b;
+    --st-new: #16a34a;
+    --st-rising: #dc2626;
+    --st-sustained: #2563eb;
+    --st-fading: #64748b;
+    --st-resurfaced: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Noto Sans CJK JP", "Noto Sans JP",
+      "Yu Gothic", "Yu Gothic UI", "Meiryo",
+      -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "palt" 1;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 32px;
+  }
+  .nowrap { white-space: nowrap; }
+
+  /* ── ヘッダー ─────────────────────────── */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+  .slot-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* ── セクション共通 ─────────────────────── */
+  .section {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── セクション01: TOP ニュース（メイン・45%） ────────── */
+  .top-section { padding: 20px 22px 22px; }
+  .top-hero {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid var(--gold);
+    margin-bottom: 14px;
+  }
+  .top-hero .medal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 6px;
+  }
+  .top-hero .medal .rank-num { font-size: 32px; font-weight: 900; line-height: 1; }
+  .top-hero .medal .rank-label { font-size: 10px; letter-spacing: 0.08em; font-weight: 700; }
+  .top-hero .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .top-hero .title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-hero .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .top-hero .summary {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .top-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .top-card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border: 1.5px solid var(--line);
+    border-left: 4px solid var(--cat-default);
+    border-radius: 10px;
+  }
+  .top-card .rank-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--silver);
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .top-card .rank-badge.r3 { background: var(--bronze); }
+  .top-card.cat-model { border-left-color: var(--cat-model); }
+  .top-card.cat-biz { border-left-color: var(--cat-biz); }
+  .top-card.cat-reg { border-left-color: var(--cat-reg); }
+  .top-card.cat-research { border-left-color: var(--cat-research); }
+  .top-card.cat-fund { border-left-color: var(--cat-fund); }
+  .top-card.cat-usecase { border-left-color: var(--cat-usecase); }
+  .top-card .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .top-card .title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .top-card .summary {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: var(--ink2);
+    white-space: nowrap;
+  }
+  .tag.cat-model { background: #d1fae5; color: #047857; }
+  .tag.cat-biz { background: #fef3c7; color: #92400e; }
+  .tag.cat-reg { background: #fce7f3; color: #be185d; }
+  .tag.cat-research { background: #e0e7ff; color: #4338ca; }
+  .tag.cat-fund { background: #ffedd5; color: #c2410c; }
+  .tag.cat-usecase { background: #dbeafe; color: #1e40af; }
+  .tag.src { background: #f1f5f9; color: var(--muted); font-weight: 600; }
+
+  /* ── セクション02: トレンド（補助） ─────────── */
+  .trend-box {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trend-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .topic-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .topic-chip .chip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .topic-chip .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status.st-NEW { background: var(--st-new); }
+  .status.st-RISING { background: var(--st-rising); }
+  .status.st-SUSTAINED { background: var(--st-sustained); }
+  .status.st-FADING { background: var(--st-fading); }
+  .status.st-RESURFACED { background: var(--st-resurfaced); }
+  .topic-chip .topic-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .topic-chip .streak {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .topic-chip .evolution {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+    border-top: 1px solid var(--line);
+    padding-top: 5px;
+    margin-top: 2px;
+  }
+
+  /* ── セクション03: カテゴリ分布（補助） ───────── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    border-top: 4px solid var(--cat-default);
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .cat-card.cat-model { border-top-color: var(--cat-model); }
+  .cat-card.cat-biz { border-top-color: var(--cat-biz); }
+  .cat-card.cat-reg { border-top-color: var(--cat-reg); }
+  .cat-card.cat-research { border-top-color: var(--cat-research); }
+  .cat-card.cat-fund { border-top-color: var(--cat-fund); }
+  .cat-card.cat-usecase { border-top-color: var(--cat-usecase); }
+  .cat-card .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cat-card .name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .cat-card .count {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .cat-card .summary {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── セクション04: X トピック（補助） ─────────── */
+  .x-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .x-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .x-card .head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .x-card .buzz { font-size: 12px; }
+  .x-card .topic {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--ink);
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .x-card .desc {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── フッタ ─────────────────────────── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* スマホ対応 */
+  @media (max-width: 600px) {
+    .page { padding: 16px 12px 24px; }
+    .top-grid { grid-template-columns: 1fr !important; }
+    .trend-grid { grid-template-columns: 1fr !important; }
+    .topic-grid { grid-template-columns: 1fr !important; }
+    .cat-grid { grid-template-columns: 1fr !important; }
+    .x-grid { grid-template-columns: 1fr !important; }
+    .hero { padding: 14px 12px; }
+    .hero-title { font-size: 1.1rem; }
+    .topic-title { font-size: 0.95rem; }
+    .rank-num { font-size: 1.4rem !important; }
+    .medal { width: 36px !important; height: 36px !important; }
+    .nowrap { white-space: normal !important; }
+    .tag { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-title">🤖 AI News 図解版</div>
+    <div class="hero-meta">
+      <span>2026-05-23</span>
+      <span class="slot-badge">朝便</span>
+    </div>
+  </div>
+
+  
+  
+  <div class="section top-section">
+    <div class="section-title"><span class="num">01</span>今日の TOP ニュース</div>
+
+    
+    <div class="top-hero">
+      <div class="medal">
+        <div class="rank-num">1</div>
+        <div class="rank-label">TOP</div>
+      </div>
+      <div class="body">
+        <div class="title">Anthropic、AIで脆弱性1万件以上発見</div>
+        <div class="tags">
+          <span class="tag cat-biz">企業動向</span>
+          <span class="tag src">x:@AnthropicAI</span>
+        </div>
+        <div class="summary">Anthropicは、AIサイバーセキュリティイニシアチブ「Project Glasswing」で、必須ソフトウェアから1万件以上の高リスクまたは重大な脆弱性を発見したと発表しました。</div>
+      </div>
+    </div>
+
+    
+    <div class="top-grid">
+      
+      <div class="top-card cat-research">
+        <div class="rank-badge ">2</div>
+        <div class="body">
+          <div class="title">Google、実在の場所からゲーム世界を生成</div>
+          <div class="tags">
+            <span class="tag cat-research">研究論文</span>
+            <span class="tag src">x:@GoogleDeepMind</span>
+          </div>
+          <div class="summary">Google DeepMindは、インタラクティブな世界を生成する「Project Genie」がGoogle Mapsのストリートビューと連携したことを発表しました。これにより、米国の実在の場所を新たな仮想世界に変換できます。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge r3">3</div>
+        <div class="body">
+          <div class="title">新モデルQwen 3.7 MaxがGPT-4o超え</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@ai_hakase_</span>
+          </div>
+          <div class="summary">Alibabaの最新モデル「Qwen 3.7 Max」が、コーディング能力を測るSWE-benchでClaude 3.7 SonnetやGPT-4oを上回るスコアを記録し、大きな注目を集めています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-reg">
+        <div class="rank-badge ">4</div>
+        <div class="body">
+          <div class="title">声優 津田健次郎氏、声の無断利用で提訴</div>
+          <div class="tags">
+            <span class="tag cat-reg">規制/政策</span>
+            <span class="tag src">x:@Yomiuri_Online</span>
+          </div>
+          <div class="summary">声優の津田健次郎氏が、自身の声を生成AIで無断で模倣した動画がTikTokに投稿されたとして、動画の削除などを求めて提訴しました。声の無断利用を巡る訴訟は国内初とみられます。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge ">5</div>
+        <div class="body">
+          <div class="title">DHH氏「GPT-5.5はエージェント性能向上」</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@dhh</span>
+          </div>
+          <div class="summary">著名開発者のDHH氏は、未発表の「GPT-5.5」について、複雑なエージェントタスクでの性能が驚くほど向上していると述べ、OpenAIの強力なカムバックを評価しました。</div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">02</span>今日のトレンド</div>
+    
+    <div class="trend-box">
+      <p>本日のAI業界は、AnthropicがAIによるサイバーセキュリティイニシアチブ「Project Glasswing」で1万件以上の脆弱性を発見したと発表し、AIの防御面での活用が大きな注目を集めました。同時に、Googleが「Project Genie」とGoogle Mapsを連携させ、実在の場所からインタラクティブな世界を生成する技術を公開するなど、生成AIの応用範囲は物理世界との融合へと進んでいます。モデル開発競争も激化しており、Alibabaの「Qwen 3.7 Max」やCohereの「Command A+」といった新モデルがGPT-4oなどを凌駕する性能を示し、市場の勢力図を塗り替えようとしています。一方、国内では声優の声の無断利用を巡る初の訴訟が発生し、AIと個人の権利に関する議論が新たな段階に入りました。</p>
+    </div>
+    
+    
+    <div class="topic-grid">
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">6日目</span>
+        </div>
+        <div class="topic-name">AIエージェント開発競争</div>
+        <div class="evolution">各社が新モデルやSDKをリリースし、エージェント構築の容易さと性能を競う段階が継続している。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">4日目</span>
+        </div>
+        <div class="topic-name">AIコーディングツールの進化</div>
+        <div class="evolution">Cursor SDKの提供やQwenのコーディング性能向上など、開発者向けツールの競争が続いている。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">3日目</span>
+        </div>
+        <div class="topic-name">マルチモーダル・特定用途モデル開発競争</div>
+        <div class="evolution">GoogleのProject Genie（世界生成）やGemini Omni Videoなど、テキストに留まらない特定用途でのモデル開発が加速している。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-NEW">⚡ NEW</span>
+          
+        </div>
+        <div class="topic-name">AIとサイバーセキュリティ</div>
+        <div class="evolution">AnthropicがProject GlasswingでAIによる大規模な脆弱性発見を報告し、AIの防御面での活用が新たな重要トピックとして浮上した。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">3日目</span>
+        </div>
+        <div class="topic-name">オープンモデルの性能向上と実用化</div>
+        <div class="evolution">QwenやCohereの新モデルがベンチマークでGPT-4oを上回るなど、オープンモデルがクローズドモデルに匹敵、あるいは凌駕する事例が増加している。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RESURFACED">🔄 RESURFACED</span>
+          
+        </div>
+        <div class="topic-name">生成AIと個人の権利（声の権利）</div>
+        <div class="evolution">著作権問題に加え、声優の声の無断利用に関する国内初の提訴が発生し、パブリシティ権や人格権に関する議論が再燃した。</div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">03</span>カテゴリ分布</div>
+    <div class="cat-grid">
+      
+      <div class="cat-card cat-model">
+        <div class="head">
+          <span class="name">モデル/ツール</span>
+          <span class="count">36</span>
+        </div>
+        <div class="summary">モデル開発競争が激化し、Alibabaの「Qwen 3.7 Max」やCohereの「Command A+」がベンチマークで既存のトップモデルを凌駕する性能を示しました。DHH氏による未発表の「GPT-5.5」への言及も注目を集めています。また、Cursorがエージェント構築用SDKを公開するなど、開発者がAIをカスタマイズするツールも増えています。動画や3D、音楽生成などマルチモーダル分野でもComfyUIへの統合が進み、ローカル環境での活用が広がっています。</div>
+      </div>
+      
+      <div class="cat-card cat-biz">
+        <div class="head">
+          <span class="name">企業動向</span>
+          <span class="count">13</span>
+        </div>
+        <div class="summary">AnthropicがAIサイバーセキュリティイニシアチブ「Project Glasswing」の成果を発表し、AIの防御面での活用をリードしました。Googleは電子透かし技術「SynthID」のパートナー拡大を発表し、AI生成コンテンツの信頼性確保に取り組んでいます。国内ではSOMPOホールディングスが3万人規模でAIエージェントを全社展開するなど、大企業でのAI導入も進んでいます。</div>
+      </div>
+      
+      <div class="cat-card cat-reg">
+        <div class="head">
+          <span class="name">規制/政策</span>
+          <span class="count">10</span>
+        </div>
+        <div class="summary">声優の津田健次郎氏が自身の声を無断でAIに模倣されたとして提訴したというニュースが最大のトピックとなりました。これは国内で初めて「声の権利」が争われる訴訟とみられ、今後の司法判断が注目されます。また、自民党が検討している「国旗損壊罪」の法案で、アニメや生成AIによる創作物は対象外とする方向で調整されたことも報じられました。</div>
+      </div>
+      
+      <div class="cat-card cat-research">
+        <div class="head">
+          <span class="name">研究論文</span>
+          <span class="count">4</span>
+        </div>
+        <div class="summary">Googleの「Project Genie」がGoogle Mapsと連携し、実在の場所からインタラクティブな世界を生成する技術が大きな反響を呼びました。また、GitHubのマージ履歴から開発者の「センス」を学習させるという新しいアプローチ「Implicit Preference Distillation」が提案され、AIの学習手法の進化を示唆しています。</div>
+      </div>
+      
+      <div class="cat-card cat-usecase">
+        <div class="head">
+          <span class="name">ユースケース</span>
+          <span class="count">11</span>
+        </div>
+        <div class="summary">ローカルLLMとAIエージェントを組み合わせ、PCに話しかけるだけで開発作業を自動化する事例が注目を集めました。また、ClaudeやChatGPTを活用して広告クリエイティブを自動量産するワークフローや、オープンソースのAIエージェントでトレーディングボットを構築し多額の利益を上げた個人の事例も話題となり、AIによる業務自動化とマネタイズが現実的なものになっています。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">04</span>X で話題</div>
+    <div class="x-grid">
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">Anthropic「Project Glasswing」の衝撃</span>
+        </div>
+        <div class="desc">AnthropicがAIサイバーセキュリティイニシアチブ「Project Glasswing」で1万件以上の脆弱性を発見したとの公式発表に大きな反響が寄せられています。多くのユーザーがAIの建設的な活用事例として高く評価しており、AIがもたらすリスクだけでなく、社会の安全性を向上させる強力なツールとなり得ることを示すものとしてポジティブに受け止められています。AIの能力を防御面に活用する流れが加速することへの期待が高まっています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">未発表モデル「GPT-5.5」への期待と憶測</span>
+        </div>
+        <div class="desc">Ruby on Railsの作者であるDHH氏が、未発表モデル「GPT-5.5」の複雑なエージェント性能が驚くほど向上していると投稿したことで、大きな話題となっています。公式発表前のリーク的な情報であり、多くの開発者やAIウォッチャーが次世代モデルの性能に高い期待を寄せています。OpenAIとAnthropic (Opus) の性能競争が再び激化することを示唆しており、市場の関心を集めています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">声優・津田健次郎氏の提訴と「声の権利」</span>
+        </div>
+        <div class="desc">人気声優の津田健次郎氏が自身の声を無断でAIに模倣されたとして提訴したニュースは、X上で広く拡散され、大きな議論を呼んでいます。クリエイターやファンからは当然の権利主張として支持する声が多数上がる一方、技術の進歩と個人の権利のバランスをどう取るべきか、法整備の必要性を指摘する意見も出ています。AIとパブリシティ権を巡る国内初の司法判断となる可能性があり、今後の展開に強い関心が寄せられています。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="footer">
+    Generated 2026-05-22 22:41 UTC · AI News Collector
+    
+  </div>
+
+</div>
+</body>
+</html>

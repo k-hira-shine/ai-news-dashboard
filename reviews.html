@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIツール 使ってみたレビュー</title>
+<style>
+  :root {
+    --bg: #0a0f1e; --surface: #111827; --card: #1a2236;
+    --accent: #38bdf8; --accent2: #0284c7; --text: #e2e8f0;
+    --muted: #94a3b8; --border: #2d3748;
+    --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; min-height: 100vh; padding-top: 48px; }
+
+.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #0a0f1eee; backdrop-filter: blur(8px); border-bottom: 1px solid #2d3748; display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; padding: 6px 12px; }
+.topnav a { display: inline-block; padding: 4px 12px; background: #1a2236; border-radius: 6px; color: #94a3b8; text-decoration: none; font-size: 0.82rem; white-space: nowrap; }
+.topnav a:hover { color: #38bdf8; background: rgba(56,189,248,0.1); }
+.topnav a.active { background: #0284c7; color: #fff; }
+@media (max-width: 640px) {
+  .topnav { gap: 4px; padding: 4px 8px; }
+  .topnav a { font-size: 0.75rem; padding: 3px 8px; }
+}
+
+  header { background: linear-gradient(135deg, #0c1a35, #0a0f1e); padding: 16px 32px; border-bottom: 1px solid var(--border); }
+  .header-title { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .header-title span { font-size: 0.85rem; color: var(--muted); margin-left: 10px; font-weight: 400; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+  .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stat-chip { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 0.85rem; color: var(--muted); }
+  .stat-chip strong { color: var(--accent); }
+  .filter-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .filter-label { font-size: 0.76rem; color: var(--muted); min-width: 60px; }
+  .filter-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 5px 12px; border-radius: 16px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent2); border-color: var(--accent); color: #fff; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 14px; }
+  .review-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s; }
+  .review-card:hover { border-color: var(--accent); }
+  .card-header { display: flex; flex-direction: column; gap: 6px; }
+  .tool-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tool-name { font-size: 1.05rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+  .tool-name:hover { text-decoration: underline; }
+  button.tool-name { background: none; border: none; cursor: pointer; padding: 0; text-align: left; }
+  .external-link { font-size: 0.78rem; color: var(--muted); text-decoration: none; padding: 1px 5px; border: 1px solid var(--border); border-radius: 4px; }
+  .external-link:hover { color: var(--accent); border-color: var(--accent); }
+  .category-badge { font-size: 0.72rem; background: rgba(148,163,184,0.15); border: 1px solid var(--border); color: var(--muted); padding: 2px 8px; border-radius: 10px; }
+  .badge-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .status-badge, .verdict-badge { font-size: 0.8rem; font-weight: 600; }
+  .updated { font-size: 0.72rem; color: var(--muted); margin-left: auto; }
+  .use-for { display: flex; gap: 6px; flex-wrap: wrap; }
+  .use-badge { font-size: 0.75rem; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25); color: var(--accent); padding: 2px 8px; border-radius: 10px; }
+  .fields { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--border); padding-top: 8px; }
+  .field-row { display: flex; gap: 8px; font-size: 0.85rem; }
+  .field-label { color: var(--muted); min-width: 110px; flex-shrink: 0; font-size: 0.78rem; }
+  .field-value { color: var(--text); line-height: 1.5; }
+  .memo { font-size: 0.85rem; color: var(--muted); background: rgba(148,163,184,0.08); border-radius: 6px; padding: 8px 10px; line-height: 1.6; border-top: 1px solid var(--border); }
+  .history-details { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+  .history-details summary { font-size: 0.78rem; color: var(--muted); cursor: pointer; user-select: none; }
+  .history-details summary:hover { color: var(--accent); }
+  .history-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .history-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 0.78rem; padding: 4px 0; border-bottom: 1px solid rgba(45,55,72,0.5); }
+  .history-memo { color: var(--muted); font-size: 0.75rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); grid-column: 1/-1; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 32px; margin-top: 20px; border-top: 1px solid var(--border); }
+  @media (max-width: 640px) {
+    header { padding: 12px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="home.html">🏠 ホーム</a>
+  <a href="index.html">📰 ニュース</a>
+  <a href="strategy.html">🎯 施策提案</a>
+  <a href="buzz.html">🔥 バズりランキング</a>
+  <a href="money.html">🎬 マネタイズ</a>
+  <a href="sns_success.html">🧠 SNS成功者</a>
+  <a href="post_generator.html">✍️ 投稿ストック</a>
+  <a href="tools.html">🔧 ツール追跡</a>
+  <a href="reviews.html" class="active">📋 使ってみた</a>
+  <a href="gemini.html">✨ Gemini追跡</a>
+</nav>
+<header>
+  <div class="header-title" style="max-width:1200px;margin:0 auto;">📋 AIツール使ってみたレビュー <span>Last updated: 2026-05-22 11:23 JST</span></div>
+</header>
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-chip">合計 <strong>4</strong> ツール</div>
+    <div class="stat-chip">✅ 使用中 <strong>0</strong></div>
+    <div class="stat-chip">🔄 試用中 <strong>2</strong></div>
+    <div class="stat-chip">⬜ 未試用 <strong>2</strong></div>
+    <div class="stat-chip">❌ 不採用 <strong>0</strong></div>
+    <div class="stat-chip">👍 採用判定 <strong id="visibleCount">4</strong> / 4</div>
+  </div>
+  <div class="filter-section">
+    <div class="filter-row">
+      <span class="filter-label">ステータス</span>
+      <button class="filter-btn active" data-filter-status="all">すべて</button>
+<button class="filter-btn" data-filter-status="using">✅ 使用中</button>
+<button class="filter-btn" data-filter-status="trying">🔄 試用中</button>
+<button class="filter-btn" data-filter-status="untried">⬜ 未試用</button>
+<button class="filter-btn" data-filter-status="rejected">❌ 不採用</button>
+
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">判定</span>
+      <button class="filter-btn active" data-filter-verdict="all">すべて</button>
+<button class="filter-btn" data-filter-verdict="use">👍 使う</button>
+<button class="filter-btn" data-filter-verdict="no">👎 使わない</button>
+<button class="filter-btn" data-filter-verdict="maybe">🤔 検討中</button>
+
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">カテゴリ</span>
+      <button class="filter-btn active" data-filter-category="all">すべて</button>
+<button class="filter-btn" data-filter-category="未分類">未分類</button>
+
+    </div>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid">
+    <div class="review-card" data-status="untried" data-verdict="watch" data-category="">
+  <div class="card-header">
+    <div class="tool-name-row">
+      <button class="tool-name edit-trigger" onclick="openEditModal(this)" data-tool-name="ChatGPT (Personal Finance)">ChatGPT (Personal Finance)</button>
+      
+      <span class="category-badge"></span>
+    </div>
+    <div class="badge-row">
+      <span class="status-badge" style="color:#64748b">⬜ 未試用</span>
+      <span class="verdict-badge" style="color:#64748b">— 未判定</span>
+      <span class="updated">更新 2026/05/16 06:41</span>
+    </div>
+  </div>
+  
+  <div class="fields"><div class="field-row">
+  <span class="field-label">目的・用途</span>
+  <span class="field-value">ChatGPTを使った個人の家計管理</span>
+</div><div class="field-row">
+  <span class="field-label">注意点</span>
+  <span class="field-value">米国のみの提供</span>
+</div></div>
+  <div class="memo">📝 日本で提供されたら使ってみたい。
+何を管理してくれるのか、米国の情報を収集すること。</div>
+  
+</div>
+<div class="review-card" data-status="untried" data-verdict="watch" data-category="">
+  <div class="card-header">
+    <div class="tool-name-row">
+      <button class="tool-name edit-trigger" onclick="openEditModal(this)" data-tool-name="Gemma4-26B-A4B Uncensored">Gemma4-26B-A4B Uncensored</button>
+      
+      <span class="category-badge"></span>
+    </div>
+    <div class="badge-row">
+      <span class="status-badge" style="color:#64748b">⬜ 未試用</span>
+      <span class="verdict-badge" style="color:#64748b">— 未判定</span>
+      <span class="updated">更新 2026/05/18 04:34</span>
+    </div>
+  </div>
+  
+  <div class="fields"><div class="field-row">
+  <span class="field-label">目的・用途</span>
+  <span class="field-value">NGなしで色々な文章生成を試してみる</span>
+</div><div class="field-row">
+  <span class="field-label">注意点</span>
+  <span class="field-value">使い方がよくわからん、ローカルで動くものなの？</span>
+</div></div>
+  <div class="memo">📝 どうやった使えばいいのかよくわからない。
+AIに聞きながら導入してみようか？
+まだまだ基礎知識が足りないと感じる。
+→ChatGPTで壁打ち、今のパソコンだと性能ギリギリ動かなさそう
+→やっぱりスタジオとか欲しいよね</div>
+  
+</div>
+<div class="review-card" data-status="trying" data-verdict="watch" data-category="">
+  <div class="card-header">
+    <div class="tool-name-row">
+      <button class="tool-name edit-trigger" onclick="openEditModal(this)" data-tool-name="MultipleChat">MultipleChat</button>
+      
+      <span class="category-badge"></span>
+    </div>
+    <div class="badge-row">
+      <span class="status-badge" style="color:#f59e0b">🔄 試用中</span>
+      <span class="verdict-badge" style="color:#64748b">— 未判定</span>
+      <span class="updated">更新 2026/05/18 04:38</span>
+    </div>
+  </div>
+  
+  <div class="fields"><div class="field-row">
+  <span class="field-label">目的・用途</span>
+  <span class="field-value">AIごとの出力確認、動画のネタとして良さそう</span>
+</div><div class="field-row">
+  <span class="field-label">注意点</span>
+  <span class="field-value">無料枠だとAI間の比較は使えない</span>
+</div></div>
+  <div class="memo">📝 課金必須なのが難点。
+無料お試しとかあればよかったんだけど…
+話のネタとしてはありだけど、課金まではしない。</div>
+  
+</div>
+<div class="review-card" data-status="trying" data-verdict="watch" data-category="">
+  <div class="card-header">
+    <div class="tool-name-row">
+      <button class="tool-name edit-trigger" onclick="openEditModal(this)" data-tool-name="Step Image Edit 2">Step Image Edit 2</button>
+      
+      <span class="category-badge"></span>
+    </div>
+    <div class="badge-row">
+      <span class="status-badge" style="color:#f59e0b">🔄 試用中</span>
+      <span class="verdict-badge" style="color:#64748b">— 未判定</span>
+      <span class="updated">更新 2026/05/18 04:49</span>
+    </div>
+  </div>
+  
+  <div class="fields"><div class="field-row">
+  <span class="field-label">目的・用途</span>
+  <span class="field-value">サムネイルの作成や修正、ビジュアルイメージ</span>
+</div><div class="field-row">
+  <span class="field-label">注意点</span>
+  <span class="field-value">API課金が必要</span>
+</div></div>
+  <div class="memo">📝 一度カーソルで使ってみるのもありかも？
+課金が必要だけど金額としては小さそう、ChatGPTで相談済み。
+ブラウザで使うのはイマイチかも、公式じゃないし。</div>
+  
+</div>
+  </div>
+</div>
+<footer>地上にあるAIツールを全て触っている状態を目指す — data/reviews.json に追記して更新</footer>
+
+<!-- 編集モーダル -->
+<div id="editModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;padding:16px" onclick="if(event.target===this)closeEditModal()">
+  <div style="background:#111827;border:1px solid #2d3748;border-radius:14px;max-width:540px;width:100%;padding:24px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:1.1rem;font-weight:700;color:#38bdf8" id="editToolName"></span>
+      <button onclick="closeEditModal()" style="background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer">✕</button>
+    </div>
+    <input type="hidden" id="editToolNameHidden">
+    <div id="editTokenSection" style="background:#0a0f1e;border:1px solid #2d3748;border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:0.78rem;color:#94a3b8">🔑 GitHub Personal Access Token</span>
+        <span id="editTokenStatus" style="font-size:0.75rem"></span>
+      </div>
+      <div id="editTokenRow" style="display:flex;gap:6px">
+        <input id="editToken" type="password" placeholder="ghp_xxxx…（repo スコープ必要）" style="flex:1;background:#1a2236;border:1px solid #2d3748;color:#e2e8f0;padding:6px 10px;border-radius:6px;font-size:0.82rem">
+        <button onclick="saveToken()" style="background:#1e3a5f;border:1px solid #2d5986;color:#7dd3fc;padding:6px 12px;border-radius:6px;font-size:0.8rem;cursor:pointer;white-space:nowrap">保存</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <label style="font-size:0.8rem;color:#94a3b8;display:flex;flex-direction:column;gap:4px">
+        使用状況
+        <select id="editStatus" style="background:#1a2236;border:1px solid #2d3748;color:#e2e8f0;padding:6px;border-radius:6px;font-size:0.85rem">
+          <option value="untried">未試用</option>
+          <option value="trying">試用中</option>
+          <option value="using">使ってる</option>
+          <option value="rejected">却下</option>
+        </select>
+      </label>
+      <label style="font-size:0.8rem;color:#94a3b8;display:flex;flex-direction:column;gap:4px">
+        評価
+        <select id="editVerdict" style="background:#1a2236;border:1px solid #2d3748;color:#e2e8f0;padding:6px;border-radius:6px;font-size:0.85rem">
+          <option value="">（未評価）</option>
+          <option value="use">使う</option>
+          <option value="watch">様子見</option>
+          <option value="skip">スキップ</option>
+        </select>
+      </label>
+    </div>
+    <label style="font-size:0.8rem;color:#94a3b8;display:flex;flex-direction:column;gap:4px">
+      用途・目的
+      <input id="editPurpose" type="text" placeholder="例: YouTube台本作成、調査" style="background:#1a2236;border:1px solid #2d3748;color:#e2e8f0;padding:7px 10px;border-radius:6px;font-size:0.85rem">
+    </label>
+    <label style="font-size:0.8rem;color:#94a3b8;display:flex;flex-direction:column;gap:4px">
+      注意点・制限
+      <input id="editCaution" type="text" placeholder="例: 無料枠に制限あり" style="background:#1a2236;border:1px solid #2d3748;color:#e2e8f0;padding:7px 10px;border-radius:6px;font-size:0.85rem">
+    </label>
+    <label style="font-size:0.8rem;color:#94a3b8;display:flex;flex-direction:column;gap:4px">
+      所感メモ
+      <textarea id="editMemo" rows="4" placeholder="使ってみた感想、気づき、改善点など自由に…" style="background:#1a2236;border:1px solid #2d3748;color:#e2e8f0;padding:8px 10px;border-radius:6px;font-size:0.85rem;resize:vertical;line-height:1.6"></textarea>
+    </label>
+    <div style="border-top:1px solid #2d3748;padding-top:10px">
+      <div style="font-size:0.78rem;color:#94a3b8;margin-bottom:6px">📋 履歴（×で削除 → 保存で確定）</div>
+      <div id="editHistoryList" style="max-height:160px;overflow-y:auto"></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <button onclick="deleteTool()" style="background:none;border:1px solid #ef4444;color:#ef4444;padding:7px 14px;border-radius:8px;font-size:0.82rem;cursor:pointer">🗑 削除</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="editSaveMsg" style="font-size:0.8rem"></span>
+        <button onclick="saveEdit()" style="background:#0284c7;border:none;color:#fff;padding:8px 20px;border-radius:8px;font-size:0.85rem;cursor:pointer;font-weight:600">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let activeStatus = 'all';
+let activeVerdict = 'all';
+let activeCategory = 'all';
+
+function applyFilters() {
+  const cards = Array.from(document.querySelectorAll('.review-card'));
+  let visible = 0;
+  cards.forEach(card => {
+    const sm = activeStatus === 'all' || card.dataset.status === activeStatus;
+    const vm = activeVerdict === 'all' || card.dataset.verdict === activeVerdict;
+    const cm = activeCategory === 'all' || card.dataset.category === activeCategory;
+    const show = sm && vm && cm;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('visibleCount').textContent = visible;
+}
+
+document.querySelectorAll('[data-filter-status]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-status]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeStatus = btn.dataset.filterStatus;
+    applyFilters();
+  });
+});
+document.querySelectorAll('[data-filter-verdict]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-verdict]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeVerdict = btn.dataset.filterVerdict;
+    applyFilters();
+  });
+});
+document.querySelectorAll('[data-filter-category]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-category]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCategory = btn.dataset.filterCategory;
+    applyFilters();
+  });
+});
+
+/* ── 編集モーダル ── */
+const REPO = 'k-hira-shine/ai-news-collector';
+const FILE_PATH = 'data/reviews.json';
+
+function getToken() {
+  return localStorage.getItem('gh_pat') || '';
+}
+
+function saveToken() {
+  const val = (document.getElementById('editToken')?.value || '').trim();
+  if (!val) return;
+  localStorage.setItem('gh_pat', val);
+  refreshTokenUI();
+}
+
+function refreshTokenUI() {
+  const token = getToken();
+  const status = document.getElementById('editTokenStatus');
+  const row = document.getElementById('editTokenRow');
+  if (token) {
+    if (status) { status.textContent = '✅ 保存済み'; status.style.color = '#10b981'; }
+    if (row) row.style.display = 'none';
+  } else {
+    if (status) { status.textContent = '未設定'; status.style.color = '#f59e0b'; }
+    if (row) row.style.display = 'flex';
+  }
+}
+
+async function fetchReviews(token) {
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+  const data = await res.json();
+  const b64 = data.content.replace(/\n/g, '');
+  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const text = new TextDecoder('utf-8').decode(bytes);
+  return { sha: data.sha, content: JSON.parse(text) };
+}
+
+// 編集中の履歴（削除操作を反映した作業コピー）
+let _editHistories = [];
+
+function _renderHistoryList() {
+  const container = document.getElementById('editHistoryList');
+  if (!container) return;
+  const today = new Date().toLocaleDateString('sv');
+  // 今日分は上の入力欄と同じなので履歴には表示しない
+  const pastHistories = _editHistories.filter(h => h.updated !== today);
+  if (pastHistories.length === 0) {
+    container.innerHTML = '<span style="font-size:0.78rem;color:#64748b">過去の履歴なし</span>';
+    return;
+  }
+  container.innerHTML = _editHistories.map((h, i) => {
+    if (h.updated === today) return '';
+    const dt = h.updated_at || h.updated || '';
+    const sl = { untried:'未試用', trying:'試用中', using:'使ってる', rejected:'却下' }[h.status] || h.status || '';
+    const vl = { use:'👍 使う', watch:'👀 様子見', skip:'👎 スキップ' }[h.verdict] || '';
+    const m = (h.memo || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `<div class="hist-row" style="display:flex;gap:6px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #2d3748;font-size:0.78rem">
+      <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+        <div style="color:#94a3b8">${dt}</div>
+        <div style="color:#e2e8f0">${sl}${vl ? ' / ' + vl : ''}${m ? ' — ' + m : ''}</div>
+      </div>
+      <button onclick="_deleteHistory(${i})" style="background:none;border:1px solid #4b5563;color:#94a3b8;border-radius:4px;padding:2px 7px;cursor:pointer;font-size:0.78rem;flex-shrink:0" title="削除">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function _deleteHistory(idx) {
+  if (!confirm('この履歴を削除しますか？')) return;
+  _editHistories.splice(idx, 1);
+  _renderHistoryList();
+}
+
+async function openEditModal(btn) {
+  try {
+    const toolName = btn.dataset.toolName;
+    const card = btn.closest('.review-card');
+    const status = (card && card.dataset.status) || 'untried';
+    const verdict = (card && card.dataset.verdict === 'none') ? '' : ((card && card.dataset.verdict) || '');
+    const fieldRows = card ? card.querySelectorAll('.field-row') : [];
+    let purpose = '', caution = '', memo = '';
+    fieldRows.forEach(row => {
+      const lbl = (row.querySelector('.field-label')?.textContent || '').trim();
+      const val = (row.querySelector('.field-value')?.textContent || '').trim();
+      if (lbl === '目的・用途') purpose = val;
+      if (lbl === '注意点') caution = val;
+    });
+    const memoEl = card ? card.querySelector('.memo') : null;
+    if (memoEl) memo = memoEl.textContent.replace(/^📝 */, '').trim();
+
+    document.getElementById('editToolName').textContent = toolName;
+    document.getElementById('editToolNameHidden').value = toolName;
+    document.getElementById('editStatus').value = status;
+    document.getElementById('editVerdict').value = verdict;
+    document.getElementById('editPurpose').value = purpose;
+    document.getElementById('editCaution').value = caution;
+    document.getElementById('editMemo').value = memo;
+    document.getElementById('editSaveMsg').textContent = '';
+
+    // 履歴をAPIから取得して表示
+    _editHistories = [];
+    _renderHistoryList();
+    const modal = document.getElementById('editModal');
+    modal.style.cssText = 'display:flex!important;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;padding:16px';
+    refreshTokenUI();
+
+    const token = getToken();
+    if (token) {
+      try {
+        const { content } = await fetchReviews(token);
+        const tool = (content.tools || []).find(t => t.name === toolName);
+        _editHistories = tool ? [...(tool.histories || [])] : [];
+        _renderHistoryList();
+      } catch(e) {}
+    }
+  } catch(e) {
+    alert('エラー: ' + e.message);
+  }
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').style.display = 'none';
+}
+
+async function saveEdit() {
+  const token = getToken();
+  if (!token) {
+    const msg = document.getElementById('editSaveMsg');
+    msg.style.color = '#f59e0b';
+    msg.textContent = '⚠️ トークン欄に GitHub PAT を入力して「保存」してください';
+    return;
+  }
+  const toolName = document.getElementById('editToolNameHidden').value;
+  const msg = document.getElementById('editSaveMsg');
+  msg.style.color = '#94a3b8';
+  msg.textContent = '保存中…';
+  try {
+    const { sha, content } = await fetchReviews(token);
+    const idx = (content.tools || []).findIndex(t => t.name === toolName);
+    const existing = idx >= 0 ? content.tools[idx] : {};
+    const today = new Date().toLocaleDateString('sv');
+    const now = new Date().toLocaleString('ja-JP', {timeZone:'Asia/Tokyo', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
+    const snapshot = {
+      status: document.getElementById('editStatus').value,
+      verdict: document.getElementById('editVerdict').value,
+      purpose: document.getElementById('editPurpose').value,
+      caution: document.getElementById('editCaution').value,
+      memo: document.getElementById('editMemo').value,
+      updated: today,
+      updated_at: now,
+    };
+    // 削除操作済みの _editHistories をベースに今回分を追記
+    const newHistories = [..._editHistories];
+    const histIdx = newHistories.findIndex(h => h.updated === today);
+    if (histIdx >= 0) newHistories[histIdx] = snapshot;
+    else newHistories.unshift(snapshot);
+    const entry = { name: toolName, category: existing.category || '', url: existing.url || '', ...snapshot, histories: newHistories };
+    if (idx >= 0) content.tools[idx] = entry;
+    else content.tools.push(entry);
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2) + '\n')));
+    const putRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `memo: ${toolName} の所感を更新`, content: encoded, sha })
+    });
+    if (!putRes.ok) { const e = await putRes.json(); throw new Error(e.message || putRes.status); }
+    msg.style.color = '#10b981';
+    msg.textContent = '✅ 保存しました。反映には数分かかります。Cmd+Shift+R でリロードしてください。';
+  } catch(e) {
+    if (e.message.includes('401') || e.message.includes('Bad credentials')) {
+      localStorage.removeItem('gh_pat');
+      refreshTokenUI();
+      msg.style.color = '#ef4444';
+      msg.textContent = '❌ トークンが無効です。再入力してください。';
+    } else {
+      msg.style.color = '#ef4444';
+      msg.textContent = '❌ ' + e.message;
+    }
+  }
+}
+
+async function deleteTool() {
+  const toolName = document.getElementById('editToolNameHidden').value;
+  if (!confirm(`「${toolName}」のレビューデータをすべて削除しますか？`)) return;
+  const token = getToken();
+  if (!token) {
+    document.getElementById('editSaveMsg').textContent = '⚠️ トークンが必要です';
+    return;
+  }
+  const msg = document.getElementById('editSaveMsg');
+  msg.style.color = '#94a3b8';
+  msg.textContent = '削除中…';
+  try {
+    const { sha, content } = await fetchReviews(token);
+    content.tools = (content.tools || []).filter(t => t.name !== toolName);
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2) + '\n')));
+    const putRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `memo: ${toolName} を削除`, content: encoded, sha })
+    });
+    if (!putRes.ok) { const e = await putRes.json(); throw new Error(e.message || putRes.status); }
+    msg.style.color = '#10b981';
+    msg.textContent = '✅ 削除しました。反映には数分かかります。Cmd+Shift+R でリロードしてください。';
+    // カードをその場で非表示
+    document.querySelectorAll('.review-card').forEach(card => {
+      const nameEl = card.querySelector('.tool-name');
+      if (nameEl && nameEl.textContent.trim() === toolName) card.style.display = 'none';
+    });
+    setTimeout(closeEditModal, 1500);
+  } catch(e) {
+    msg.style.color = '#ef4444';
+    msg.textContent = '❌ ' + e.message;
+  }
+}
+
+// ?tool=ToolName でリンクされた場合、該当カードをハイライト
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const toolParam = (params.get('tool') || '').toLowerCase().trim();
+  if (!toolParam) return;
+  const cards = Array.from(document.querySelectorAll('.review-card'));
+  let found = null;
+  cards.forEach(card => {
+    const nameEl = card.querySelector('.tool-name');
+    if (nameEl && nameEl.textContent.toLowerCase().trim() === toolParam) {
+      card.style.outline = '2px solid var(--accent)';
+      card.style.background = 'rgba(56,189,248,0.07)';
+      if (!found) found = card;
+    }
+  });
+  if (found) {
+    setTimeout(() => found.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  }
+})();
+</script>
+</body>
+</html>

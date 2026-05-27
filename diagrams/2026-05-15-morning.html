@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News 図解版 2026-05-15 朝便</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --ink: #1a1a2e;
+    --ink2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --accent: #6366f1;
+    --gold: #f59e0b;
+    --silver: #94a3b8;
+    --bronze: #b45309;
+    --cat-model: #10b981;
+    --cat-biz: #f59e0b;
+    --cat-reg: #ec4899;
+    --cat-research: #6366f1;
+    --cat-fund: #f97316;
+    --cat-usecase: #3b82f6;
+    --cat-default: #64748b;
+    --st-new: #16a34a;
+    --st-rising: #dc2626;
+    --st-sustained: #2563eb;
+    --st-fading: #64748b;
+    --st-resurfaced: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Noto Sans CJK JP", "Noto Sans JP",
+      "Yu Gothic", "Yu Gothic UI", "Meiryo",
+      -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "palt" 1;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 32px;
+  }
+  .nowrap { white-space: nowrap; }
+
+  /* ── ヘッダー ─────────────────────────── */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+  .slot-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* ── セクション共通 ─────────────────────── */
+  .section {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── セクション01: TOP ニュース（メイン・45%） ────────── */
+  .top-section { padding: 20px 22px 22px; }
+  .top-hero {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid var(--gold);
+    margin-bottom: 14px;
+  }
+  .top-hero .medal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 6px;
+  }
+  .top-hero .medal .rank-num { font-size: 32px; font-weight: 900; line-height: 1; }
+  .top-hero .medal .rank-label { font-size: 10px; letter-spacing: 0.08em; font-weight: 700; }
+  .top-hero .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .top-hero .title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-hero .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .top-hero .summary {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .top-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .top-card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border: 1.5px solid var(--line);
+    border-left: 4px solid var(--cat-default);
+    border-radius: 10px;
+  }
+  .top-card .rank-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--silver);
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .top-card .rank-badge.r3 { background: var(--bronze); }
+  .top-card.cat-model { border-left-color: var(--cat-model); }
+  .top-card.cat-biz { border-left-color: var(--cat-biz); }
+  .top-card.cat-reg { border-left-color: var(--cat-reg); }
+  .top-card.cat-research { border-left-color: var(--cat-research); }
+  .top-card.cat-fund { border-left-color: var(--cat-fund); }
+  .top-card.cat-usecase { border-left-color: var(--cat-usecase); }
+  .top-card .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .top-card .title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .top-card .summary {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: var(--ink2);
+    white-space: nowrap;
+  }
+  .tag.cat-model { background: #d1fae5; color: #047857; }
+  .tag.cat-biz { background: #fef3c7; color: #92400e; }
+  .tag.cat-reg { background: #fce7f3; color: #be185d; }
+  .tag.cat-research { background: #e0e7ff; color: #4338ca; }
+  .tag.cat-fund { background: #ffedd5; color: #c2410c; }
+  .tag.cat-usecase { background: #dbeafe; color: #1e40af; }
+  .tag.src { background: #f1f5f9; color: var(--muted); font-weight: 600; }
+
+  /* ── セクション02: トレンド（補助） ─────────── */
+  .trend-box {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trend-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .topic-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .topic-chip .chip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .topic-chip .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status.st-NEW { background: var(--st-new); }
+  .status.st-RISING { background: var(--st-rising); }
+  .status.st-SUSTAINED { background: var(--st-sustained); }
+  .status.st-FADING { background: var(--st-fading); }
+  .status.st-RESURFACED { background: var(--st-resurfaced); }
+  .topic-chip .topic-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .topic-chip .streak {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .topic-chip .evolution {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+    border-top: 1px solid var(--line);
+    padding-top: 5px;
+    margin-top: 2px;
+  }
+
+  /* ── セクション03: カテゴリ分布（補助） ───────── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    border-top: 4px solid var(--cat-default);
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .cat-card.cat-model { border-top-color: var(--cat-model); }
+  .cat-card.cat-biz { border-top-color: var(--cat-biz); }
+  .cat-card.cat-reg { border-top-color: var(--cat-reg); }
+  .cat-card.cat-research { border-top-color: var(--cat-research); }
+  .cat-card.cat-fund { border-top-color: var(--cat-fund); }
+  .cat-card.cat-usecase { border-top-color: var(--cat-usecase); }
+  .cat-card .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cat-card .name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .cat-card .count {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .cat-card .summary {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── セクション04: X トピック（補助） ─────────── */
+  .x-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .x-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .x-card .head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .x-card .buzz { font-size: 12px; }
+  .x-card .topic {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--ink);
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .x-card .desc {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── フッタ ─────────────────────────── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* スマホ対応 */
+  @media (max-width: 600px) {
+    .page { padding: 16px 12px 24px; }
+    .top-grid { grid-template-columns: 1fr !important; }
+    .trend-grid { grid-template-columns: 1fr !important; }
+    .topic-grid { grid-template-columns: 1fr !important; }
+    .cat-grid { grid-template-columns: 1fr !important; }
+    .x-grid { grid-template-columns: 1fr !important; }
+    .hero { padding: 14px 12px; }
+    .hero-title { font-size: 1.1rem; }
+    .topic-title { font-size: 0.95rem; }
+    .rank-num { font-size: 1.4rem !important; }
+    .medal { width: 36px !important; height: 36px !important; }
+    .nowrap { white-space: normal !important; }
+    .tag { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-title">🤖 AI News 図解版</div>
+    <div class="hero-meta">
+      <span>2026-05-15</span>
+      <span class="slot-badge">朝便</span>
+    </div>
+  </div>
+
+  
+  
+  <div class="section top-section">
+    <div class="section-title"><span class="num">01</span>今日の TOP ニュース</div>
+
+    
+    <div class="top-hero">
+      <div class="medal">
+        <div class="rank-num">1</div>
+        <div class="rank-label">TOP</div>
+      </div>
+      <div class="body">
+        <div class="title">Anthropic、ゲイツ財団と2億ドル提携</div>
+        <div class="tags">
+          <span class="tag cat-fund">資金調達</span>
+          <span class="tag src">x:@AnthropicAI</span>
+        </div>
+        <div class="summary">Anthropicはゲイツ財団と提携し、世界の健康、教育、経済的流動性などのプログラムに2億ドル相当の助成金、Claudeクレジット、技術サポートを提供すると発表しました。</div>
+      </div>
+    </div>
+
+    
+    <div class="top-grid">
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge ">2</div>
+        <div class="body">
+          <div class="title">Google、新AIエージェント「Gemini Spark」発表か</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@testingcatalog</span>
+          </div>
+          <div class="summary">Google I/Oで、24時間稼働しユーザーの行動から学習する新しいAIアシスタント「Gemini Spark Agent」が発表されるとの情報がリークされました。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge r3">3</div>
+        <div class="body">
+          <div class="title">Hermes AgentがCodexランタイムを統合</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@NousResearch</span>
+          </div>
+          <div class="summary">Nous Researchは、AIエージェント「Hermes Agent」がOpenAIモデル使用時に、新たにCodexをツール実行のランタイムとして利用可能になったことを発表しました。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge ">4</div>
+        <div class="body">
+          <div class="title">Moonshot AI、ブラウザ拡張「Kimi Web Bridge」発表</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@Kimi_Moonshot</span>
+          </div>
+          <div class="summary">Moonshot AIは、AIエージェントが人間のようにウェブサイトを操作（検索、クリック、入力等）できるブラウザ拡張機能「Kimi Web Bridge」を公開しました。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-reg">
+        <div class="rank-badge ">5</div>
+        <div class="body">
+          <div class="title">Anthropic、米中のAI競争に関する論文を発表</div>
+          <div class="tags">
+            <span class="tag cat-reg">規制/政策</span>
+            <span class="tag src">x:@AnthropicAI</span>
+          </div>
+          <div class="summary">Anthropicは、米中のAI競争に関する見解をまとめた論文を公開し、米国と同盟国が最先端AIにおけるリードを維持するための要件について論じました。</div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">02</span>今日のトレンド</div>
+    
+    <div class="trend-box">
+      <p>本日のAI業界は「AIエージェント」が市場の中心を占める一日となりました。Googleが次期アシスタント「Gemini Spark Agent」の存在を示唆したのを筆頭に、NousResearchの「Hermes」、Moonshot AIの「Kimi」など、各社がウェブ操作やタスク自動化を可能にするエージェント技術の進化を相次いで発表しました。また、Anthropicがゲイツ財団との2億ドル規模の提携を発表し、AIの社会実装に向けた動きを加速させています。新技術の登場と並行し、AIの悪用リスクや規制に関する議論も活発化しており、技術革新と社会の健全な発展の両立が喫緊の課題として浮上しています。</p>
+    </div>
+    
+    
+    <div class="topic-grid">
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">6日目</span>
+        </div>
+        <div class="topic-name">AIエージェント開発競争の本格化</div>
+        <div class="evolution">AIエージェントのエコシステム化が議論されていたが、Googleの新エージェント登場の噂を機に、各社が具体的な製品を発表し、競争が本格化した。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">Anthropicの事業展開と社会的インパクト</div>
+        <div class="evolution">料金体系変更の議論が中心だったが、ゲイツ財団との2億ドル提携発表により、AIの社会貢献・実装へと焦点が移った。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-NEW">⚡ NEW</span>
+          
+        </div>
+        <div class="topic-name">LLMの性能向上と新アーキテクチャ</div>
+        <div class="evolution">重み学習を不要とする「Learning Beyond Gradients」のような、従来の勾配降下法とは異なる新しい学習手法が注目され始めた。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">3日目</span>
+        </div>
+        <div class="topic-name">生成AIの規制と倫理問題</div>
+        <div class="evolution">漠然とした著作権や倫理の議論から、「Claude Mythos」の悪用リスクなど、特定のモデルに起因する具体的なセキュリティ脅威へと議論が深化している。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-NEW">⚡ NEW</span>
+          
+        </div>
+        <div class="topic-name">AIハードウェア（APU/GPU）の進化</div>
+        <div class="evolution">AMDの最新APU「Strix Halo」がLLM推論を大幅に高速化するなど、クラウドだけでなくローカル環境でのAI実行能力が向上している。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">4日目</span>
+        </div>
+        <div class="topic-name">AIによる開発・制作ワークフローの変革</div>
+        <div class="evolution">コーディング支援ツール（Claude Code, Codex）の話題が中心だったが、動画・音声同時生成など、より多様なクリエイティブ領域へ応用が広がっている。</div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">03</span>カテゴリ分布</div>
+    <div class="cat-grid">
+      
+      <div class="cat-card cat-model">
+        <div class="head">
+          <span class="name">モデル/ツール</span>
+          <span class="count">21</span>
+        </div>
+        <div class="summary">本日はAIエージェント関連の発表が相次ぎました。Googleから常時稼働アシスタント「Gemini Spark Agent」の登場が示唆されたほか、NousResearchの「Hermes Agent」はCodexとの統合、Moonshot AIはブラウザ操作を可能にする「Kimi Web Bridge」を発表し、エージェントの実用性が大きく向上しています。また、動画・音声生成やTTS（音声合成）の分野でも新技術が登場し、マルチモーダル化と効率化が進んでいます。</div>
+      </div>
+      
+      <div class="cat-card cat-biz">
+        <div class="head">
+          <span class="name">企業動向</span>
+          <span class="count">21</span>
+        </div>
+        <div class="summary">NVIDIAが「AIは提案から行動へ」と宣言し、AIエージェント時代の到来を象徴しました。AMDは最新APUによるLLM推論の高速化を発表し、ハードウェア競争も激化しています。Google Cloud Japanは生成AIエージェント開発に特化した新組織を設立し、人材獲得を強化。一方、OpenAIとAppleの提携は期待されたほどの収益を上げていないとの報道もあり、ビジネスモデルの模索が続いています。また、AnthropicがIPOに踏み切る確率が高いとの観測も出ています。</div>
+      </div>
+      
+      <div class="cat-card cat-reg">
+        <div class="head">
+          <span class="name">規制/政策</span>
+          <span class="count">7</span>
+        </div>
+        <div class="summary">Anthropicが米中のAI競争に関する論文を発表し、技術的リーダーシップを維持するための政策提言を行いました。これは、AI企業が地政学的リスクや安全保障問題に深く関与し始めていることを示しています。国内では、最先端AI「Claude Mythos」の悪用リスクが報道され、政府やセキュリティ企業が対策の議論を開始。また、選挙運動におけるAI生成動画の明示ルール作りが進むなど、具体的なAI利用シーンを想定した法整備が動き出しています。</div>
+      </div>
+      
+      <div class="cat-card cat-research">
+        <div class="head">
+          <span class="name">研究論文</span>
+          <span class="count">3</span>
+        </div>
+        <div class="summary">従来のAI学習の常識を覆す可能性のある研究が注目を集めています。特に、重み学習を不要とする「Learning Beyond Gradients」は、LLM自身がプログラムを生成・改善する新しいアプローチとして、学習コストの劇的な削減が期待されます。また、オープンソースLLM「Qwen 3.6」が、小規模なモデルサイズにもかかわらず長期推論タスクで巨大モデルを凌駕する性能を示し、モデルの効率化と高性能化の両立が進んでいることが示されました。</div>
+      </div>
+      
+      <div class="cat-card cat-fund">
+        <div class="head">
+          <span class="name">資金調達</span>
+          <span class="count">1</span>
+        </div>
+        <div class="summary">本日はAnthropicとゲイツ財団の大型提携が最大のニュースでした。2億ドル規模の助成金や技術支援を通じて、AIを世界の健康、教育、農業といった社会課題の解決に応用するこの取り組みは、AIのポジティブな活用事例として業界全体に大きな影響を与えるでしょう。営利目的だけでなく、非営利分野でのAI活用を促進するマイルストーンとなります。</div>
+      </div>
+      
+      <div class="cat-card cat-usecase">
+        <div class="head">
+          <span class="name">ユースケース</span>
+          <span class="count">25</span>
+        </div>
+        <div class="summary">AIエージェントの活用に関する議論が活発です。「CodexやClaude Codeでアプリ開発をしても、それは本当の開発とは言えない」といった、AIを使う側のスキルや理解を問う声が多数上がりました。一方で、Obsidianやn8nと連携させたビジネス自動化、AIによる脆弱性対応システムの検討、NotionAIでの業務効率化など、具体的な業務にAIを組み込む実践的な知見も共有されています。AIを単なるツールではなく、いかにして「有能な部下」として使いこなすかが焦点となっています。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">04</span>X で話題</div>
+    <div class="x-grid">
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">Googleの新AIエージェント「Gemini Spark」への期待</span>
+        </div>
+        <div class="desc">GoogleがGoogle I/Oで発表すると噂される、24時間稼働のパーソナルAIエージェント「Gemini Spark」に関するリーク情報が大きな話題を呼んでいます。ユーザーの行動から学習し、接続されたアプリと連携してタスクをこなすというコンセプトに、多くのユーザーが未来のAIアシスタントの姿として高い期待を寄せています。「エージェント戦争が始まる」といったコメントも見られ、市場の大きな変化を予感させるトピックとなっています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">Anthropicとゲイツ財団の2億ドル規模の提携</span>
+        </div>
+        <div class="desc">Anthropicがゲイツ財団と2億ドル規模の提携を発表したことは、非常にポジティブに受け止められています。AI技術が商業利用だけでなく、世界の健康、教育、貧困といったグローバルな課題解決のために使われることへの期待感が高まっています。AIのトップ企業が明確に社会貢献へのコミットメントを示したことで、業界のイメージ向上にも繋がると評価されています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">AIエージェントによる開発の是非を問う議論</span>
+        </div>
+        <div class="desc">AIエージェント（特にCodexやClaude Code）を使ってアプリケーションを開発するユースケースが広まる一方で、その行為の本質を問う投稿が大きな共感を呼んでいます。「何が起きているかわからないままAIに指示するだけでは開発とは言えない」「有能な部下を持つ知識ゼロの上司のようだ」といった意見に、多くの開発者が同意を示しました。これは、AIを使いこなすためには、ユーザー側にも相応の知識とスキルが必要であるという課題を浮き彫りにしています。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="footer">
+    Generated 2026-05-14 18:41 UTC · AI News Collector
+    
+  </div>
+
+</div>
+</body>
+</html>

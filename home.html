@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News Collector — ホーム</title>
+<style>
+  :root {
+    --bg: #0a0f1e; --surface: #111827; --card: #1a2236;
+    --accent: #38bdf8; --accent2: #0284c7; --text: #e2e8f0;
+    --muted: #94a3b8; --border: #2d3748;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; min-height: 100vh; padding-top: 48px; }
+
+.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #0a0f1eee; backdrop-filter: blur(8px); border-bottom: 1px solid #2d3748; display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; padding: 6px 12px; }
+.topnav a { display: inline-block; padding: 4px 12px; background: #1a2236; border-radius: 6px; color: #94a3b8; text-decoration: none; font-size: 0.82rem; white-space: nowrap; }
+.topnav a:hover { color: #38bdf8; background: rgba(56,189,248,0.1); }
+.topnav a.active { background: #0284c7; color: #fff; }
+@media (max-width: 640px) {
+  .topnav { gap: 4px; padding: 4px 8px; }
+  .topnav a { font-size: 0.75rem; padding: 3px 8px; }
+}
+
+  header { background: linear-gradient(135deg, #0c1a35, #0a0f1e); padding: 22px 32px 18px; border-bottom: 1px solid var(--border); text-align: center; }
+  .site-title { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+  .site-sub { font-size: 0.82rem; color: var(--muted); margin-top: 5px; }
+  .site-updated { font-size: 0.72rem; color: #4b5563; margin-top: 4px; }
+  .container { max-width: 860px; margin: 0 auto; padding: 28px 16px; display: flex; flex-direction: column; gap: 32px; }
+  /* セクションタイトル */
+  .section-label { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  /* 機能リスト */
+  .feature-list { display: flex; flex-direction: column; gap: 10px; }
+  .feature-row {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    display: flex; flex-direction: column;
+    border-left: 3px solid var(--row-color, var(--border));
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .feature-row:hover { border-color: var(--row-color); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .row-main {
+    padding: 14px 18px 10px; text-decoration: none; color: var(--text);
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .row-main:hover .row-title { color: var(--row-color); }
+  .row-line1 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .row-title { font-size: 1rem; font-weight: 700; color: var(--row-color); transition: opacity 0.15s; }
+  .row-updated { font-size: 0.68rem; color: #4b5563; margin-left: auto; }
+  .row-line2 { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+  .row-line3 {
+    font-size: 0.78rem; color: #64748b;
+    padding: 7px 18px; border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.15);
+    display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+  }
+  .row-topic-text { color: #94a3b8; flex: 1; line-height: 1.4; }
+  .row-topic-link { color: var(--muted); font-size: 0.72rem; text-decoration: none; flex-shrink: 0; }
+  .row-topic-link:hover { color: var(--accent); }
+  .row-topic-empty { color: #374151; }
+  .diagram-chip { font-size: 0.7rem; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); color: var(--accent); padding: 2px 8px; border-radius: 20px; text-decoration: none; white-space: nowrap; }
+  .diagram-chip:hover { background: rgba(56,189,248,0.18); }
+  /* git ログ */
+  .log-section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .log-row { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid rgba(45,55,72,0.5); font-size: 0.8rem; }
+  .log-row:last-child { border-bottom: none; }
+  .log-date { color: var(--muted); min-width: 76px; flex-shrink: 0; }
+  .log-sha { font-family: monospace; font-size: 0.72rem; color: #4b5563; flex-shrink: 0; }
+  .log-subject { color: var(--text); }
+  .log-empty { color: var(--muted); font-size: 0.82rem; }
+  footer { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 24px; border-top: 1px solid var(--border); }
+  @media (max-width: 600px) {
+    header { padding: 14px 12px; }
+    .site-title { font-size: 1.3rem; }
+    .row-updated { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="home.html" class="active">🏠 ホーム</a>
+  <a href="index.html">📰 ニュース</a>
+  <a href="strategy.html">🎯 施策提案</a>
+  <a href="buzz.html">🔥 バズりランキング</a>
+  <a href="money.html">🎬 マネタイズ</a>
+  <a href="sns_success.html">🧠 SNS成功者</a>
+  <a href="post_generator.html">✍️ 投稿ストック</a>
+  <a href="tools.html">🔧 ツール追跡</a>
+  <a href="reviews.html">📋 使ってみた</a>
+  <a href="gemini.html">✨ Gemini追跡</a>
+</nav>
+<header>
+  <div class="site-title">🤖 AI News Collector</div>
+  <div class="site-sub">RSS・X・HackerNews・Redditから自動収集 → Geminiが分析・整理</div>
+  <div class="site-updated">Generated: 2026-05-27 23:39 JST</div>
+</header>
+<div class="container">
+  <div>
+    <div class="section-label">機能一覧</div>
+    <div class="feature-list">
+      <div class="feature-row" style="--row-color:#38bdf8">
+  <a href="index.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">📰 ニュース</span>
+      
+    </div>
+    <div class="row-line2">RSS・X・HNから収集したAI関連ニュースを毎日自動更新。Geminiがトレンド分析・要約を生成</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">DeepMind、AIで数学の未解決問題を多数解決</span><a href="https://x.com/pushmeet/status/2058936037754224998" target="_blank" rel="noopener" class="row-topic-link">↗</a> <a href="diagrams/2026-05-26-morning.html" class="diagram-chip" target="_blank" rel="noopener" onclick="event.stopPropagation()">📊 最新図解: 2026-05-26-morning</a></div>
+</div>
+<div class="feature-row" style="--row-color:#f472b6">
+  <a href="strategy.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">🎯 施策提案</span>
+      
+    </div>
+    <div class="row-line2">収集ニュースからYouTube施策をAIが自動提案。今すぐ使える企画アイデアを毎日更新</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">【速報】Google DeepMind、AIで数学の未解決問題を複数解決。本日発表された『AlphaProof Nexus』がヤバすぎる…</span><a href="strategy.html" class="row-topic-link">↗</a></div>
+</div>
+<div class="feature-row" style="--row-color:#fb923c">
+  <a href="buzz.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">🔥 バズりランキング</span>
+      
+    </div>
+    <div class="row-line2">いいね・RT数でランキング化。バズったAI情報を見逃さない</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">2012年にビットコインを見つけたら億万長者
+
+2018年にテスラを見つけたら億万長者
+
+2022年にNvidiaを見つけたら億万長者
+
+2</span><a href="https://x.com/fiction_log/status/2056281113035944396" target="_blank" rel="noopener" class="row-topic-link">↗</a></div>
+</div>
+<div class="feature-row" style="--row-color:#fbbf24">
+  <a href="money.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">🎬 マネタイズ</span>
+      
+    </div>
+    <div class="row-line2">収益化・マネタイズ関連情報を自動収集・整理</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">伸びた事例どんどん報告していきます</span><a href="money.html" class="row-topic-link">↗</a></div>
+</div>
+<div class="feature-row" style="--row-color:#60a5fa">
+  <a href="sns_success.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">🧠 SNS成功者</span>
+      
+    </div>
+    <div class="row-line2">SNSで成功した人の思考法・習慣を自動収集</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">ガチで毎日バズってます
+弊社の投稿作成ツールで今日も𝕏伸びてます。
+
+・518万
+・265万
+・162万
+・51万
+・46万
+・40万
+
+&quot;</span><a href="sns_success.html" class="row-topic-link">↗</a></div>
+</div>
+<div class="feature-row" style="--row-color:#4ade80">
+  <a href="post_generator.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">✍️ 投稿ストック</span>
+      
+    </div>
+    <div class="row-line2">AI生成の投稿案をストック。すぐ使えるコンテンツを常備</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">20代で終わらせたい悪習慣 4選
+1. 他人との比較：SNSを見て自己否定。自分の道を進もう。
+2. 口だけの不満：愚痴は言うが行動はゼロ。</span><a href="post_generator.html" class="row-topic-link">↗</a></div>
+</div>
+<div class="feature-row" style="--row-color:#a78bfa">
+  <a href="tools.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">🔧 ツール追跡</span>
+      
+    </div>
+    <div class="row-line2">AIツール・機能リリースをリアルタイムで追跡。日付・ファミリー・影響度でフィルター可能</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">SEGA (Spectral-Energy Guided Attention) — 再学習なしで4K/6K超高解像度画像を生成できる新技術「SEGA」が登場。</span><a href="https://x.com/ai_hakase_/status/2058852325914022036" target="_blank" rel="noopener" class="row-topic-link">↗</a></div>
+</div>
+<div class="feature-row" style="--row-color:#34d399">
+  <a href="reviews.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">📋 使ってみた</span>
+      
+    </div>
+    <div class="row-line2">試したAIツールの所感・評価を記録。ステータス・判定・メモを履歴付きで管理</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-empty">データなし</span></div>
+</div>
+<div class="feature-row" style="--row-color:#4285f4">
+  <a href="gemini.html" class="row-main">
+    <div class="row-line1">
+      <span class="row-title">✨ Gemini追跡</span>
+      
+    </div>
+    <div class="row-line2">Gemini公式のRSS・Release Notes・Xを毎日チェック。今使える機能と近日公開を日本語で整理</div>
+  </a>
+  <div class="row-line3">💬 最新: <span class="row-topic-text">AI生成コンテンツの電子透かし「SynthID」対応拡大</span><a href="gemini.html" class="row-topic-link">↗</a></div>
+</div>
+
+    </div>
+  </div>
+  <div class="log-section">
+    <div class="section-label" style="margin-bottom:10px">🕐 最近の更新</div>
+    <div class="log-row">
+  <span class="log-date">05/27 23:35</span>
+  <span class="log-sha">9b18a73</span>
+  <span class="log-subject">docs: Gemini Omni 概要ページと海外実使用ポスト一覧</span>
+</div><div class="log-row">
+  <span class="log-date">05/27 03:20</span>
+  <span class="log-sha">8fe920d</span>
+  <span class="log-subject">money: 2026-05-26_1820</span>
+</div><div class="log-row">
+  <span class="log-date">05/26 03:03</span>
+  <span class="log-sha">cbce7f4</span>
+  <span class="log-subject">money: 2026-05-25_1803</span>
+</div><div class="log-row">
+  <span class="log-date">05/26 02:48</span>
+  <span class="log-sha">bc40ee4</span>
+  <span class="log-subject">buzz: 2026-05-25_1748</span>
+</div><div class="log-row">
+  <span class="log-date">05/25 06:39</span>
+  <span class="log-sha">4757840</span>
+  <span class="log-subject">money: 2026-05-24_2139 (merge attempt 1)</span>
+</div><div class="log-row">
+  <span class="log-date">05/25 06:39</span>
+  <span class="log-sha">b3500d9</span>
+  <span class="log-subject">money: 2026-05-24_2139</span>
+</div><div class="log-row">
+  <span class="log-date">05/25 06:18</span>
+  <span class="log-sha">f39b960</span>
+  <span class="log-subject">buzz: 2026-05-24_2118</span>
+</div><div class="log-row">
+  <span class="log-date">05/25 02:42</span>
+  <span class="log-sha">60abb39</span>
+  <span class="log-subject">money: 2026-05-24_1742</span>
+</div>
+  </div>
+</div>
+<footer>AI News Collector — 自動収集・分析パイプライン</footer>
+</body>
+</html>

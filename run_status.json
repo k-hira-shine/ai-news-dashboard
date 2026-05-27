@@ -1,0 +1,43 @@
+{
+  "overall": "success",
+  "updated_at": "2026-05-27 03:20 JST",
+  "workflows": {
+    "collect": {
+      "status": "success",
+      "ts": "2026-05-26T02:39:57.292308+09:00",
+      "time": "2026-05-26 02:39 JST",
+      "error": "",
+      "items_collected": 164,
+      "top_articles": 10
+    },
+    "money": {
+      "status": "success",
+      "ts": "2026-05-27T03:20:03.389733+09:00",
+      "time": "2026-05-27 03:20 JST",
+      "error": "",
+      "money_collected": 116,
+      "sns_collected": 316,
+      "money_analyzed": 0,
+      "sns_analyzed": 0,
+      "mode": "full",
+      "cost_usd": 0.6396
+    },
+    "sns_overseas_boost_analysis": {
+      "status": "success",
+      "ts": "2026-05-14T11:08:51.502576+09:00",
+      "time": "2026-05-14 11:08 JST",
+      "error": "",
+      "items_analyzed": 435,
+      "candidates": 845,
+      "mode": "one-off-analysis"
+    },
+    "buzz": {
+      "status": "success",
+      "ts": "2026-05-26T02:48:22.243499+09:00",
+      "time": "2026-05-26 02:48 JST",
+      "error": "",
+      "items_collected": 1396,
+      "accounts": 15
+    }
+  }
+}
