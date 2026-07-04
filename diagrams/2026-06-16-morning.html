@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News 図解版 2026-06-16 朝便</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --ink: #1a1a2e;
+    --ink2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --accent: #6366f1;
+    --gold: #f59e0b;
+    --silver: #94a3b8;
+    --bronze: #b45309;
+    --cat-model: #10b981;
+    --cat-biz: #f59e0b;
+    --cat-reg: #ec4899;
+    --cat-research: #6366f1;
+    --cat-fund: #f97316;
+    --cat-usecase: #3b82f6;
+    --cat-default: #64748b;
+    --st-new: #16a34a;
+    --st-rising: #dc2626;
+    --st-sustained: #2563eb;
+    --st-fading: #64748b;
+    --st-resurfaced: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Noto Sans CJK JP", "Noto Sans JP",
+      "Yu Gothic", "Yu Gothic UI", "Meiryo",
+      -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "palt" 1;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 32px;
+  }
+  .nowrap { white-space: nowrap; }
+
+  /* ── ヘッダー ─────────────────────────── */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+  .slot-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* ── セクション共通 ─────────────────────── */
+  .section {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── セクション01: TOP ニュース（メイン・45%） ────────── */
+  .top-section { padding: 20px 22px 22px; }
+  .top-hero {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid var(--gold);
+    margin-bottom: 14px;
+  }
+  .top-hero .medal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 6px;
+  }
+  .top-hero .medal .rank-num { font-size: 32px; font-weight: 900; line-height: 1; }
+  .top-hero .medal .rank-label { font-size: 10px; letter-spacing: 0.08em; font-weight: 700; }
+  .top-hero .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .top-hero .title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-hero .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .top-hero .summary {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .top-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .top-card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border: 1.5px solid var(--line);
+    border-left: 4px solid var(--cat-default);
+    border-radius: 10px;
+  }
+  .top-card .rank-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--silver);
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .top-card .rank-badge.r3 { background: var(--bronze); }
+  .top-card.cat-model { border-left-color: var(--cat-model); }
+  .top-card.cat-biz { border-left-color: var(--cat-biz); }
+  .top-card.cat-reg { border-left-color: var(--cat-reg); }
+  .top-card.cat-research { border-left-color: var(--cat-research); }
+  .top-card.cat-fund { border-left-color: var(--cat-fund); }
+  .top-card.cat-usecase { border-left-color: var(--cat-usecase); }
+  .top-card .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .top-card .title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .top-card .summary {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: var(--ink2);
+    white-space: nowrap;
+  }
+  .tag.cat-model { background: #d1fae5; color: #047857; }
+  .tag.cat-biz { background: #fef3c7; color: #92400e; }
+  .tag.cat-reg { background: #fce7f3; color: #be185d; }
+  .tag.cat-research { background: #e0e7ff; color: #4338ca; }
+  .tag.cat-fund { background: #ffedd5; color: #c2410c; }
+  .tag.cat-usecase { background: #dbeafe; color: #1e40af; }
+  .tag.src { background: #f1f5f9; color: var(--muted); font-weight: 600; }
+
+  /* ── セクション02: トレンド（補助） ─────────── */
+  .trend-box {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trend-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .topic-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .topic-chip .chip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .topic-chip .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status.st-NEW { background: var(--st-new); }
+  .status.st-RISING { background: var(--st-rising); }
+  .status.st-SUSTAINED { background: var(--st-sustained); }
+  .status.st-FADING { background: var(--st-fading); }
+  .status.st-RESURFACED { background: var(--st-resurfaced); }
+  .topic-chip .topic-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .topic-chip .streak {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .topic-chip .evolution {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+    border-top: 1px solid var(--line);
+    padding-top: 5px;
+    margin-top: 2px;
+  }
+
+  /* ── セクション03: カテゴリ分布（補助） ───────── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    border-top: 4px solid var(--cat-default);
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .cat-card.cat-model { border-top-color: var(--cat-model); }
+  .cat-card.cat-biz { border-top-color: var(--cat-biz); }
+  .cat-card.cat-reg { border-top-color: var(--cat-reg); }
+  .cat-card.cat-research { border-top-color: var(--cat-research); }
+  .cat-card.cat-fund { border-top-color: var(--cat-fund); }
+  .cat-card.cat-usecase { border-top-color: var(--cat-usecase); }
+  .cat-card .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cat-card .name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .cat-card .count {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .cat-card .summary {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── セクション04: X トピック（補助） ─────────── */
+  .x-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .x-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .x-card .head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .x-card .buzz { font-size: 12px; }
+  .x-card .topic {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--ink);
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .x-card .desc {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── フッタ ─────────────────────────── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* スマホ対応 */
+  @media (max-width: 600px) {
+    .page { padding: 16px 12px 24px; }
+    .top-grid { grid-template-columns: 1fr !important; }
+    .trend-grid { grid-template-columns: 1fr !important; }
+    .topic-grid { grid-template-columns: 1fr !important; }
+    .cat-grid { grid-template-columns: 1fr !important; }
+    .x-grid { grid-template-columns: 1fr !important; }
+    .hero { padding: 14px 12px; }
+    .hero-title { font-size: 1.1rem; }
+    .topic-title { font-size: 0.95rem; }
+    .rank-num { font-size: 1.4rem !important; }
+    .medal { width: 36px !important; height: 36px !important; }
+    .nowrap { white-space: normal !important; }
+    .tag { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-title">🤖 AI News 図解版</div>
+    <div class="hero-meta">
+      <span>2026-06-16</span>
+      <span class="slot-badge">朝便</span>
+    </div>
+  </div>
+
+  
+  
+  <div class="section top-section">
+    <div class="section-title"><span class="num">01</span>今日の TOP ニュース</div>
+
+    
+    <div class="top-hero">
+      <div class="medal">
+        <div class="rank-num">1</div>
+        <div class="rank-label">TOP</div>
+      </div>
+      <div class="body">
+        <div class="title">Claudeがエージェントチーム機能を出荷</div>
+        <div class="tags">
+          <span class="tag cat-biz">企業動向</span>
+          <span class="tag src">x:@undefinedKi</span>
+        </div>
+        <div class="summary">AnthropicがClaude Codeにエージェントチーム機能を静かに実装しました。チームリーダーが複数のエージェントを生成し、直接メッセージを送り合い、互いの作業をレビューすることで、効率的なソフトウェア開発が可能になります。</div>
+      </div>
+    </div>
+
+    
+    <div class="top-grid">
+      
+      <div class="top-card cat-biz">
+        <div class="rank-badge ">2</div>
+        <div class="body">
+          <div class="title">Fableはすぐには戻らない可能性</div>
+          <div class="tags">
+            <span class="tag cat-biz">企業動向</span>
+            <span class="tag src">x:@simonw</span>
+          </div>
+          <div class="summary">AnthropicのFableモデルがすぐに利用可能になる可能性は低いという見方が示されています。米国政府によるアクセス遮断問題が継続している状況を示唆しています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-reg">
+        <div class="rank-badge r3">3</div>
+        <div class="body">
+          <div class="title">Mythos遮断はAnthropicの自業自得？</div>
+          <div class="tags">
+            <span class="tag cat-reg">規制/政策</span>
+            <span class="tag src">x:@umiyuki_ai</span>
+          </div>
+          <div class="summary">Opus4.8ではスルーされていた政府の懸念が、Mythos/Fableで遮断事件に発展したのは、Anthropicが自ら性能を大袈裟に宣伝したためではないかという指摘があります。これはAIの安全性評価と公開戦略における企業の責任を示唆しています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-reg">
+        <div class="rank-badge ">4</div>
+        <div class="body">
+          <div class="title">国防長官のAnthropic批判</div>
+          <div class="tags">
+            <span class="tag cat-reg">規制/政策</span>
+            <span class="tag src">x:@umiyuki_ai</span>
+          </div>
+          <div class="summary">ピートヘグセス国防長官が過去にAnthropicをペンタゴンから追放したことを正当化する発言をしました。しかし、その後に国防総省がMythosを使用していたという情報もあり、政府側の態度に一貫性がないとの疑念が提起されています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-reg">
+        <div class="rank-badge ">5</div>
+        <div class="body">
+          <div class="title">Mythos遮断事件の実情とデマ</div>
+          <div class="tags">
+            <span class="tag cat-reg">規制/政策</span>
+            <span class="tag src">x:@umiyuki_ai</span>
+          </div>
+          <div class="summary">Mythos遮断事件に関して、当初はAnthropicのダリオCEOがウェルネスリトリート中で政府と連絡が取れなかったという情報が流れましたが、後にデマであったと訂正されました。政府側はダリオ氏が要請に応じなかったため強制遮断したと主張しています。</div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">02</span>今日のトレンド</div>
+    
+    <div class="trend-box">
+      <p>本日のAI業界は、Anthropicの高性能モデルFable/Mythos 5の米国政府によるアクセス遮断問題が引き続き中心的な話題です。この問題は、AI企業と政府間のコミュニケーションの課題、クローズドモデルのリスク、そして国産/オープンモデルの重要性を浮き彫りにしました。同時に、AnthropicはClaude Codeに複数のAIエージェントが協調する新機能を投入し、AIエージェント技術の進化が加速しています。また、開発コスト削減やローカル環境でのAI活用に焦点を当てた新しいAIモデルやツールが多数登場しており、AIの民主化と実用化に向けた動きが活発化しています。</p>
+    </div>
+    
+    
+    <div class="topic-grid">
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">Anthropic Fable/Mythos 5のアクセス停止と影響</div>
+        <div class="evolution">初報→米当局が動く→規制議論に発展→政府とAnthropicのコミュニケーション齟齬が焦点に</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">AIの安全性と規制/政策</div>
+        <div class="evolution">Fable問題を受けて各国政府の動きや輸出管理の議論が活発化、オープンモデルの重要性が再認識されている</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">AIエージェントと開発パラダイムシフト</div>
+        <div class="evolution">自律型エージェントの協調機能や統合ツールが登場し、開発効率化への応用が具体化</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">大手AIラボのモデル/ツール競争</div>
+        <div class="evolution">Anthropicの新機能やZhipuAIのGLM5.2発表など、主要企業間の技術競争が継続</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-FADING">📉 FADING</span>
+          <span class="streak">3日目</span>
+        </div>
+        <div class="topic-name">AIモデルの著作権と法的側面</div>
+        <div class="evolution">AI訓練の著作権料に関する大手企業の反発が前回注目されたが、今回はFable問題に焦点が移り沈静化</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">AIコーディング支援ツールの進化と活用</div>
+        <div class="evolution">Claude Codeのチーム機能や新しいコーディングモデルが登場し、開発者コミュニティでの活用が広がる</div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">03</span>カテゴリ分布</div>
+    <div class="cat-grid">
+      
+      <div class="cat-card cat-biz">
+        <div class="head">
+          <span class="name">企業動向</span>
+          <span class="count">6</span>
+        </div>
+        <div class="summary">AnthropicがClaude Codeにエージェントチーム機能を追加し、複数のAIエージェントが連携してソフトウェア開発を行う新機能を出荷しました。これはAIエージェントの協調作業を新たなレベルに引き上げるものです。同時に、Fableモデルのアクセス遮断問題は継続しており、その影響で中国のZhipuAIがGLM5.2を公開し、オープンモデルの株価が急騰するなど、市場の動向に大きな変化が見られます。Anthropicのプライバシーポリシー変更や、社員が政府と問題解決を試みているといった動きも報じられています。</div>
+      </div>
+      
+      <div class="cat-card cat-research">
+        <div class="head">
+          <span class="name">研究論文</span>
+          <span class="count">4</span>
+        </div>
+        <div class="summary">Microsoft Researchは、SQLからGPUカーネルを自動生成し、分析を30倍高速化する技術や、LLMが再訓練なしにタスクを横断学習する能力など、多様な研究成果を公開しました。病理画像と空間RNA転写物を統合するTARIO-2モデルや、テキストを画像に圧縮してLLMのコストを90%削減するSnapcompact技術も注目されています。また、AIが生成したコンテンツがトレーニングデータに混ざることで、LLMの性能が低下する可能性についての懸念も示されています。</div>
+      </div>
+      
+      <div class="cat-card cat-reg">
+        <div class="head">
+          <span class="name">規制/政策</span>
+          <span class="count">10</span>
+        </div>
+        <div class="summary">AnthropicのFable/Mythos 5アクセス遮断問題が連日トップニュースを飾り、米国政府とAnthropicのコミュニケーション不全が原因であることがAxiosの報道で指摘されました。元政府関係者はAnthropic側が要請を拒否したため強制遮断に至ったと政府の立場を擁護する一方、国防長官の発言の矛盾も指摘されています。この事態は、非米国製AIの必要性やオープンモデルの価値を再認識させるきっかけとなり、マクロン大統領もMistralの国産LLMをアピールしました。大手テック企業は引き続きAI規制の策定に影響力を行使しようとしています。</div>
+      </div>
+      
+      <div class="cat-card cat-model">
+        <div class="head">
+          <span class="name">モデル/ツール</span>
+          <span class="count">16</span>
+        </div>
+        <div class="summary">Claude CodeにGenerative UI機能が導入され、UI生成や3D表示が可能になりました。また、ZhipuAIのGLM5.2が公開され、オープンモデルへの注目が高まっています。画像から3D空間を生成するMoVerseや、GPU不要でローカル動作する音楽制作AI StableDAW、リアルタイム音声AIチャットボットなど、多様なAIツールが登場しています。開発コスト削減を目指すKimi K2.7-Codeや、画面操作を自動化するVISTAモデル、複数のAIコーディングツールを統合するOmnigent、AIモデルの消失を防ぐHeretic Grimoireなど、実用性とコスト効率を重視したツールが目立ちます。さらに、N2 Proという中国製の無料オープンソースAIがClaude Codeなどの基盤として注目され、無料と有料AIモデルの性能差が縮まっていることが指摘されています。</div>
+      </div>
+      
+      <div class="cat-card cat-usecase">
+        <div class="head">
+          <span class="name">ユースケース</span>
+          <span class="count">19</span>
+        </div>
+        <div class="summary">AIエージェントの活用は、ソフトウェア開発、コンテンツ制作、業務自動化など多岐にわたります。特にClaude Codeはエージェントチーム機能やMemory/Skills機能を活用することで、開発効率やSNS運用の精度を大幅に向上させることが可能です。低画質動画をリアルタイムで超解像するSwiftVRや、VFX素材をAIで抽出するComfyUI活用術、完全自律型AIエージェントワークステーションMiniMax Hubなど、クリエイティブ分野でのAI活用も進化しています。ローカル環境でのAI運用に関心が集まり、古いGPUを活用したQwen 27BやGemma 12Bの高速動作事例が紹介されており、コストを抑えたAI導入の道が探られています。また、AIによる論文分析やビジネス資料作成、AI動画制作における音声合成（ElevenLabs）など、多様な業務効率化ツールが提供されています。</div>
+      </div>
+      
+      <div class="cat-card cat-fund">
+        <div class="head">
+          <span class="name">資金調達</span>
+          <span class="count">0</span>
+        </div>
+        <div class="summary">該当する記事はありません。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">04</span>X で話題</div>
+    <div class="x-grid">
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥🔥</span>
+          <span class="topic">Anthropic Fable/Mythos 5アクセス遮断事件の詳細と責任</span>
+        </div>
+        <div class="desc">米国政府によるFable/Mythos 5のアクセス遮断事件は、X上で連日議論の的となっています。特に、政府とAnthropic間のコミュニケーションの齟齬や、どちらに責任があるかについて様々な情報が飛び交い、ユーザーは政府側の主張（Anthropicが要請を拒否した）と、Anthropic側のプライバシーポリシー変更のタイミングなどに注目しています。情報の真偽や責任の所在を巡る言及が多く、米国のAI政策への不信感も表明されています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥🔥</span>
+          <span class="topic">Claude Codeの新機能とAIエージェントの進化</span>
+        </div>
+        <div class="desc">AnthropicがClaude Codeにエージェントチーム機能を静かに実装したことが大きな話題になっています。これにより、AIエージェントが互いに協力し、レビューし合うことで、より複雑なタスクを自律的に遂行できるようになります。また、Generative UI機能の追加や、複数のAIコーディングツールを統合するOmnigent、無料の中国製AI「N2 Pro」がClaude Codeの機能を拡張するといった情報も注目され、AIエージェントとコーディング支援の進化に期待が集まっています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">オープンモデルの価値再認識とZhipuAIの台頭</span>
+        </div>
+        <div class="desc">Fable/Mythos 5のアクセス遮断事件は、クローズドモデルに依存するリスクを浮き彫りにし、オープンモデルの重要性を再認識させるきっかけとなりました。特にZhipuAIがこのタイミングでGLM5.2を公開し、株価が急騰したことが注目されています。ユーザーはオープンモデルが規制リスクへの耐性を持つことや、特定のベンダーに依存しない選択肢として評価しています。フランスのマクロン大統領も国産LLM Mistralの存在をアピールし、各国のAI主権への関心が高まっています。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="footer">
+    Generated 2026-06-15 18:36 UTC · AI News Collector
+    
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News 図解版 2026-06-17 朝便</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --ink: #1a1a2e;
+    --ink2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --accent: #6366f1;
+    --gold: #f59e0b;
+    --silver: #94a3b8;
+    --bronze: #b45309;
+    --cat-model: #10b981;
+    --cat-biz: #f59e0b;
+    --cat-reg: #ec4899;
+    --cat-research: #6366f1;
+    --cat-fund: #f97316;
+    --cat-usecase: #3b82f6;
+    --cat-default: #64748b;
+    --st-new: #16a34a;
+    --st-rising: #dc2626;
+    --st-sustained: #2563eb;
+    --st-fading: #64748b;
+    --st-resurfaced: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Noto Sans CJK JP", "Noto Sans JP",
+      "Yu Gothic", "Yu Gothic UI", "Meiryo",
+      -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "palt" 1;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 32px;
+  }
+  .nowrap { white-space: nowrap; }
+
+  /* ── ヘッダー ─────────────────────────── */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+  .slot-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* ── セクション共通 ─────────────────────── */
+  .section {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── セクション01: TOP ニュース（メイン・45%） ────────── */
+  .top-section { padding: 20px 22px 22px; }
+  .top-hero {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid var(--gold);
+    margin-bottom: 14px;
+  }
+  .top-hero .medal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 6px;
+  }
+  .top-hero .medal .rank-num { font-size: 32px; font-weight: 900; line-height: 1; }
+  .top-hero .medal .rank-label { font-size: 10px; letter-spacing: 0.08em; font-weight: 700; }
+  .top-hero .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .top-hero .title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-hero .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .top-hero .summary {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .top-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .top-card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border: 1.5px solid var(--line);
+    border-left: 4px solid var(--cat-default);
+    border-radius: 10px;
+  }
+  .top-card .rank-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--silver);
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .top-card .rank-badge.r3 { background: var(--bronze); }
+  .top-card.cat-model { border-left-color: var(--cat-model); }
+  .top-card.cat-biz { border-left-color: var(--cat-biz); }
+  .top-card.cat-reg { border-left-color: var(--cat-reg); }
+  .top-card.cat-research { border-left-color: var(--cat-research); }
+  .top-card.cat-fund { border-left-color: var(--cat-fund); }
+  .top-card.cat-usecase { border-left-color: var(--cat-usecase); }
+  .top-card .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .top-card .title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .top-card .summary {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: var(--ink2);
+    white-space: nowrap;
+  }
+  .tag.cat-model { background: #d1fae5; color: #047857; }
+  .tag.cat-biz { background: #fef3c7; color: #92400e; }
+  .tag.cat-reg { background: #fce7f3; color: #be185d; }
+  .tag.cat-research { background: #e0e7ff; color: #4338ca; }
+  .tag.cat-fund { background: #ffedd5; color: #c2410c; }
+  .tag.cat-usecase { background: #dbeafe; color: #1e40af; }
+  .tag.src { background: #f1f5f9; color: var(--muted); font-weight: 600; }
+
+  /* ── セクション02: トレンド（補助） ─────────── */
+  .trend-box {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trend-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .topic-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .topic-chip .chip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .topic-chip .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status.st-NEW { background: var(--st-new); }
+  .status.st-RISING { background: var(--st-rising); }
+  .status.st-SUSTAINED { background: var(--st-sustained); }
+  .status.st-FADING { background: var(--st-fading); }
+  .status.st-RESURFACED { background: var(--st-resurfaced); }
+  .topic-chip .topic-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .topic-chip .streak {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .topic-chip .evolution {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+    border-top: 1px solid var(--line);
+    padding-top: 5px;
+    margin-top: 2px;
+  }
+
+  /* ── セクション03: カテゴリ分布（補助） ───────── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    border-top: 4px solid var(--cat-default);
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .cat-card.cat-model { border-top-color: var(--cat-model); }
+  .cat-card.cat-biz { border-top-color: var(--cat-biz); }
+  .cat-card.cat-reg { border-top-color: var(--cat-reg); }
+  .cat-card.cat-research { border-top-color: var(--cat-research); }
+  .cat-card.cat-fund { border-top-color: var(--cat-fund); }
+  .cat-card.cat-usecase { border-top-color: var(--cat-usecase); }
+  .cat-card .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cat-card .name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .cat-card .count {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .cat-card .summary {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── セクション04: X トピック（補助） ─────────── */
+  .x-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .x-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .x-card .head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .x-card .buzz { font-size: 12px; }
+  .x-card .topic {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--ink);
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .x-card .desc {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── フッタ ─────────────────────────── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* スマホ対応 */
+  @media (max-width: 600px) {
+    .page { padding: 16px 12px 24px; }
+    .top-grid { grid-template-columns: 1fr !important; }
+    .trend-grid { grid-template-columns: 1fr !important; }
+    .topic-grid { grid-template-columns: 1fr !important; }
+    .cat-grid { grid-template-columns: 1fr !important; }
+    .x-grid { grid-template-columns: 1fr !important; }
+    .hero { padding: 14px 12px; }
+    .hero-title { font-size: 1.1rem; }
+    .topic-title { font-size: 0.95rem; }
+    .rank-num { font-size: 1.4rem !important; }
+    .medal { width: 36px !important; height: 36px !important; }
+    .nowrap { white-space: normal !important; }
+    .tag { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-title">🤖 AI News 図解版</div>
+    <div class="hero-meta">
+      <span>2026-06-17</span>
+      <span class="slot-badge">朝便</span>
+    </div>
+  </div>
+
+  
+  
+  <div class="section top-section">
+    <div class="section-title"><span class="num">01</span>今日の TOP ニュース</div>
+
+    
+    <div class="top-hero">
+      <div class="medal">
+        <div class="rank-num">1</div>
+        <div class="rank-label">TOP</div>
+      </div>
+      <div class="body">
+        <div class="title">Cursor AIとSpaceXが提携</div>
+        <div class="tags">
+          <span class="tag cat-biz">企業動向</span>
+          <span class="tag src">x:@cursor_ai</span>
+        </div>
+        <div class="summary">Cursor AIがSpaceXとの提携を発表し、有用なAIのフロンティアを推進することでCursorの性能が大幅に向上すると期待されています。</div>
+      </div>
+    </div>
+
+    
+    <div class="top-grid">
+      
+      <div class="top-card cat-biz">
+        <div class="rank-badge ">2</div>
+        <div class="body">
+          <div class="title">AIは20世紀の石油になる</div>
+          <div class="tags">
+            <span class="tag cat-biz">企業動向</span>
+            <span class="tag src">x:@arthurmensch</span>
+          </div>
+          <div class="summary">AIが20世紀の石油と同様に、世界の主要なレバレッジと力の源になると提言されており、その展開次第で富の分配か搾取経済のどちらかにつながると予測されています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-research">
+        <div class="rank-badge r3">3</div>
+        <div class="body">
+          <div class="title">OpenAI、モデル評価について</div>
+          <div class="tags">
+            <span class="tag cat-research">研究論文</span>
+            <span class="tag src">x:@OpenAI</span>
+          </div>
+          <div class="summary">OpenAIは、ベンチマークが飽和またはゲーム化される中で、モデルの進捗を測定および予測するより良い方法として評価（evals）の重要性について議論しています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-biz">
+        <div class="rank-badge ">4</div>
+        <div class="body">
+          <div class="title">NVIDIA BlackwellがMLPerfで最高性能</div>
+          <div class="tags">
+            <span class="tag cat-biz">企業動向</span>
+            <span class="tag src">x:@nvidia</span>
+          </div>
+          <div class="summary">NVIDIA BlackwellプラットフォームがMLPerf Training 6.0で最速性能と最大規模を達成し、信頼性・可用性・保守性機能も強調されています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-biz">
+        <div class="rank-badge ">5</div>
+        <div class="body">
+          <div class="title">IneffableLabsが超知能構築のため、Google Cloud上のNVI…</div>
+          <div class="tags">
+            <span class="tag cat-biz">企業動向</span>
+            <span class="tag src">x:@nvidia</span>
+          </div>
+          <div class="summary">IneffableLabsが超知能構築のため、Google Cloud上のNVIDIA Vera Rubin NVL72クラスターを採用しました。</div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">02</span>今日のトレンド</div>
+    
+    <div class="trend-box">
+      <p>本日のAI業界は、AnthropicのFable/Mythos 5アクセス遮断問題が引き続き主要な議論の中心であり、AIの安全性、規制、そして国家間の技術覇権に関する懸念が深まっています。これに伴い、AI依存リスクを回避するためのマルチベンダー戦略やローカルAI環境の重要性が改めて強調されています。同時に、NVIDIAが高性能AIインフラの提供を継続し、効率的なモデル開発や高速な推論を実現する新しいAIモデルやツールが次々と登場しており、AIの技術革新が止まることはありません。特に、自律型エージェントの進化やローカルLLMの高速化、そしてAIを活用した具体的なユースケースの広がりが注目されています。</p>
+    </div>
+    
+    
+    <div class="topic-grid">
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">Anthropic Fable/Mythos 5アクセス停止と影響</div>
+        <div class="evolution">初報→米当局が動く→規制議論に発展→企業への影響とAnthropicの対応が焦点→その後の展開と国際関係への影響が議論されるように。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">AIの安全性と規制/政策</div>
+        <div class="evolution">Fable 5問題から、AIの倫理、法的側面、国家安全保障、輸出規制、そして超知能独占への懸念が具体的な議論に。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">AIエージェントと開発パラダイムシフト</div>
+        <div class="evolution">AIエージェントの機能拡張やWebブラウジング能力、具体的な業務自動化ツール、そしてAI家庭教師といったユースケースが登場し、活発化。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">大手AIラボのモデル/ツール競争</div>
+        <div class="evolution">NVIDIAのプラットフォーム強化、OpenAIの評価基準議論、新しいオープンソースモデルの登場など、技術競争は継続。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-FADING">📉 FADING</span>
+          <span class="streak">3日目</span>
+        </div>
+        <div class="topic-name">AIモデルの著作権と法的側面</div>
+        <div class="evolution">著作権侵害の議論は一時的に高まったものの、Fable/Mythos問題の影に隠れてやや沈静化。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">2日目</span>
+        </div>
+        <div class="topic-name">AIのエネルギー・インフラ需要</div>
+        <div class="evolution">AIの進化に伴う計算リソースとGPUの需要は継続しており、NVIDIAの技術革新がその中心。</div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">03</span>カテゴリ分布</div>
+    <div class="cat-grid">
+      
+      <div class="cat-card cat-biz">
+        <div class="head">
+          <span class="name">企業動向</span>
+          <span class="count">14</span>
+        </div>
+        <div class="summary">本日は、Cursor AIとSpaceXの提携発表が大きな注目を集め、NVIDIAのBlackwellプラットフォームがMLPerfで最高性能を達成するなど、大手企業の技術革新と連携が活発です。また、AnthropicのFable/Mythos 5のアクセス遮断を巡る政府との交渉難航が続き、MicrosoftのCEOはAIへの過度な依存リスクに警鐘を鳴らしています。一部ではAnthropicのサービスプランに関する訴訟問題や、GPUの利用方針を巡るマイクロソフトへの株主訴訟なども報じられています。</div>
+      </div>
+      
+      <div class="cat-card cat-research">
+        <div class="head">
+          <span class="name">研究論文</span>
+          <span class="count">8</span>
+        </div>
+        <div class="summary">本日は、OpenAIがモデル評価（evals）の重要性について議論していることが報じられ、飽和したベンチマークの課題が指摘されました。また、NVIDIAのBlackwellプラットフォームがMLPerf Training 6.0で最速性能を記録し、AI推論速度における開発者による「意図的なセーフガード」の存在がWebGPU最適化を通じて明らかになりました。論理的推論能力テスト「ErdosBench」ではClaude Fable-5-maxが100%の解決率を記録し、Kimi 2.7も高い性能を示しています。画像生成モデルの空間理解を深度情報に転用する「Modality Forcing」も注目されました。</div>
+      </div>
+      
+      <div class="cat-card cat-reg">
+        <div class="head">
+          <span class="name">規制/政策</span>
+          <span class="count">13</span>
+        </div>
+        <div class="summary">AnthropicのFable/Mythos 5アクセス遮断問題が引き続き焦点となり、米国政府の規制がAI企業や国際社会に与える影響が大きく議論されています。EUのようなAI規制に積極的な国の未来への懸念や、米国が超知能を独占する可能性、そして米国以外の国々が自力でのAI開発や新たな安全保障協定を迫られる状況が指摘されています。また、Claudeの利用に際して顔写真や身分証提出を求めるプライバシーポリシーの更新、英国でのAIエロチャット禁止など、具体的なAI利用に関する規制動向も進んでいます。</div>
+      </div>
+      
+      <div class="cat-card cat-model">
+        <div class="head">
+          <span class="name">モデル/ツール</span>
+          <span class="count">25</span>
+        </div>
+        <div class="summary">llama.cppにEAGLE3が統合され推論速度が劇的に向上し、ローカルAIの利用がさらに現実的になりました。サカナAIは企業向け自律型リサーチエージェント「SakanaMarlin」をリリース。NVIDIAはリアルタイムV2V技術「SANA-Streaming」や自動運転向け推論モデル「Alpamayo 2 Super」を発表し、3D形状を自動生成する「Proteus」も登場。また、OpenHandsのような自律型コード生成エージェントや、商用利用無料のMiniMax-M3、超高速音声合成「ZONOS2」など、多岐にわたる新しいAIモデルやツールが発表され、ローカルLLMの高速化技術も進化しています。</div>
+      </div>
+      
+      <div class="cat-card cat-usecase">
+        <div class="head">
+          <span class="name">ユースケース</span>
+          <span class="count">14</span>
+        </div>
+        <div class="summary">AIの活用が多岐にわたり、ウェブ制作ではFable 5とFigma Makeの組み合わせで2時間でクライアント向けウェブサイトが作成可能になったとの報告があります。AnthropicはClaude Code向けに、AIが量産デザインを避け、設計から自己ツッコミ、コード生成まで行う公式スキル「frontend-design」をアップデートしました。また、Googleスプレッドシートの「Fill with Gemini」がデータ整理や分析を支援し、CodexのChrome拡張機能がレポート作成を自動化するなど、業務効率化ツールが進化しています。個人の学習支援ではAI家庭教師が登場し、運動不足解消を促すClaude Codeのプラグイン「workout gate」といったユニークな活用例も見られます。</div>
+      </div>
+      
+      <div class="cat-card cat-fund">
+        <div class="head">
+          <span class="name">資金調達</span>
+          <span class="count">0</span>
+        </div>
+        <div class="summary">本日は資金調達に関する特筆すべき記事はありませんでした。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">04</span>X で話題</div>
+    <div class="x-grid">
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥🔥</span>
+          <span class="topic">Anthropic Fable/Mythos 5 アクセス遮断後の議論</span>
+        </div>
+        <div class="desc">AnthropicのFable/Mythos 5が政府規制で利用停止された件は引き続きXで最大の話題となっています。Anthropicと政府の交渉状況、遮断の理由、そしてこの事態がAI産業や国際関係に与える影響について、多くのユーザーが懸念や推測を表明しています。特に、米国による超知能独占への懸念や、他国が独自AI開発に力を入れるべきだという意見が多く見られます。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">AIの過度な依存リスクと対策</span>
+        </div>
+        <div class="desc">AnthropicのFable/Mythos 5アクセス遮断を受け、企業が特定のAIモデルに過度に依存するリスクが強く意識されています。MicrosoftのナデラCEOの発言を引用し、AIを「部品」として捉え、代替可能な状態にしておくことの重要性が議論されています。ユーザーは、複数ベンダーへの分散、ローカルAIの活用、輸出規制などへの注視といった具体的な対策の必要性を共有しています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">ローカルAIと高速化技術の進化</span>
+        </div>
+        <div class="desc">クラウドAPIの停止リスクやコスト削減の必要性から、ローカルAI環境への関心が高まっています。llama.cppにEAGLE3が統合されたことで推論速度が劇的に向上したというニュースは大きな反響を呼び、他にもllama-launcherのベイズ最適化による速度向上や、RTX 5080とRTX 3090のハイブリッド構成による高速ローカルAIサーバー構築法が共有されています。データセキュリティや運用コスト削減への意識の高まりが背景にあります。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="footer">
+    Generated 2026-06-16 18:34 UTC · AI News Collector
+    
+  </div>
+
+</div>
+</body>
+</html>

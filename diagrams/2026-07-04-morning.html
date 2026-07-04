@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News 図解版 2026-07-04 朝便</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --ink: #1a1a2e;
+    --ink2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --accent: #6366f1;
+    --gold: #f59e0b;
+    --silver: #94a3b8;
+    --bronze: #b45309;
+    --cat-model: #10b981;
+    --cat-biz: #f59e0b;
+    --cat-reg: #ec4899;
+    --cat-research: #6366f1;
+    --cat-fund: #f97316;
+    --cat-usecase: #3b82f6;
+    --cat-default: #64748b;
+    --st-new: #16a34a;
+    --st-rising: #dc2626;
+    --st-sustained: #2563eb;
+    --st-fading: #64748b;
+    --st-resurfaced: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Noto Sans CJK JP", "Noto Sans JP",
+      "Yu Gothic", "Yu Gothic UI", "Meiryo",
+      -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "palt" 1;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 32px;
+  }
+  .nowrap { white-space: nowrap; }
+
+  /* ── ヘッダー ─────────────────────────── */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+  .slot-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* ── セクション共通 ─────────────────────── */
+  .section {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── セクション01: TOP ニュース（メイン・45%） ────────── */
+  .top-section { padding: 20px 22px 22px; }
+  .top-hero {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid var(--gold);
+    margin-bottom: 14px;
+  }
+  .top-hero .medal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 6px;
+  }
+  .top-hero .medal .rank-num { font-size: 32px; font-weight: 900; line-height: 1; }
+  .top-hero .medal .rank-label { font-size: 10px; letter-spacing: 0.08em; font-weight: 700; }
+  .top-hero .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .top-hero .title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-hero .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .top-hero .summary {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .top-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .top-card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border: 1.5px solid var(--line);
+    border-left: 4px solid var(--cat-default);
+    border-radius: 10px;
+  }
+  .top-card .rank-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--silver);
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .top-card .rank-badge.r3 { background: var(--bronze); }
+  .top-card.cat-model { border-left-color: var(--cat-model); }
+  .top-card.cat-biz { border-left-color: var(--cat-biz); }
+  .top-card.cat-reg { border-left-color: var(--cat-reg); }
+  .top-card.cat-research { border-left-color: var(--cat-research); }
+  .top-card.cat-fund { border-left-color: var(--cat-fund); }
+  .top-card.cat-usecase { border-left-color: var(--cat-usecase); }
+  .top-card .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .top-card .title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .top-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .top-card .summary {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: var(--ink2);
+    white-space: nowrap;
+  }
+  .tag.cat-model { background: #d1fae5; color: #047857; }
+  .tag.cat-biz { background: #fef3c7; color: #92400e; }
+  .tag.cat-reg { background: #fce7f3; color: #be185d; }
+  .tag.cat-research { background: #e0e7ff; color: #4338ca; }
+  .tag.cat-fund { background: #ffedd5; color: #c2410c; }
+  .tag.cat-usecase { background: #dbeafe; color: #1e40af; }
+  .tag.src { background: #f1f5f9; color: var(--muted); font-weight: 600; }
+
+  /* ── セクション02: トレンド（補助） ─────────── */
+  .trend-box {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trend-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .topic-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .topic-chip .chip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .topic-chip .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status.st-NEW { background: var(--st-new); }
+  .status.st-RISING { background: var(--st-rising); }
+  .status.st-SUSTAINED { background: var(--st-sustained); }
+  .status.st-FADING { background: var(--st-fading); }
+  .status.st-RESURFACED { background: var(--st-resurfaced); }
+  .topic-chip .topic-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .topic-chip .streak {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .topic-chip .evolution {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+    border-top: 1px solid var(--line);
+    padding-top: 5px;
+    margin-top: 2px;
+  }
+
+  /* ── セクション03: カテゴリ分布（補助） ───────── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    border-top: 4px solid var(--cat-default);
+    background: #fafbfc;
+    min-width: 0;
+  }
+  .cat-card.cat-model { border-top-color: var(--cat-model); }
+  .cat-card.cat-biz { border-top-color: var(--cat-biz); }
+  .cat-card.cat-reg { border-top-color: var(--cat-reg); }
+  .cat-card.cat-research { border-top-color: var(--cat-research); }
+  .cat-card.cat-fund { border-top-color: var(--cat-fund); }
+  .cat-card.cat-usecase { border-top-color: var(--cat-usecase); }
+  .cat-card .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cat-card .name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .cat-card .count {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .cat-card .summary {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── セクション04: X トピック（補助） ─────────── */
+  .x-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .x-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .x-card .head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .x-card .buzz { font-size: 12px; }
+  .x-card .topic {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--ink);
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .x-card .desc {
+    font-size: 11.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── フッタ ─────────────────────────── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* スマホ対応 */
+  @media (max-width: 600px) {
+    .page { padding: 16px 12px 24px; }
+    .top-grid { grid-template-columns: 1fr !important; }
+    .trend-grid { grid-template-columns: 1fr !important; }
+    .topic-grid { grid-template-columns: 1fr !important; }
+    .cat-grid { grid-template-columns: 1fr !important; }
+    .x-grid { grid-template-columns: 1fr !important; }
+    .hero { padding: 14px 12px; }
+    .hero-title { font-size: 1.1rem; }
+    .topic-title { font-size: 0.95rem; }
+    .rank-num { font-size: 1.4rem !important; }
+    .medal { width: 36px !important; height: 36px !important; }
+    .nowrap { white-space: normal !important; }
+    .tag { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-title">🤖 AI News 図解版</div>
+    <div class="hero-meta">
+      <span>2026-07-04</span>
+      <span class="slot-badge">朝便</span>
+    </div>
+  </div>
+
+  
+  
+  <div class="section top-section">
+    <div class="section-title"><span class="num">01</span>今日の TOP ニュース</div>
+
+    
+    <div class="top-hero">
+      <div class="medal">
+        <div class="rank-num">1</div>
+        <div class="rank-label">TOP</div>
+      </div>
+      <div class="body">
+        <div class="title">アリババ、Claudeを禁止</div>
+        <div class="tags">
+          <span class="tag cat-reg">規制/政策</span>
+          <span class="tag src">x:@joho_no_todai</span>
+        </div>
+        <div class="summary">アリババが7月10日からClaude Codeを「ハイリスクソフトウェア」に分類し、全社で禁止することを発表しました。これはClaude Codeがユーザーのタイムゾーンやプロキシ情報を収集し、システムプロンプトに埋め込んでいたことが発覚したためです。</div>
+      </div>
+    </div>
+
+    
+    <div class="top-grid">
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge ">2</div>
+        <div class="body">
+          <div class="title">Claude FableのGPU最適化</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@ClaudeCode_love</span>
+          </div>
+          <div class="summary">Claude Fableが専門家が数週間かかるGPUカーネルの高速化プログラムを2.5時間で書き上げ、PyTorch比18倍超の高速化を達成したとの報道がありました。これはAIがAIを高速化する能力を持ち始めたことを示唆しており、非常に大きなインパクトを持つとされます。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge r3">3</div>
+        <div class="body">
+          <div class="title">Claude Sonnet 5の自律実行</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@ai_hakase_</span>
+          </div>
+          <div class="summary">Claude Sonnet 5が自律型エージェントとして進化し、目標設定、計画立案、ブラウザやターミナルの操作、エラー修正まで自動で行う能力を安価で提供しています。これにより、AIが単なるチャットボットから意思決定支援へとシフトする可能性が示唆されています。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-model">
+        <div class="rank-badge ">4</div>
+        <div class="body">
+          <div class="title">Huaweiが920億パラメータのLLM「OpenPangu-2.0-Flash…</div>
+          <div class="tags">
+            <span class="tag cat-model">モデル/ツール</span>
+            <span class="tag src">x:@ai_hakase_</span>
+          </div>
+          <div class="summary">Huaweiが920億パラメータのLLM「OpenPangu-2.0-Flash」をフルオープンソースで公開しました。MoE（Mixture of Experts）技術により、推論時はわずか60億パラメータで動作し、16GB VRAMのローカル環境でもスムーズに利用可能です。</div>
+        </div>
+      </div>
+      
+      <div class="top-card cat-research">
+        <div class="rank-badge ">5</div>
+        <div class="body">
+          <div class="title">OpenAIが計算生物学向けの新しいベンチマーク「GeneBench-Pro」を…</div>
+          <div class="tags">
+            <span class="tag cat-research">研究論文</span>
+            <span class="tag src">x:@ai_hakase_</span>
+          </div>
+          <div class="summary">OpenAIが計算生物学向けの新しいベンチマーク「GeneBench-Pro」を発表し、GPT-5.6 Solが複雑な生体データからの推論力で大進歩を遂げています。これは、AIが科学的判断を下す「本物の推論力」を測定する新たな基準となります。</div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">02</span>今日のトレンド</div>
+    
+    <div class="trend-box">
+      <p>本日のAI業界は、AnthropicのClaude Fable 5が規制と性能面で大きな動きを見せ、特にアリババによる利用禁止措置が注目を集めました。一方で、低リソースで大規模AIを動かす技術や、GPUカーネルの自動最適化など、AIモデルの効率と高性能化が急速に進展しています。さらに、AIエージェントの自律性向上と企業での導入拡大が進む中、AIインフラのコスト問題や規制・倫理に関する議論も活発化しています。</p>
+    </div>
+    
+    
+    <div class="topic-grid">
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">4日目</span>
+        </div>
+        <div class="topic-name">Anthropic Claude Fable 5の動向</div>
+        <div class="evolution">規制解除と利用可能化の期待が高まった一方で、プライバシー問題と性能劣化の指摘が浮上し、アリババによる使用禁止措置が発表された。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">5日目</span>
+        </div>
+        <div class="topic-name">AIエージェントの進化と活用</div>
+        <div class="evolution">企業での導入事例が増え、Claude CodeやFable 5を活用した開発自動化、デザイン・実装連携、業務効率化の具体的手法が議論されている。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">3日目</span>
+        </div>
+        <div class="topic-name">ローカルLLMとハードウェア最適化</div>
+        <div class="evolution">GLM 5.2やOpenPangu-2.0-Flashなど、家庭用PCでも動作する大規模モデルや、推論高速化技術に関する話題が引き続き増加。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">2日目</span>
+        </div>
+        <div class="topic-name">AIインフラとコスト問題</div>
+        <div class="evolution">DRAM価格高騰の背景にある独占禁止法訴訟や、NVIDIA Inference APIによる中国製LLMの無料提供など、コストとアクセスに関する議論が活発化。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-RISING">📈 RISING</span>
+          <span class="streak">4日目</span>
+        </div>
+        <div class="topic-name">AIの規制と倫理・プライバシー</div>
+        <div class="evolution">Anthropicのプライバシー問題、AI規制を求める教皇への批判、AI生成コンテンツの著作権、軍事利用のリスクなど、多角的な議論が深まっている。</div>
+      </div>
+      
+      <div class="topic-chip">
+        <div class="chip-header">
+          <span class="status st-SUSTAINED">➡️ SUSTAINED</span>
+          <span class="streak">4日目</span>
+        </div>
+        <div class="topic-name">オープンソースAIの進展</div>
+        <div class="evolution">Hugging FaceがオープンソースAIの「夏」をアピールし、Google DeepMindやNVIDIAなどから新たな研究やモデルが発表され続けている。</div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">03</span>カテゴリ分布</div>
+    <div class="cat-grid">
+      
+      <div class="cat-card cat-model">
+        <div class="head">
+          <span class="name">モデル/ツール</span>
+          <span class="count">19</span>
+        </div>
+        <div class="summary">Claude Fable 5のGPUカーネル自動最適化による18倍高速化や、Sonnet 5の自律エージェントとしての進化が際立ち、AIモデル自身が効率を高め、より高度なタスクをこなす時代が到来しています。また、HuaweiのOpenPangu-2.0-FlashはMoE技術で低リソースながら大規模モデルを実現し、GLM 5.2のローカル高速化技術も話題に。画像編集AI「Boogu-Image-0.1-Edit-Turbo」や、デザイン・実装連携ツール「Gesso」、音響生成AI「Seed Audio 1.0」など、マルチモーダルAIや開発支援ツールの進化も著しく、AI活用の幅が大きく広がっています。</div>
+      </div>
+      
+      <div class="cat-card cat-biz">
+        <div class="head">
+          <span class="name">企業動向</span>
+          <span class="count">13</span>
+        </div>
+        <div class="summary">アリババがClaude Codeを「ハイリスクソフトウェア」として全社禁止にしたことは、AIモデルのセキュリティとプライバシーに関する企業の姿勢を浮き彫りにしました。また、パランティアが欧州で契約解除が相次いでいる背景には、米国政府との関係に対するデータ主権と国家安全保障上の懸念があり、これに対応するため同社がオープンモデルへの傾倒を強めている状況です。AIインフラの要となるDRAMの価格高騰を巡る独占禁止法訴訟「RAMpocalypse」も、AI産業のサプライチェーンにおける潜在的なリスクとして注目されています。AIエージェントの企業導入が約半数に達しているという調査結果も出ており、AIがビジネスプロセスに深く組み込まれている現状が示されています。</div>
+      </div>
+      
+      <div class="cat-card cat-reg">
+        <div class="head">
+          <span class="name">規制/政策</span>
+          <span class="count">4</span>
+        </div>
+        <div class="summary">アリババがAnthropicのClaude Codeを「ハイリスクソフトウェア」として全社禁止としたことは、AIモデルのプライバシーとセキュリティに関する懸念が現実の規制措置につながることを明確に示しました。Claude Codeがユーザーのタイムゾーンやプロキシを読み取り、中国関連ドメインと照合してプロンプトに埋め込んでいたことが原因とされており、AI開発における透明性と倫理の重要性が改めて問われています。また、ピーター・ティールがAI規制を求める教皇を「中国共産党のエージェント」と批判するなど、AIの規制を巡る国際的な対立軸も鮮明化しています。グーグルのAI出力が著作権侵害に当たるとのホワイトペーパーの言及も、知財分野での重要な動きです。</div>
+      </div>
+      
+      <div class="cat-card cat-research">
+        <div class="head">
+          <span class="name">研究論文</span>
+          <span class="count">10</span>
+        </div>
+        <div class="summary">Google DeepMindのCOrigami、OpenAIのGeneBench-ProとGPT-5.6 Sol、NVIDIAのNemotron-Labs-TwoTowerといった主要な研究成果が発表されました。特にGeneBench-Proは計算生物学におけるAIの高度な推論力を測る新基準を提示し、GPT-5.6 Solの能力向上を示しています。Nemotron-Labs-TwoTowerは拡散プロセスをテキスト生成に応用し、LLMの生成速度を2.4倍に高速化。これらの研究は、AIの推論能力、生成効率、および新たな応用分野の拡大に貢献しています。Hugging Face上ではオープンソースのSpeech-to-Speechモデルや、ビジョン・言語学習モデルに関する研究も注目されています。</div>
+      </div>
+      
+      <div class="cat-card cat-usecase">
+        <div class="head">
+          <span class="name">ユースケース</span>
+          <span class="count">21</span>
+        </div>
+        <div class="summary">AIエージェント、特にClaude Codeを活用した開発自動化や業務効率化のユースケースが多様化しています。AIによるGPUカーネルの自動最適化、デザインからコードへのシームレスな変換、AIアニメーションのキャラクター一貫性維持、3Dキャラ制作の大幅な時間短縮など、クリエイティブ分野でのAI導入が加速。また、「Vibe Coding」のようなウェアラブルAIによる直感的な開発スタイルも提案されています。家庭用ロボット「Isaac 1」の発表は、AIが日常生活に浸透する新たな一歩を示し、YouTubeやTikTokコンテンツ制作、採用ポスター作成、副業でのAI活用など、幅広い分野でAIが具体的な成果を生み出しています。</div>
+      </div>
+      
+      <div class="cat-card ">
+        <div class="head">
+          <span class="name">その他</span>
+          <span class="count">1</span>
+        </div>
+        <div class="summary">X上でAIに関するボットアカウントの増加が問題視されています。質問形式の返信が多く、人間との区別がつきにくいことから、インターネットの質の低下を懸念する声が上がっています。これはAI技術の普及に伴う新たな課題として、SNS運営者やユーザーコミュニティにとって重要なテーマです。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  
+  
+  <div class="section">
+    <div class="section-title"><span class="num">04</span>X で話題</div>
+    <div class="x-grid">
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥🔥</span>
+          <span class="topic">Claude Fable 5の利用禁止と性能劣化</span>
+        </div>
+        <div class="desc">アリババがClaude Codeを「ハイリスクソフトウェア」として全社禁止したというニュースは大きな衝撃を与えています。ユーザーのプライバシー情報収集が原因とされ、AIの信頼性への懸念が広がっています。また、Fable 5が再公開後に「ナーフされ」、性能が大幅に低下したという検証結果も話題となっており、ユーザーは利用継続の是非を議論しています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥🔥</span>
+          <span class="topic">AIエージェントの業務活用術</span>
+        </div>
+        <div class="desc">Claude CodeやFable 5といったAIエージェントをビジネスでどう活用するかの具体的な手法が数多く投稿されています。特に「Fable 5を司令塔に、SonnetやOpusを専門部下とするオーケストレーション」や、コスト削減のためのプロンプト工夫、AIによるWebサイトデザイン・実装、財務分析、YouTube/TikTok運用などが注目を集めています。AIが単なるツールではなく、共同作業者としての役割を果たすことへの期待が高まっています。</div>
+      </div>
+      
+      <div class="x-card">
+        <div class="head">
+          <span class="buzz">🔥🔥</span>
+          <span class="topic">ローカルLLMの性能と経済性</span>
+        </div>
+        <div class="desc">GLM 5.2やHuaweiのOpenPangu-2.0-Flashなど、高性能なLLMをローカル環境で動かすための技術やモデルが注目されています。特に、低リソースで大規模モデルを動かすMoE技術や、ハイエンドPCでの極限最適化術が話題です。また、ローカルLLM用のハードウェア投資が、相場高騰により「損しない」との議論も出ており、実用性と経済性の両面で関心が高まっています。</div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="footer">
+    Generated 2026-07-03 16:50 UTC · AI News Collector
+    
+  </div>
+
+</div>
+</body>
+</html>

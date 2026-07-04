@@ -1,0 +1,1594 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gemini 驚き・新機能バズ調査</title>
+<style>
+:root{--bg:#0f172a;--surface:#1e293b;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--accent:#8b5cf6}
+*{box-sizing:border-box} body{margin:0;padding-top:48px;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+
+.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #0a0f1eee; backdrop-filter: blur(8px); border-bottom: 1px solid #2d3748; display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; padding: 6px 12px; }
+.topnav a { display: inline-block; padding: 4px 12px; background: #1a2236; border-radius: 6px; color: #94a3b8; text-decoration: none; font-size: 0.82rem; white-space: nowrap; }
+.topnav a:hover { color: #38bdf8; background: rgba(56,189,248,0.1); }
+.topnav a.active { background: #0284c7; color: #fff; }
+@media (max-width: 640px) {
+  .topnav { gap: 4px; padding: 4px 8px; }
+  .topnav a { font-size: 0.75rem; padding: 3px 8px; }
+}
+
+main{max-width:1050px;margin:auto;padding:28px 18px} h1{margin:0;color:#c4b5fd} .lead{color:var(--muted);line-height:1.7}
+.notice{padding:12px 14px;border:1px solid #7c3aed;background:#2e1065;border-radius:10px;margin:18px 0;font-size:.86rem}
+.sortbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:18px 0;color:var(--muted);font-size:.85rem}
+.filterbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:18px 0;color:var(--muted);font-size:.85rem}
+.sortbtn{cursor:pointer;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;font-size:.82rem}
+.sortbtn:hover{border-color:var(--accent)} .sortbtn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.filterbtn{cursor:pointer;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;font-size:.82rem}
+.filterbtn:hover{border-color:#f59e0b} .filterbtn.active{background:#f59e0b;border-color:#f59e0b;color:#111827;font-weight:700}
+.card{display:flex;gap:14px;align-items:flex-start;padding:16px;margin:12px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.rank{font-size:1.2rem;font-weight:800;color:#fbbf24;min-width:42px} .content{flex:1;min-width:0}
+.meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;color:var(--muted);font-size:.8rem} .meta strong{color:var(--text)} .meta .handle{color:var(--muted)} .content p{white-space:pre-wrap;line-height:1.65}
+.stats{display:flex;gap:14px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:.82rem} .stats a{color:#60a5fa}
+.er{font-weight:700;color:#0f172a;background:#34d399;padding:1px 8px;border-radius:999px;font-size:.78rem}
+.thumb{width:160px;max-height:120px;object-fit:cover;border-radius:8px} .review{color:#fbbf24}
+.discovery{color:#111827;background:#fbbf24;padding:1px 7px;border-radius:999px;font-weight:700}
+.original{margin:8px 0;color:var(--muted);font-size:.84rem} .original summary{cursor:pointer;color:#60a5fa} .original p{padding-left:12px;border-left:2px solid var(--border)}
+.empty{padding:60px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:12px}
+@media(max-width:650px){.thumb{display:none}.card{gap:6px}}
+</style></head><body>
+<nav class="topnav">
+  <a href="home.html">🏠 ホーム</a>
+  <a href="index.html">📰 ニュース</a>
+  <a href="strategy.html">🎯 施策提案</a>
+  <a href="buzz.html">🔥 バズりランキング</a>
+  <a href="money.html">🎬 マネタイズ</a>
+  <a href="sns_success.html">🧠 SNS成功者</a>
+  <a href="post_generator.html">✍️ 投稿ストック</a>
+  <a href="tools.html">🔧 ツール追跡</a>
+  <a href="reviews.html">📋 使ってみた</a>
+  <a href="gemini.html">✨ Gemini追跡</a>
+  <a href="gemini-buzz.html" class="active">🏆 Gemini活用</a>
+  <a href="gemini-omni.html">🎬 Gemini Omni</a>
+</nav>
+<main><h1>Gemini 驚き・新機能バズ調査</h1>
+<p class="lead">Geminiの新機能や具体的な能力を見て「これはすごい」と紹介している人気投稿を優先表示します。</p>
+<div class="notice">対象: 2024-06-10〜2026-06-10 / 取得 200件 / 採用 55件 / 驚き・新機能 55件 / Apify $0.0201<br>最終調査: 2026-06-10 05:18:41 UTC。XのTop検索は完全な全件取得ではありません。</div>
+<div class="filterbar">表示:
+  <button class="filterbtn active" data-filter="all">すべて</button>
+  <button class="filterbtn" data-filter="surprise">驚きデモ</button>
+  <button class="filterbtn" data-filter="new_feature">新機能</button>
+</div>
+<div class="sortbar">並べ替え:
+  <button class="sortbtn active" data-key="buzz">バズスコア</button>
+  <button class="sortbtn" data-key="likes">いいね</button>
+  <button class="sortbtn" data-key="retweets">リポスト</button>
+  <button class="sortbtn" data-key="bookmarks">ブックマーク</button>
+  <button class="sortbtn" data-key="er">エンゲージメント率</button>
+</div>
+<div id="cards">
+<article class="card" data-likes="11597" data-retweets="1162" data-bookmarks="12170" data-er="19.1789" data-buzz="39693" data-discovery="1" data-kind="surprise">
+  <div class="rank">#1</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2025年12月1日</span><span class="discovery">驚き</span></div>
+    <p>ああ、これはありえない… Gemini 3はthree.jsを使って3Dインタラクティブシーンを生成できる…しかも、コードスキルは一切不要で、文字通り手でパーティクルを動かせるんだ！すべて無料のチュートリアルとプロンプトはコメント欄にあるよ！https://t.co/WRRm3oKCpJ</p>
+    <details class="original"><summary>英語原文</summary><p>oh my… this shouldn’t be possible
+
+Gemini 3 can generate 3D interactive scenes with three.js… and you can literally move particles with your hands
+
+no coding skills needed at all, it&#x27;s all free
+
+tutorial + prompts in the comments https://t.co/WRRm3oKCpJ</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 19.2%</span>
+      <span>♥ 11,597</span>
+      <span>↻ 1,162</span>
+      <span>🔖 12,170</span>
+      <span>表示 1,260,418</span>
+      <span>👤 132,098</span>
+      <a href="https://x.com/EHuanglu/status/1995511733138710785" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1995502042651963392/img/a5LrcVytVKZPILJy.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="8560" data-retweets="904" data-bookmarks="7321" data-er="13.0376" data-buzz="26302" data-discovery="1" data-kind="surprise">
+  <div class="rank">#2</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2024年12月13日</span><span class="discovery">驚き</span></div>
+    <p>RIP Photoshop。Gemini 2.0は、話しかけるだけで画像を編集できるようになりました。これは正気の沙汰ではありません。その仕組みはこちらです：https://t.co/qQ5rOxzBiq</p>
+    <details class="original"><summary>英語原文</summary><p>RIP Photoshop.
+
+Gemini 2.0 now can edit image by talking to it , it&#x27;s insane.
+
+Here’s how it works: https://t.co/qQ5rOxzBiq</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 13.0%</span>
+      <span>♥ 8,560</span>
+      <span>↻ 904</span>
+      <span>🔖 7,321</span>
+      <span>表示 1,697,568</span>
+      <span>👤 132,103</span>
+      <a href="https://x.com/EHuanglu/status/1867609151314313705" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/Gep4ovtbQAAtMcd.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="8458" data-retweets="916" data-bookmarks="9069" data-er="4.2674" data-buzz="29470" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#3</div>
+  <div class="content">
+    <div class="meta"><strong>Hasan Toor</strong>
+      <span class="handle">@hasantoxr</span>
+      <span>2026年1月4日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>速報：Google GeminiがGuided Learningという新機能を発表しました。まるでパーソナルトレーナーのように、文字通りあらゆることを段階的に学ぶことができます。アクセス方法はこちらです👇 https://t.co/2p6y35VQ8B</p>
+    <details class="original"><summary>英語原文</summary><p>BREAKING: Google Gemini just launched a new feature called Guided Learning.
+
+You can now use it to learn literally anything, step by step, like a personal tutor.
+
+Here’s how to access it 👇 https://t.co/2p6y35VQ8B</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 4.3%</span>
+      <span>♥ 8,458</span>
+      <span>↻ 916</span>
+      <span>🔖 9,069</span>
+      <span>表示 1,119,002</span>
+      <span>👤 437,671</span>
+      <a href="https://x.com/hasantoxr/status/2007842343102161058" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/G91J-FPWYAAce3l.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="8276" data-retweets="944" data-bookmarks="8363" data-er="40.0059" data-buzz="27950" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#4</div>
+  <div class="content">
+    <div class="meta"><strong>Brady Long</strong>
+      <span class="handle">@thisguyknowsai</span>
+      <span>2026年1月10日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>速報：Google Geminiが「Guided Learning」という新機能をリリースしました。これで、パーソナルチューターのように、文字通りあらゆることをステップバイステップで学べるようになります。アクセス方法はこちら👇 https://t.co/9WaYsvoYqH</p>
+    <details class="original"><summary>英語原文</summary><p>BREAKING: Google Gemini launched a new feature called Guided Learning.
+
+You can now use it to learn literally anything, step by step, like a personal tutor.
+
+Here’s how to access it 👇 https://t.co/9WaYsvoYqH</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 40.0%</span>
+      <span>♥ 8,276</span>
+      <span>↻ 944</span>
+      <span>🔖 8,363</span>
+      <span>表示 924,733</span>
+      <span>👤 44,381</span>
+      <a href="https://x.com/thisguyknowsai/status/2009917578463064128" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/G-SpYu0b0AAXZ21.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="5920" data-retweets="768" data-bookmarks="2078" data-er="0.0294" data-buzz="13094" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#5</div>
+  <div class="content">
+    <div class="meta"><strong>Google</strong>
+      <span class="handle">@Google</span>
+      <span>2026年5月19日</span><span class="discovery">新機能</span></div>
+    <p>Gemini Spark ✨をご紹介します。あなたのデジタルライフをナビゲートし、あなたに代わって、そしてあなたの指示のもとで行動する、24時間年中無休のパーソナルAIエージェントです。🧠 Gemini 3.5で動作し、@Antigravity上に構築されているため、長時間かかるタスクをバックグラウンドで簡単に実行できます。⏱️ そして、Google Cloud上の専用仮想マシンで動作するため、ラップトップを開いたままにする必要さえありません。🧰 SparkはGoogleツールとシームレスに統合され、まもなくMCPを通じてサードパーティとも統合されます。#GoogleIO</p>
+    <details class="original"><summary>英語原文</summary><p>Introducing Gemini Spark ✨
+
+It’s your 24/7 personal AI agent that helps you navigate your digital life, taking action on your behalf, and under your direction. 
+
+🧠 It runs on Gemini 3.5 and is built on @Antigravity, so it can perform long-running tasks easily in the background.
+
+⏱️ And because it runs on dedicated virtual machines on Google Cloud, you don’t even need to keep your laptop open. 
+
+🧰 Spark will integrate seamlessly with Google tools, and soon with third parties through MCP. 
+
+#GoogleIO</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.0%</span>
+      <span>♥ 5,920</span>
+      <span>↻ 768</span>
+      <span>🔖 2,078</span>
+      <span>表示 1,714,743</span>
+      <span>👤 31,900,957</span>
+      <a href="https://x.com/Google/status/2056791134295273554" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/tweet_video_thumb/HIswmanWgAAsl4t.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="5885" data-retweets="417" data-bookmarks="2540" data-er="2.8104" data-buzz="12466" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#6</div>
+  <div class="content">
+    <div class="meta"><strong>Logan Kilpatrick</strong>
+      <span class="handle">@OfficialLoganK</span>
+      <span>2026年4月15日</span><span class="discovery">新機能</span></div>
+    <p>Gemini 3.1 Flash TTS 🗣️ をご紹介します。シーンディレクション、話者レベルの指定、オーディオタグ、より自然で表現豊かな音声、70言語対応を備えた、当社の最新テキスト読み上げモデルです。AI Studio の新しいオーディオプレイグラウンドおよび Gemini API を介してご利用いただけます！ https://t.co/5PpBdhQMNg</p>
+    <details class="original"><summary>英語原文</summary><p>Introducing Gemini 3.1 Flash TTS 🗣️, our latest text to speech model with scene direction, speaker level specificity, audio tags, more natural + expressive voices, and support for 70 different languages.
+
+Available via our new audio playground in AI Studio and in the Gemini API! https://t.co/5PpBdhQMNg</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 2.8%</span>
+      <span>♥ 5,885</span>
+      <span>↻ 417</span>
+      <span>🔖 2,540</span>
+      <span>表示 799,460</span>
+      <span>👤 327,780</span>
+      <a href="https://x.com/OfficialLoganK/status/2044447596010435054" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2044447498601984000/img/Gz_mOOk3YyS1_sJp.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="5835" data-retweets="520" data-bookmarks="4485" data-er="8.3870" data-buzz="16487" data-discovery="1" data-kind="surprise">
+  <div class="rank">#7</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2025年12月17日</span><span class="discovery">驚き</span></div>
+    <p>Gemini 3はchatgpt 5.2を完全に殺した。単一のプロンプトで3DインタラクティブARシューティングゲームを生成できる。カメラを使って人差し指でのエイムや親指でのトリガー引きなどの複数の手のジェスチャーを認識して射撃する。チュートリアルとプロンプトはコメント欄にあるよ https://t.co/lxUdLY44I0</p>
+    <details class="original"><summary>英語原文</summary><p>Gemini 3 kills chatgpt 5.2 completely 
+
+it can generate 3d interactive AR shooting game with single prompt.. 
+
+use camera to recognize multiple hand gestures like index finger aiming, thumb pulling the trigger to shoot
+
+tutorial and prompt in comments https://t.co/lxUdLY44I0</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 8.4%</span>
+      <span>♥ 5,835</span>
+      <span>↻ 520</span>
+      <span>🔖 4,485</span>
+      <span>表示 1,587,966</span>
+      <span>👤 132,098</span>
+      <a href="https://x.com/EHuanglu/status/2001351640272769509" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2001351576502616064/img/cf0w_PhM-5Xnh8yu.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="5367" data-retweets="576" data-bookmarks="9107" data-er="4.0505" data-buzz="25375" data-discovery="1" data-kind="surprise">
+  <div class="rank">#8</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年1月3日</span><span class="discovery">驚き</span></div>
+    <p>ヤバい、Gemini 2.0はすごい。みんな、生産性を爆上げしまくってる。とんでもない10の事例を紹介。</p>
+    <details class="original"><summary>英語原文</summary><p>Ok Gemini 2.0 is insane.
+
+People can&#x27;t stop building and getting productivity superpowers.
+
+10 wild examples.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 4.1%</span>
+      <span>♥ 5,367</span>
+      <span>↻ 576</span>
+      <span>🔖 9,107</span>
+      <span>表示 1,235,439</span>
+      <span>👤 375,110</span>
+      <a href="https://x.com/minchoi/status/1875212143265800268" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="4947" data-retweets="65" data-bookmarks="107" data-er="26.4430" data-buzz="5386" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#9</div>
+  <div class="content">
+    <div class="meta"><strong>0.005 Seconds (3/694)</strong>
+      <span class="handle">@seconds_0</span>
+      <span>2025年11月18日</span><span class="discovery">新機能</span></div>
+    <p>Gemini 3がリリースされました。Geminiアプリ以外ではどこでも利用可能です https://t.co/mfi2l1f0d</p>
+    <details class="original"><summary>英語原文</summary><p>Gemini 3 released
+ available everywhere
+except Gemini app https://t.co/mfi2l1f0Yd</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 26.4%</span>
+      <span>♥ 4,947</span>
+      <span>↻ 65</span>
+      <span>🔖 107</span>
+      <span>表示 277,077</span>
+      <span>👤 19,820</span>
+      <a href="https://x.com/seconds_0/status/1990823689806287286" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/G6DTljrasAAkal8.png" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="4878" data-retweets="550" data-bookmarks="4311" data-er="7.5096" data-buzz="15234" data-discovery="1" data-kind="surprise">
+  <div class="rank">#10</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2025年12月2日</span><span class="discovery">驚き</span></div>
+    <p>Gemini 3は数分で3Dインタラクティブウェブサイトを作成できる。カメラを使って手のジェスチャーを検出し、インタラクションする。これはクレイジーだ。コードを知る必要はなく、簡単なテキストだけ。チュートリアルとプロンプトは以下にあるよ https://t.co/UdBii5Y2LE</p>
+    <details class="original"><summary>英語原文</summary><p>Gemini 3 can do 3D interactive website in a few mins
+
+it detects hand gestures using your camera and interact.. this is crazy 
+
+no need to know code, just simple texts
+
+tutorial and prompts below https://t.co/UdBii5Y2LE</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 7.5%</span>
+      <span>♥ 4,878</span>
+      <span>↻ 550</span>
+      <span>🔖 4,311</span>
+      <span>表示 992,988</span>
+      <span>👤 132,098</span>
+      <a href="https://x.com/EHuanglu/status/1995887857920344404" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1995887770066173952/img/_WnWR0hoNeQsyH5p.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="4405" data-retweets="581" data-bookmarks="3580" data-er="1.5730" data-buzz="13374" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#11</div>
+  <div class="content">
+    <div class="meta"><strong>Aria Westcott</strong>
+      <span class="handle">@AriaWestcott</span>
+      <span>2026年1月12日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>速報: Google GeminiがGuided Learningという新機能をリリースしました。個人的な家庭教師のように、文字通り何でも段階的に学ぶために使えるようになりました。アクセス方法はこちら👇 https://t.co/yBf1QhiMe7</p>
+    <details class="original"><summary>英語原文</summary><p>BREAKING: Google Gemini released a new feature called Guided Learning.
+
+You can now use it to learn literally anything, step by step, like a personal tutor.
+
+Here’s how to access it 👇 https://t.co/yBf1QhiMe7</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.6%</span>
+      <span>♥ 4,405</span>
+      <span>↻ 581</span>
+      <span>🔖 3,580</span>
+      <span>表示 535,699</span>
+      <span>👤 550,744</span>
+      <a href="https://x.com/AriaWestcott/status/2010617925049172453" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/G-cmUpMWAAAniLZ.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="4319" data-retweets="453" data-bookmarks="5571" data-er="2.8440" data-buzz="16968" data-discovery="1" data-kind="surprise">
+  <div class="rank">#12</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年3月14日</span><span class="discovery">驚き</span></div>
+    <p>もう終わりだ。GoogleはGemini 2.0 Flash Experimentalで完全にやってくれた🤯 画像の即時編集、キャラクターの一貫性保持、テキストからの視覚的なストーリー生成まで。やり方と、とんでもない10の事例を以下に紹介：👇 https://t.co/JXOlyeRRJi</p>
+    <details class="original"><summary>英語原文</summary><p>It&#x27;s over.
+
+Google absolutely cooked with Gemini 2.0 Flash Experimental 🤯
+
+Instantly edit images, keep consistent characters, or generate visual stories from just text.
+
+Here&#x27;s how plus 10 wild examples:👇 https://t.co/JXOlyeRRJi</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 2.8%</span>
+      <span>♥ 4,319</span>
+      <span>↻ 453</span>
+      <span>🔖 5,571</span>
+      <span>表示 2,978,910</span>
+      <span>👤 375,110</span>
+      <a href="https://x.com/minchoi/status/1900618095766512086" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/ext_tw_video_thumb/1900612401893883904/pu/img/3uVLNiqFzVkviKhh.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="4192" data-retweets="331" data-bookmarks="2971" data-er="2.0749" data-buzz="11281" data-discovery="1" data-kind="surprise">
+  <div class="rank">#13</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年3月17日</span><span class="discovery">驚き</span></div>
+    <p>これは続かないだろ…Google Gemini 2.0 Flashがウォーターマークを削除できる。とんでもない6つの事例：https://t.co/lyoRRESlHr</p>
+    <details class="original"><summary>英語原文</summary><p>No way this lasts...
+
+Google Gemini 2.0 Flash can remove watermarks 
+
+6 wild examples: https://t.co/lyoRRESlHr</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 2.1%</span>
+      <span>♥ 4,192</span>
+      <span>↻ 331</span>
+      <span>🔖 2,971</span>
+      <span>表示 665,260</span>
+      <span>👤 375,110</span>
+      <a href="https://x.com/minchoi/status/1901641067344068681" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/GmP7bxOagAAEysH.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="4097" data-retweets="366" data-bookmarks="4845" data-er="7.1235" data-buzz="14929" data-discovery="1" data-kind="surprise">
+  <div class="rank">#14</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2026年1月12日</span><span class="discovery">驚き</span></div>
+    <p>Google Gemini 3 + three.jsには完全にぶっ飛んだ…コードゼロで3D製品インタラクティブアプリを生成した…手のジェスチャーで3Dモデルの回転、拡大縮小、XYZ、ライティングを制御できる。AIが乗っ取ろうとしている…受け入れるか否かだ。チュートリアルとプロンプト、コードは以下にある: https://t.co/l3R99BGEu</p>
+    <details class="original"><summary>英語原文</summary><p>totally blown away by Google Gemini 3 + three.js..
+
+just generated a 3D product interactive app with zero coding.. use hand gesture to rotate, scale, control xyz and lighting of 3D model
+
+AI is taking over.. accept or not
+
+tutorial with prompts &amp;amp; code below: https://t.co/l3R99B1GEu</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 7.1%</span>
+      <span>♥ 4,097</span>
+      <span>↻ 366</span>
+      <span>🔖 4,845</span>
+      <span>表示 415,232</span>
+      <span>👤 132,098</span>
+      <a href="https://x.com/EHuanglu/status/2010730798278910282" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2010730729827958784/img/9E2QG49htZXgKDC3.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="3602" data-retweets="308" data-bookmarks="3137" data-er="1.9109" data-buzz="10874" data-discovery="1" data-kind="surprise">
+  <div class="rank">#15</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年11月18日</span><span class="discovery">驚き</span></div>
+    <p>Gemini 3は本当にすごい。みんな作り続けるのをやめられない10の驚くべき例： 1. 90年代のテーマパークゲームが数時間でリメイクされた https://t.co/ktH6EuZv3m</p>
+    <details class="original"><summary>英語原文</summary><p>Ok Gemini 3 is insane.
+
+People can&#x27;t stop just build things
+
+10 wild examples:
+
+1. Theme Park game from 90s remade in hours
+https://t.co/ktH6EuZv3m</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.9%</span>
+      <span>♥ 3,602</span>
+      <span>↻ 308</span>
+      <span>🔖 3,137</span>
+      <span>表示 730,870</span>
+      <span>👤 375,111</span>
+      <a href="https://x.com/minchoi/status/1990825299391431060" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1990818582570094592/img/NWEvrbVXEG0Jw27g.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="3131" data-retweets="326" data-bookmarks="3343" data-er="5.2113" data-buzz="10825" data-discovery="1" data-kind="surprise">
+  <div class="rank">#16</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2025年12月6日</span><span class="discovery">驚き</span></div>
+    <p>やばい… Gemini 3がこんなことできるなんて信じられない。Three.jsを使って、建物設備管理システム（デジタルツイン）全体を3Dインタラクティブで生成できるんだ…コードなし、テキストプロンプトだけで、リアルタイムデータを分析・シミュレートして潜在的な問題を特定してくれる。チュートリアルとプロンプトはコメント欄に！https://t.co/k6Xa0z69tX</p>
+    <details class="original"><summary>英語原文</summary><p>omg.. I can&#x27;t believe Gemini 3 can do this
+
+it can generate an entire 3D interactive building facility management system(digital twin) using Three.js.. no code, just text prompt
+
+it analyse, simulate real time data to identify potential issues
+
+tutorial and prompts in comments https://t.co/k6Xa0z69tX</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 5.2%</span>
+      <span>♥ 3,131</span>
+      <span>↻ 326</span>
+      <span>🔖 3,343</span>
+      <span>表示 680,960</span>
+      <span>👤 132,098</span>
+      <a href="https://x.com/EHuanglu/status/1997120339910828292" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1997105947970609152/img/pJqn_2ATVNFnzZQB.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="3119" data-retweets="270" data-bookmarks="804" data-er="1.3504" data-buzz="5681" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#17</div>
+  <div class="content">
+    <div class="meta"><strong>Logan Kilpatrick</strong>
+      <span class="handle">@OfficialLoganK</span>
+      <span>2026年6月9日</span><span class="discovery">新機能</span></div>
+    <p>70以上の言語（入出力両方）に対応し、非常に自然なリアルタイム音声翻訳モデル、Gemini 3.5 Flash Live Translateを発表します。Gemini API、AI Studio、Google翻訳で今すぐ利用可能で、Google Meetにも間もなく登場します!! https://t.co/nDiaqrbHgF</p>
+    <details class="original"><summary>英語原文</summary><p>Introducing Gemini 3.5 Flash Live Translate, our real time speech to speech translation model which supports more than 70 languages (both in and out), and is so natural.
+
+It is available in the Gemini API, AI Studio, &amp;amp; Google Translate right now + coming soon to Google Meet!! https://t.co/nDiaqrbHgF</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.4%</span>
+      <span>♥ 3,119</span>
+      <span>↻ 270</span>
+      <span>🔖 804</span>
+      <span>表示 261,370</span>
+      <span>👤 327,766</span>
+      <a href="https://x.com/OfficialLoganK/status/2064369125447864674" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2064368829183213569/img/8jtlq3eUHx5d-MbJ.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="3029" data-retweets="302" data-bookmarks="3031" data-er="1.7363" data-buzz="10077" data-discovery="1" data-kind="surprise">
+  <div class="rank">#18</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年3月16日</span><span class="discovery">驚き</span></div>
+    <p>Google Gemini 2.0 Flashはヤバい🤯 誰でもテキストや他の写真を使って簡単に写真を編集できるようになった。やり方と、とんでもない10の事例を以下に紹介：👇 https://t.co/RSOlryGb0i</p>
+    <details class="original"><summary>英語原文</summary><p>Google Gemini 2.0 Flash is insane 🤯
+
+Anyone can now easily edit photos using just text or other photos.
+
+Here&#x27;s how, plus 10 wild examples: 👇 https://t.co/RSOlryGb0i</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.7%</span>
+      <span>♥ 3,029</span>
+      <span>↻ 302</span>
+      <span>🔖 3,031</span>
+      <span>表示 555,416</span>
+      <span>👤 375,110</span>
+      <a href="https://x.com/minchoi/status/1901370712419418510" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/GmMGBp8aYAACe1g.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="2774" data-retweets="296" data-bookmarks="2949" data-er="4.6428" data-buzz="9606" data-discovery="1" data-kind="surprise">
+  <div class="rank">#19</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2025年12月4日</span><span class="discovery">驚き</span></div>
+    <p>ああ、これで開発者は終わりだ… Gemini 3は数分でインタラクティブな3Dウェブページを作成できる。いくつかの簡単なテキストプロンプトだけで、すべてのコードを生成する。手で何百万ものパーティクルを制御し、好きな形にできるんだ。チュートリアルとプロンプトは以下にあるよ: https://t.co/Nn95aFZIKP</p>
+    <details class="original"><summary>英語原文</summary><p>oh my.. this is over for developers
+
+Gemini 3 can create interactive 3D webpage in mins, just a few simple text prompts, it generates all the code
+
+you can control millions of particles with your hands and make them form any shape you want
+
+tutorial and prompts below: https://t.co/Nn95aFZIKP</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 4.6%</span>
+      <span>♥ 2,774</span>
+      <span>↻ 296</span>
+      <span>🔖 2,949</span>
+      <span>表示 615,904</span>
+      <span>👤 132,098</span>
+      <a href="https://x.com/EHuanglu/status/1996673781243564046" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1996670675701190657/img/IWQ5i24IStXmP-Zz.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="2486" data-retweets="239" data-bookmarks="767" data-er="2.0641" data-buzz="4855" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#20</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI Studio</strong>
+      <span class="handle">@GoogleAIStudio</span>
+      <span>2026年6月9日</span><span class="discovery">新機能</span></div>
+    <p>最新のオーディオモデル、Gemini 3.5 Live Translateを発表します: - 70以上の言語で低遅延翻訳 - 1つのセッションで多言語入力を自動検出 - ピッチとペースを維持するネイティブオーディオ処理 - 騒がしい環境向けの堅牢なノイズフィルタリング Gemini Live APIとAI Studioを通じて公開プレビューでお試しください</p>
+    <details class="original"><summary>英語原文</summary><p>introducing gemini 3.5 live translate, our latest audio model:
+
+- low-latency translation across 70+ languages
+- auto-detection for multilingual inputs in a single session
+- native audio processing that preserves pitch &amp; pacing
+- robust noise filtering for loud environments
+
+try it in public preview via the gemini live api and ai studio</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 2.1%</span>
+      <span>♥ 2,486</span>
+      <span>↻ 239</span>
+      <span>🔖 767</span>
+      <span>表示 167,941</span>
+      <span>👤 176,441</span>
+      <a href="https://x.com/GoogleAIStudio/status/2064369053045608894" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2064361215585873920/img/1RxUUIfIw5vJWIY6.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="2397" data-retweets="222" data-bookmarks="2819" data-er="10.7111" data-buzz="8721" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#21</div>
+  <div class="content">
+    <div class="meta"><strong>Viktor Oddy</strong>
+      <span class="handle">@viktoroddy</span>
+      <span>2026年5月2日</span><span class="discovery">新機能</span></div>
+    <p>Gemini 3.1はとんでもないですね。❤️‍🔥Gemini 3.1でアニメーションを使った受賞歴のあるウェブサイトを構築する方法について、14分間のチュートリアルを録画したばかりです https://t.co/OoJLwhBLhr</p>
+    <details class="original"><summary>英語原文</summary><p>Gemini 3.1 is insane.
+
+❤️‍🔥Just recorded a 14-min tutorial on how to build animated, award-winning websites with Gemini 3.1 https://t.co/OoJLwhBLhr</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 10.7%</span>
+      <span>♥ 2,397</span>
+      <span>↻ 222</span>
+      <span>🔖 2,819</span>
+      <span>表示 128,319</span>
+      <span>👤 51,218</span>
+      <a href="https://x.com/viktoroddy/status/2050595298591085050" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2050586856740487168/img/yrHu9u26ybiw0pfA.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="2294" data-retweets="310" data-bookmarks="891" data-er="0.1520" data-buzz="5134" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#22</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2026年4月15日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>本日、これまでで最も表現力豊かで制御可能なテキスト読み上げモデルである Gemini 3.1 Flash TTS をリリースしました。今回のリリースには、[興奮]オーディオタグが含まれます！ 🗣️🏷️ オーディオタグ[説明]は、テキストに直接埋め込まれた自然言語コマンドを使用して、声のスタイル、ペース、配信をシームレスにガイドする方法です。テンポやトーンを変えたいですか？ [驚き]オーディオにタグを付けるだけで、AIの音声出力を制御できます！このモデルは70以上の言語をサポートしており（そのうち24は日本語、ヒンディー語、アラビア語を含む高品質な評価済み言語です）、以下のデモでオーディオタグの動作をご覧ください ↓</p>
+    <details class="original"><summary>英語原文</summary><p>Today we launched Gemini 3.1 Flash TTS, our most expressive and controllable text-to-speech model yet.
+
+This launch [excitement] includes audio tags! 🗣🏷 Audio tags [explanatory] are a seamless way to guide vocal style, pace, and delivery using natural language commands embedded directly in your text. Want a different tempo or tone? [amazement] Just tag the audio to steer the AI-speech output!
+
+The model supports 70+ languages (24 of which are high-quality evaluated languages, including: Japanese, Hindi, and Arabic). Watch the audio tags in action in the demo below ↓</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.2%</span>
+      <span>♥ 2,294</span>
+      <span>↻ 310</span>
+      <span>🔖 891</span>
+      <span>表示 201,715</span>
+      <span>👤 2,418,449</span>
+      <a href="https://x.com/GoogleAI/status/2044447560384102592" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2044447449708990464/img/DpiMl_0pWyVPDKFC.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="2134" data-retweets="283" data-bookmarks="566" data-er="0.1286" data-buzz="4229" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#23</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2026年6月9日</span><span class="discovery">新機能</span></div>
+    <p>本日、ライブ音声翻訳のための最新オーディオモデル、Gemini 3.5 Live Translateをリリースしました。70以上の言語をサポートし、話し始めるとすぐに翻訳を開始し、次に話す内容を聞きながら翻訳をストリーミングします。気まずい一時停止や途切れ途切れのオーディオはなく、言語の壁のないリアルなつながりだけです。では、どのように機能するのでしょうか？🤔 このモデルは、速度と翻訳品質を両立させるために瞬時に判断を下し、会話が実際に流れるように、人間らしく、そして自然に感じられるようにします。これを行うには、モデルは入力を受け取って文脈化すると同時に、翻訳された音声を​​出力する必要があります。このプロセスを通じて、Gemini 3.5 Live Translateは各話者のわずか数秒遅れにとどまり、長時間のセッションでもペース、ピッチ、抑揚を維持することさえできます。以下のデモをご覧になるか、iOSおよびAndroidのGoogle翻訳アプリでご自身でお試しください。</p>
+    <details class="original"><summary>英語原文</summary><p>Today, we released Gemini 3.5 Live Translate, our latest audio model for live speech-to-speech translation.
+
+It supports over 70 languages and starts translating as soon as you start talking, streaming translations while listening to what you say next. No awkward pauses or choppy audio, just real connection without language barriers.
+
+So, how does it work? 🤔
+
+The model is able to make split-second decisions to juggle speed and translation quality so conversations actually feel fluid, human, and natural. In order to do this, the model must receive and contextualize the input while simultaneously outputting the translated speech.
+
+Through this process, Gemini 3.5 Live Translate manages to stay mere seconds behind each speaker and can even maintain pacing, pitch, and intonation across extended sessions.
+
+See it in action below, or try it yourself in the Google Translate app on iOS &amp; Android.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.1%</span>
+      <span>♥ 2,134</span>
+      <span>↻ 283</span>
+      <span>🔖 566</span>
+      <span>表示 157,756</span>
+      <span>👤 2,418,438</span>
+      <a href="https://x.com/GoogleAI/status/2064366504112505266" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2064364990404997120/img/LtXo1rvetU4Kr3Yt.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="2078" data-retweets="252" data-bookmarks="369" data-er="0.2474" data-buzz="3610" data-discovery="1" data-kind="surprise">
+  <div class="rank">#24</div>
+  <div class="content">
+    <div class="meta"><strong>Demis Hassabis</strong>
+      <span class="handle">@demishassabis</span>
+      <span>2025年9月25日</span><span class="discovery">驚き</span></div>
+    <p>ロボットと会話しよう！本日、当社のSOTA Gemini Robotics 1.5 モデルをリリースします。これは、当社のマルチモーダルな Gemini モデルをベースとして使用することで、物理世界を理解し推論する能力を示すものです。ロボティクスは将来的に巨大なものとなるでしょう。ここでの当社の先駆的な仕事に超興奮しています！</p>
+    <details class="original"><summary>英語原文</summary><p>Talk to robots! Today we&#x27;re releasing our SOTA Gemini Robotics 1.5 model showing the power of using our multimodal Gemini models as a base, so it can understand &amp;amp; reason about the physical world. Robotics will be massive in the future - super excited by our pioneering work here!</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.2%</span>
+      <span>♥ 2,078</span>
+      <span>↻ 252</span>
+      <span>🔖 369</span>
+      <span>表示 292,103</span>
+      <span>👤 1,127,801</span>
+      <a href="https://x.com/demishassabis/status/1971292365592854602" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="1860" data-retweets="236" data-bookmarks="402" data-er="0.5034" data-buzz="3458" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#25</div>
+  <div class="content">
+    <div class="meta"><strong>Google Gemini</strong>
+      <span class="handle">@GeminiApp</span>
+      <span>2025年3月30日</span><span class="discovery">新機能</span></div>
+    <p>また本日より、Gemini AdvancedユーザーはGemini 2.5 ProのCanvasで創作活動ができるようになりました。このモデルの高度なコーディング能力により、誰もが想像力豊かなプロトタイプを簡単に共同作業、作成、共有できます（この例は、わずか数回のプロンプトで5分以内に作成された3D恐竜の世界です）。始めるには：1) https://t.co/lc7BAJqH5u にアクセス 2)「2.5 Pro (experimental)」モデルを選択 3)「Canvas」を選択してプロンプトを開始 より多くの人がGemini 2.5 Proを試せるよう、現在鋭意努力中です。続報をお楽しみに。</p>
+    <details class="original"><summary>英語原文</summary><p>Also starting today, Gemini Advanced users can create with Canvas on Gemini 2.5 Pro.
+
+This model’s advanced coding abilities make it easy for anyone to collaborate, create, and share imaginative prototypes (like this example of a 3D dino world, made in under 5 minutes with just a few prompts).
+
+Here’s how to get started:
+
+1) Go to https://t.co/lc7BAJqH5u
+2) Choose the “2.5 Pro (experimental)” model
+3) Select “Canvas” and start prompting
+
+We’re working hard to make Gemini 2.5 Pro available for more people to try soon–watch this space for updates.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.5%</span>
+      <span>♥ 1,860</span>
+      <span>↻ 236</span>
+      <span>🔖 402</span>
+      <span>表示 302,638</span>
+      <span>👤 518,111</span>
+      <a href="https://x.com/GeminiApp/status/1906137074102948308" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/ext_tw_video_thumb/1906136587513294848/pu/img/iGMpNU30ELGFUdUm.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="1722" data-retweets="179" data-bookmarks="294" data-er="0.0965" data-buzz="2911" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#26</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2025年8月26日</span><span class="discovery">新機能</span></div>
+    <p>本日、画像を説明するだけで生成・編集できる新モデル、Gemini 2.5 Flash Image を発表しました。しかし、その魅力とは何でしょう🍌？Gemini 2.5 のマルチモーダル入力、高度な推論、スピードと、当社の最新かつ最高の画像生成技術を組み合わせたものです。これにより、モデルはどんな要求に対しても、これほど正確な編集を行い、画像の一貫性を維持することができます。この例では、モデルはオランダの海岸沿いで育つ植物の種類、次に見た目が良い植物の美学、そして植物がどのように成長するかという生物学を考慮することができます。今すぐ @GeminiApp、開発者向けの @GoogleAIStudio、企業顧客向けの @GoogleCloud Vertex AI でお試しください！</p>
+    <details class="original"><summary>英語原文</summary><p>Today we introduced Gemini 2.5 Flash Image, a new model that allows you to generate and edit images by simply describing them. 
+
+But what’s the a-peel 🍌?
+
+It combines Gemini 2.5’s multimodal inputs, advanced reasoning, and speed with our latest and greatest image generation technology. This is what allows the model to make such precise edits and maintain image consistency, regardless of what you ask it to do. 
+
+In this example, the model is able to consider the types of plants that would thrive by the Dutch seaside, then the aesthetic of which plants would look nice, followed by thinking through the biology of how the plants would grow.
+
+Try it today in the @GeminiApp, @GoogleAIStudio for developers, and @GoogleCloud Vertex AI for enterprise customers!</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.1%</span>
+      <span>♥ 1,722</span>
+      <span>↻ 179</span>
+      <span>🔖 294</span>
+      <span>表示 163,045</span>
+      <span>👤 2,418,447</span>
+      <a href="https://x.com/GoogleAI/status/1960411168037855612" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/GzTHZ9Ja4AEpSa6.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="1631" data-retweets="212" data-bookmarks="1841" data-er="2.8492" data-buzz="5983" data-discovery="1" data-kind="surprise">
+  <div class="rank">#27</div>
+  <div class="content">
+    <div class="meta"><strong>el.cine</strong>
+      <span class="handle">@EHuanglu</span>
+      <span>2025年3月17日</span><span class="discovery">驚き</span></div>
+    <p>AI画像エディターの未来がここにある。新しいGoogle Gemini 2.0 Flashモデルはヤバい。簡単なテキストで写真を編集できて…しかも完全に無料。10個の例：彼女にどんな商品でも一貫性を持たせて持たせることができる https://t.co/I44TFS5AwO</p>
+    <details class="original"><summary>英語原文</summary><p>the future of AI image editor is here
+
+the new Google Gemini 2.0 Flash model is crazy, you can edit photo with simple text and.. it&#x27;s totally free
+
+10 examples:
+
+let her hold any product with consistency https://t.co/I44TFS5AwO</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 2.8%</span>
+      <span>♥ 1,631</span>
+      <span>↻ 212</span>
+      <span>🔖 1,841</span>
+      <span>表示 186,884</span>
+      <span>👤 132,107</span>
+      <a href="https://x.com/EHuanglu/status/1901652873101894078" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/ext_tw_video_thumb/1901644098064556032/pu/img/J9iZO01M3sNqJm_G.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="1534" data-retweets="90" data-bookmarks="892" data-er="3.7401" data-buzz="3640" data-discovery="1" data-kind="surprise">
+  <div class="rank">#28</div>
+  <div class="content">
+    <div class="meta"><strong>fofr</strong>
+      <span class="handle">@fofrAI</span>
+      <span>2026年4月15日</span><span class="discovery">驚き</span></div>
+    <p>[興奮して] Gemini 3.1 Flash TTS を楽しんでいます。オーディオタグは本当に柔軟で、色々なことができます。[ドラキュラのように] こんなことがうまくいくなんて信じられません。 https://t.co/PpfKMB9Dsw</p>
+    <details class="original"><summary>英語原文</summary><p>[excitedly] I&#x27;ve been having fun with Gemini 3.1 Flash TTS, the audio tags are really flexible, you can do so much with them.
+
+[like dracula] I can&#x27;t believe things like that just work. https://t.co/PpfKMB9Dsw</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 3.7%</span>
+      <span>♥ 1,534</span>
+      <span>↻ 90</span>
+      <span>🔖 892</span>
+      <span>表示 239,065</span>
+      <span>👤 69,062</span>
+      <a href="https://x.com/fofrAI/status/2044451204738994262" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2044450608896237568/img/A_ZKGT2bMy92Wpah.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="1519" data-retweets="139" data-bookmarks="1363" data-er="0.8289" data-buzz="4688" data-discovery="1" data-kind="surprise">
+  <div class="rank">#29</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年11月14日</span><span class="discovery">驚き</span></div>
+    <p>終わった。GoogleはGemini 3で完全にやってくれた🤯 Gemini 3がCanvasとともにiOS版Geminiアプリにひっそりと登場し、人々はとんでもない結果を出していた。10の驚くべき例:👇 1. Minecraft/タワーディフェンスゲームをワンショットで https://t.co/rJnR7EBEN2</p>
+    <details class="original"><summary>英語原文</summary><p>It&#x27;s over.
+
+Google absolutely cooked with Gemini 3🤯
+
+Gemini 3 quietly landed in the iOS Gemini app with Canvas and people were getting insane results.
+
+10 wild examples:👇
+
+1. Minecraft/tower defense game in one shot
+https://t.co/rJnR7EBEN2</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.8%</span>
+      <span>♥ 1,519</span>
+      <span>↻ 139</span>
+      <span>🔖 1,363</span>
+      <span>表示 364,666</span>
+      <span>👤 375,098</span>
+      <a href="https://x.com/minchoi/status/1989372162336301115" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1988946613348298752/img/8zSfhN2rO4KKLQv8.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="1485" data-retweets="279" data-bookmarks="620" data-er="0.6825" data-buzz="3666" data-discovery="1" data-kind="surprise">
+  <div class="rank">#30</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2025年3月12日</span><span class="discovery">驚き</span></div>
+    <p>これはすごい。GoogleがGemini Roboticsをリリースし、AIを物理世界に導入しました。ロボットがリアルタイムで見て、考えて、行動できるようになりました。Gemini Roboticsができる驚くべき10のこと：https://t.co/Bj8nfND0FW</p>
+    <details class="original"><summary>英語原文</summary><p>This is wild.
+
+Google just unleashed Gemini Robotics, bringing AI into the physical world.
+
+Robots can now see, think, and ACT in real-time.
+
+10 mind-blowing things Gemini Robotics can do: https://t.co/Bj8nfND0FW</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.7%</span>
+      <span>♥ 1,485</span>
+      <span>↻ 279</span>
+      <span>🔖 620</span>
+      <span>表示 155,915</span>
+      <span>👤 375,113</span>
+      <a href="https://x.com/minchoi/status/1899856732383240436" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/ext_tw_video_thumb/1899848901668061185/pu/img/MuGh25m08jn0bNM3.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="1427" data-retweets="132" data-bookmarks="1743" data-er="0.9032" data-buzz="5327" data-discovery="1" data-kind="surprise">
+  <div class="rank">#31</div>
+  <div class="content">
+    <div class="meta"><strong>Min Choi</strong>
+      <span class="handle">@minchoi</span>
+      <span>2026年5月23日</span><span class="discovery">驚き</span></div>
+    <p>Gemini Omniは本当にすごい。みんなこれを使ってクリエイティブになるのをやめられない。10の驚くべき例。</p>
+    <details class="original"><summary>英語原文</summary><p>Ok Gemini Omni is insane.
+
+People can&#x27;t stop getting creative with it.
+
+10 wild examples.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.9%</span>
+      <span>♥ 1,427</span>
+      <span>↻ 132</span>
+      <span>🔖 1,743</span>
+      <span>表示 277,645</span>
+      <span>👤 375,111</span>
+      <a href="https://x.com/minchoi/status/2058031448913752506" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="1356" data-retweets="178" data-bookmarks="2498" data-er="15.9762" data-buzz="6890" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#32</div>
+  <div class="content">
+    <div class="meta"><strong>Awa K. Penn</strong>
+      <span class="handle">@TawohAwa</span>
+      <span>2025年8月11日</span><span class="discovery">新機能</span></div>
+    <p>🚨速報：Google Geminiに「Guided Learning」という新機能が搭載されました。これを使って何でも学べます。アクセス方法はこちらです👇</p>
+    <details class="original"><summary>英語原文</summary><p>🚨BREAKING: Google Gemini has a new feature called &#x27;Guided Learning&#x27;.
+
+You can use it to learn anything.
+
+Here is how to access it 👇</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 16.0%</span>
+      <span>♥ 1,356</span>
+      <span>↻ 178</span>
+      <span>🔖 2,498</span>
+      <span>表示 233,547</span>
+      <span>👤 25,419</span>
+      <a href="https://x.com/TawohAwa/status/1954870387549884798" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="1269" data-retweets="102" data-bookmarks="263" data-er="0.3391" data-buzz="2129" data-discovery="1" data-kind="surprise">
+  <div class="rank">#33</div>
+  <div class="content">
+    <div class="meta"><strong>Google Gemini</strong>
+      <span class="handle">@GeminiApp</span>
+      <span>2026年6月4日</span><span class="discovery">驚き</span></div>
+    <p>Gemini Omniを使えば、あなたの最も大胆なアイデアをいかに簡単に実現できるかをご覧ください。Geminiで「ビデオを作成」を選択し、テキスト、ビデオ、または最大5枚の画像を追加するだけで、あなたの想像力を自由に解き放てます。</p>
+    <details class="original"><summary>英語原文</summary><p>See how easy it is to bring your wildest ideas to life with Gemini Omni. 
+
+Just select &quot;Create videos&quot; in Gemini, add text, video, or up to five images, and let your imagination run wild.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.3%</span>
+      <span>♥ 1,269</span>
+      <span>↻ 102</span>
+      <span>🔖 263</span>
+      <span>表示 10,491,395</span>
+      <span>👤 518,111</span>
+      <a href="https://x.com/GeminiApp/status/2062576239001690146" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="916" data-retweets="282" data-bookmarks="350" data-er="0.3395" data-buzz="2624" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#34</div>
+  <div class="content">
+    <div class="meta"><strong>Google Japan</strong>
+      <span class="handle">@googlejapan</span>
+      <span>2026年5月19日</span><span class="discovery">新機能</span></div>
+    <p>【#GoogleIO 2026 より速報 📣 】
+進化した Gemini アプリの最新アップデートまとめ⬇️
+
+🚀Gemini 3.5 Flash: 困難なタスクを効率的にこなす最高性能モデルで、圧倒的なスピードを提供
+
+🎬 Gemini Omni: 新しい動画生成モデル Gemini Omni で、会話をするような手軽さで、テキストや写真から高品質な動画の作成や編集が可能に
+
+📅 Daily Brief: パーソナライズされた 1 日の概要を Gemini が自動生成し、やるべき優先事項をスマートに整理 
+
+🗣️ Gemini Live 統合: チャット内で「話す」と「入力する」のシームレスな切り替えが可能に
+
+🤖 Gemini Spark: あなたに代わって自発的にタスクを実行するAI エージェントで、Mac 専用アプリにも登場 
+
+🎨 UI の進化: 新しいデザイン言語 (Neural Expressive) の導入により、没入型でインタラクティブな体験へと進化
+
+※ Gemini Spark、Daily Brief は 米国在住の有料プランユーザーのみ対象です</p>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.3%</span>
+      <span>♥ 916</span>
+      <span>↻ 282</span>
+      <span>🔖 350</span>
+      <span>表示 226,406</span>
+      <span>👤 482,790</span>
+      <a href="https://x.com/googlejapan/status/2056803228851880090" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/HIs7om3XIAAiIb7.png" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="895" data-retweets="37" data-bookmarks="444" data-er="1.8391" data-buzz="1928" data-discovery="1" data-kind="surprise">
+  <div class="rank">#35</div>
+  <div class="content">
+    <div class="meta"><strong>ℏεsam</strong>
+      <span class="handle">@Hesamation</span>
+      <span>2025年11月19日</span><span class="discovery">驚き</span></div>
+    <p>なんだこれ、とんでもない！Gemini 3がこのウェブサイト全体をワンショットで作成した。フロントエンド開発はもう終わりだ。 https://t.co/KrIJsmBitn</p>
+    <details class="original"><summary>英語原文</summary><p>WTF this is insane! Gemini 3 one-shotted this entire website.
+
+front-end dev is so dead. https://t.co/KrIJsmBitn</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.8%</span>
+      <span>♥ 895</span>
+      <span>↻ 37</span>
+      <span>🔖 444</span>
+      <span>表示 148,107</span>
+      <span>👤 81,454</span>
+      <a href="https://x.com/Hesamation/status/1991293785003712874" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1991293569131307008/img/wi3WEFQ4KMHV1VWF.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="864" data-retweets="108" data-bookmarks="582" data-er="0.2798" data-buzz="2374" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#36</div>
+  <div class="content">
+    <div class="meta"><strong>Google Cloud</strong>
+      <span class="handle">@googlecloud</span>
+      <span>2026年4月25日</span><span class="discovery">新機能</span></div>
+    <p>Gemini Enterpriseの強化されたAgent Designerを使って、自然言語またはビジュアルインターフェースでエージェントを作成しましょう。ワークフローの実行前に各ステップを検査、テスト、承認できるため、企業における透明性と信頼性が確保されます。詳細はこちら → https://t.co/wiIm7OFlud https://t.co/6K4Zk48Qew</p>
+    <details class="original"><summary>英語原文</summary><p>Use the enhanced Agent Designer in Gemini Enterprise to create an agent using natural language or a visual interface.
+
+You can inspect, test, and approve every step of a workflow before it ever runs, ensuring enterprise transparency and trust. Read more → https://t.co/wiIm7OFlud https://t.co/6K4Zk48Qew</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.3%</span>
+      <span>♥ 864</span>
+      <span>↻ 108</span>
+      <span>🔖 582</span>
+      <span>表示 68,251</span>
+      <span>👤 565,771</span>
+      <a href="https://x.com/googlecloud/status/2048160121310613674" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/HGwlxX-W8AASIJS.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="732" data-retweets="92" data-bookmarks="582" data-er="0.6544" data-buzz="2182" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#37</div>
+  <div class="content">
+    <div class="meta"><strong>Paul Couvert</strong>
+      <span class="handle">@itsPaulAi</span>
+      <span>2025年8月13日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>Geminiが最高のAI学習ツールをリリース。以下を使って何でも学べるようになりました。- ステップバイステップのガイド付き学習 - 無制限のクイズとフラッシュカードを生成 - 視覚的なものやYouTube動画で複雑なことを理解 探索したいあらゆるトピックに適しています。詳細はこちら👇 https://t.co/02LaVbY9UQ</p>
+    <details class="original"><summary>英語原文</summary><p>Gemini released the best AI tools for learning
+
+You can now learn anything by using:
+
+- Step-by-step guided learning
+- Generate unlimited quizzes and flashcards
+- Understand complex things w/ visuals and YT videos
+
+Suitable for any topic you want to explore.
+
+More below https://t.co/02LaVbY9UQ</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.7%</span>
+      <span>♥ 732</span>
+      <span>↻ 92</span>
+      <span>🔖 582</span>
+      <span>表示 85,366</span>
+      <span>👤 221,119</span>
+      <a href="https://x.com/itsPaulAi/status/1955657500331749800" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1955657178582278144/img/GyYXInDpjPWhMsip.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="700" data-retweets="57" data-bookmarks="172" data-er="0.4396" data-buzz="1225" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#38</div>
+  <div class="content">
+    <div class="meta"><strong>Paul Couvert</strong>
+      <span class="handle">@itsPaulAi</span>
+      <span>2025年8月1日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>ついに！GoogleがGemini Deep Thinkをリリースしました これまでのAIモデルの中で最もパワフルで、o3、Grok 4などを凌駕します🔥 - Geminiアプリで利用可能 - 困難なコーディング問題に優れる - SOTAのパフォーマンス アクセス方法と詳細↓ https://t.co/d4LlASs0sp</p>
+    <details class="original"><summary>英語原文</summary><p>Finally! Google has just released Gemini Deep Think
+
+This is the most powerful AI model available to date surpassing o3, Grok 4, etc. 🔥
+
+- Available in Gemini App
+- Excels at tough coding problems
+- SOTA performance
+
+How to access it and details ↓ https://t.co/d4LlASs0sp</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.4%</span>
+      <span>♥ 700</span>
+      <span>↻ 57</span>
+      <span>🔖 172</span>
+      <span>表示 87,661</span>
+      <span>👤 221,117</span>
+      <a href="https://x.com/itsPaulAi/status/1951326809011921389" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/GxSBU0kaIAYsiQs.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="656" data-retweets="88" data-bookmarks="286" data-er="0.0444" data-buzz="1508" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#39</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2026年4月23日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>先週、私たちは最新で最高のテキスト読み上げモデルである Gemini 3.1 TTS をリリースしました。この新しいモデルは、[驚き] オーディオタグを導入しました。これは、音声のスタイル、ペース、および配信をガイドする直感的な方法です。プロンプトでオーディオタグを使用するためのヒントをいくつかご紹介します。1. インラインタグはすべて [screams] や [whispers] のように角括弧で囲む必要があります。2. これらのタグは、遷移させたい場所に正確に挿入し、タグを直接隣り合わせに配置しないように注意してください。3. [slow] や [fast] のようなタグを使用して配信のペースを制御したり、[short pause] や [long pause] を使用して劇的な瞬間の期待感を高めたりすることもできます。4. モデルは、[cackles] や [whispers] のような合図で配信を指示できる、音声化のきめ細かな制御も提供します。5. 理想的なオーディオタグの公式は、次のようになります。[encouraging] その最後の文章をもう一度試して、完璧に仕上げたか確認しましょう。[slow] &quot;L&#x27;oiseau s&#x27;est envolé.&quot; [short pause] 完璧です！[laughs] 天才ですね。語学学習ツール [scholarly] からインタラクティブなポッドキャストアプリ [mysterious]、より適応性の高い顧客サービス [friendly] など、どのようなものを開発している場合でも、これらのプロンプトのヒントは Gemini 3.1 TTS を使用して構築を開始するのに役立ちます。</p>
+    <details class="original"><summary>英語原文</summary><p>Last week, we launched Gemini 3.1 TTS, our latest and best text-to-speech model. This new model introduces [awe] audio tags, an intuitive way to guide vocal style, pace, and delivery.
+
+Here are some tips on the best ways to use audio tags in your prompts:
+
+1. All inline tags must be enclosed in square brackets, such as [screams] or [whispers]
+
+2. Insert these tags exactly where you want the transition to occur and make sure to avoid placing tags directly next to each other
+
+3. Use tags like [slow] or [fast] to control the pace of the delivery, or even [short pause] or [long pause] to ramp up the anticipation in dramatic moments
+
+4. The model also offers granular control over vocalizations, allowing you to direct the delivery with cues like [cackles] or [whispers]
+
+5. An ideal audio tag formula could look something like: [encouraging] Let’s try that last sentence again to make sure that you nailed it. [slow] &quot;L&#x27;oiseau s&#x27;est envolé.&quot; [short pause] Perfect! [laughs] You&#x27;re a natural.
+
+No matter what you’re developing — from [scholarly] a language learning tool, to [mysterious] an interactive podcast app, to [friendly] more adaptive customer service offerings, and beyond —  these prompting tips will equip you to start building with Gemini 3.1 TTS.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.0%</span>
+      <span>♥ 656</span>
+      <span>↻ 88</span>
+      <span>🔖 286</span>
+      <span>表示 58,232</span>
+      <span>👤 2,418,449</span>
+      <a href="https://x.com/GoogleAI/status/2047377023656436013" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2047376437221425152/img/DWQIeakrMTZGwMzg.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="614" data-retweets="82" data-bookmarks="839" data-er="0.9089" data-buzz="2546" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#40</div>
+  <div class="content">
+    <div class="meta"><strong>Charly Wargnier</strong>
+      <span class="handle">@DataChaz</span>
+      <span>2025年12月21日</span><span class="discovery">新機能</span></div>
+    <p>すごい！GoogleがGemini Code Wikiをリリースしました。あらゆるGitHub URLからインタラクティブなドキュメントを生成する無料ツールです🤯 このツールでできること: → Geminiとチャットしてあらゆるリポジトリを理解 → コード構造を視覚化 → 公開リポジトリからドキュメントを作成 100%無料。リンクは🧵↓にあります https://t.co/N8WjGE5W6e</p>
+    <details class="original"><summary>英語原文</summary><p>So ace.
+
+Google just released Gemini Code Wiki.
+
+A free too that generates interactive docs from any GitHub URL 🤯
+
+The tool lets you:
+→ Chat with Gemini to understand *any* repo
+→ Visualize code structure
+→ Create docs from public repos
+
+100% free. Link in 🧵↓ https://t.co/N8WjGE5W6e</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.9%</span>
+      <span>♥ 614</span>
+      <span>↻ 82</span>
+      <span>🔖 839</span>
+      <span>表示 66,844</span>
+      <span>👤 172,625</span>
+      <a href="https://x.com/DataChaz/status/2002775127369629769" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2002775049284308992/img/Gs-tlidX0I0Xe1ia.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="612" data-retweets="92" data-bookmarks="138" data-er="0.0367" data-buzz="1176" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#41</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2025年9月26日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>正式に秋になりましたが、この忙しさには驚かされます。今週リリースしたものは以下の通りです: — @GoogleDeepMindがGemini Robotics 1.5をリリースしました。これは、ロボットにエージェント機能をもたらし、物理世界で複雑な多段階タスクを実行できるようにする新しいモデルファミリーです。 — @GeminiAppでGemini 2.5 Flashのアップデート版をリリースしました。画像理解、応答の整理、フォーマットが改善されています。 — 開発者とエンタープライズ顧客がより自然なサウンドで信頼性の高い音声エージェントを構築できるよう、Gemini Live APIのメジャーアップデートをリリースしました。 — @GoogleLabsが新しい実験的なツールMixboardをリリースしました。これは、プロジェクトを視覚化し、拡張するのに役立つAI搭載のコンセプトボードです。現在、米国でパブリックベータ版として利用可能です。 — @FlowbyGoogleでは、@NanoBananaで画像を編集および調整したり、プロンプト拡張機能を使用してプロンプトを強化したりできるようになり、クリップ全体でより多くの制御と一貫性を得ることができます。 — GeminiはGoogle TVの会話アシスタントです。映画や番組を発見するために自然にチャットしたり、サポートするYouTube動画で最大の質問に対する役立つ回答を得たりできるようになりました。一部のTVモデルで利用可能で、より多くのデバイスに間もなく対応します。 — Live in SearchはSearch Labsから卒業し、米国の英語話者全員が利用できるようになりました。音声とスマートフォンのカメラを使用して、Searchと自由で双方向の会話ができるようになりました。 — @ChromiumDevがChrome DevTools MCPサーバーのパブリックプレビューをリリースしました。これにより、AIエージェントがパフォーマンスのトレースを実行し、ウェブページをデバッグできるようになります。 — Google AI ProおよびUltraの購読者である開発者は、Gemini CLIおよびGemini Code Assistでより高い制限で構築できるようになりました。</p>
+    <details class="original"><summary>英語原文</summary><p>It’s officially autumn here and we can’t be-leaf how busy it’s been. Here’s what we launched this week:
+
+— @GoogleDeepMind released Gemini Robotics 1.5, a new family of models that brings agentic capabilities to robots and enables them to perform complex, multi-step tasks in the physical world.
+
+— We launched an updated version of Gemini 2.5 Flash in the @GeminiApp with improved image understanding, response organization, and formatting.
+
+— We released a major update to the Gemini Live API to help developers and enterprise customers build more natural sounding and reliable voice agents.
+
+— @GoogleLabs launched their new experiment Mixboard, an AI-powered concepting board designed to help you visualize and expand upon your projects. Now available in public beta in the US.
+
+— In @FlowbyGoogle, you can now edit and refine images with @NanoBanana and use prompt expanders to enhance your prompts, giving you more control and consistency across your clips.
+
+— Gemini is your conversational assistant on Google TV. Now you can chat naturally to discover movies and shows, and get helpful answers to your biggest questions with supporting YouTube videos. Available on select TV models with more devices coming soon.
+
+— Live in Search has graduated from Search Labs and is now available to everyone in English in the U.S., making it possible to have a free-flowing, back-and-forth conversation with Search using your voice and phone camera.
+
+— @ChromiumDev released a public preview of the Chrome DevTools MCP server, enabling your AI agent to run performance traces and debug your web pages.
+
+— Developers subscribed to Google AI Pro and Ultra can now build with higher limits in Gemini CLI and Gemini Code Assist.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.0%</span>
+      <span>♥ 612</span>
+      <span>↻ 92</span>
+      <span>🔖 138</span>
+      <span>表示 239,934</span>
+      <span>👤 2,418,417</span>
+      <a href="https://x.com/GoogleAI/status/1971649941627129887" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="575" data-retweets="40" data-bookmarks="112" data-er="1.1401" data-buzz="933" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#42</div>
+  <div class="content">
+    <div class="meta"><strong>🚨 AI News | TestingCatalog</strong>
+      <span class="handle">@testingcatalog</span>
+      <span>2025年11月18日</span><span class="discovery">新機能</span><span class="review">要確認</span></div>
+    <p>速報🚨：Googleは米国でGeminiの「エージェントモード」をUltra加入者向けに展開しています。Geminiはあなたの指示のもと、複数のステップにわたるタスクを処理できます。https://t.co/dfVRwSqyLg</p>
+    <details class="original"><summary>英語原文</summary><p>BREAKING 🚨: Google is rolling out Agent mode on Gemini to Ultra subscribers in the US. 
+
+Gemini can handle multi-step tasks for you—all under your guidance&quot; https://t.co/dfVRwSqyLg</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.1%</span>
+      <span>♥ 575</span>
+      <span>↻ 40</span>
+      <span>🔖 112</span>
+      <span>表示 75,280</span>
+      <span>👤 65,874</span>
+      <a href="https://x.com/testingcatalog/status/1990823658005090648" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1990823590183272449/img/mVbhKTWZ8xf7WXyC.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="546" data-retweets="50" data-bookmarks="707" data-er="1.4680" data-buzz="2118" data-discovery="1" data-kind="surprise">
+  <div class="rank">#43</div>
+  <div class="content">
+    <div class="meta"><strong>TechHalla</strong>
+      <span class="handle">@techhalla</span>
+      <span>2025年8月27日</span><span class="discovery">驚き</span></div>
+    <p>GoogleがGemini 2.5 Flash Image（以前のnano-banana）をリリースしてから24時間も経たないうちに、すでに人々はそれを使ってとんでもないものを作っています。これまでの画像モデルの中で最高の理由を示す13の例：1. @metapuppet による、単一画像からの驚異的な一貫性 https://t.co/yErkccVIx4</p>
+    <details class="original"><summary>英語原文</summary><p>less than 24h since Google dropped Gemini 2.5 Flash Image (formerly nano-banana), and people are already making wild stuff with it.
+
+13 examples showing why it’s the best image model so far:
+
+1. Insane consistency from a single image, by @metapuppet
+https://t.co/yErkccVIx4</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 1.5%</span>
+      <span>♥ 546</span>
+      <span>↻ 50</span>
+      <span>🔖 707</span>
+      <span>表示 124,577</span>
+      <span>👤 90,326</span>
+      <a href="https://x.com/techhalla/status/1960592365858775191" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/1960321263148183552/img/0u2kLDUlB_eVa9_T.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="511" data-retweets="57" data-bookmarks="107" data-er="0.0307" data-buzz="912" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#44</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2025年8月29日</span><span class="discovery">新機能</span></div>
+    <p>今週は…すごかった🍌。リリースされたものは以下の通りです: — @GeminiApp、開発者向け@GoogleAIStudio、エンタープライズ向け@GoogleCloud Vertex AIで、最新の最先端画像生成および編集モデルであるGemini 2.5 Flash Imageをリリースしました。 —@JoshWoodward、@JeffDean、Hartmut Nevenが、人工知能分野で最も影響力のある100人を表彰する@TIMEの#TIME100AIに選出されました。 — @Google Translateに、新しいAI搭載のライブ翻訳機能とカスタマイズされた言語学習ツールを導入しました。 — @NotebookLMの動画概要が、サポートされている全80言語で利用可能になりました。また、英語以外の言語では、音声概要の長いオプションも追加しました。 — @FlowbyGoogleでは、新規ユーザーはFlowを試すために毎月100クレジットを無料で利用できます。さらに、Google AI Ultraの購読者は、クレジットを使用せずにFlowでVeo 3 Fast動画を生成できるようになりました。 — 開発者がAIアプリケーション用のカスタム評価とベンチマークを作成できる実験ツールStaxをリリースしました。これにより、開発者は特定のユースケース向けのLLM搭載機能を理解し、反復し、改善することができます。</p>
+    <details class="original"><summary>英語原文</summary><p>This week was…bananas 🍌. Here’s what launched:
+
+— We released Gemini 2.5 Flash Image, our latest state-of-the-art image generation and editing model in the @GeminiApp, @GoogleAIStudio for developers, and @GoogleCloud Vertex AI for enterprise. 
+
+—@JoshWoodward, @JeffDean, and Hartmut Neven were recognized on @TIME’s #TIME100AI, a list recognizing the 100 most influential people in artificial intelligence.
+
+— We introduced new AI-powered live translation and customized language learning tools in @Google Translate. 
+
+— @NotebookLM video overviews are now available in all 80 supported languages. We also added a longer option for audio overviews in non-English languages.
+
+— In @FlowbyGoogle new users can get 100 credits free of charge per month to try Flow. Additionally, Google AI Ultra subscribers can now generate Veo 3 Fast videos in Flow without using any credits.  
+
+— We released Stax, an experimental tool that enables developers to create custom evals and benchmarks for their AI applications. This helps developers understand, iterate, and improve LLM-powered features for more specific use cases.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.0%</span>
+      <span>♥ 511</span>
+      <span>↻ 57</span>
+      <span>🔖 107</span>
+      <span>表示 218,966</span>
+      <span>👤 2,418,419</span>
+      <a href="https://x.com/GoogleAI/status/1961470334126755926" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="458" data-retweets="53" data-bookmarks="147" data-er="0.6004" data-buzz="937" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#45</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI Developers</strong>
+      <span class="handle">@googleaidevs</span>
+      <span>2026年4月15日</span><span class="discovery">新機能</span></div>
+    <p>Gemini 3.1 Flash TTS をご紹介します。当社の最新テキスト読み上げモデルで、オーディオ体験を構築するための新たなレベルの制御を提供します。新しい機能強化を見てみましょう ↓ — オーディオタグ：テキスト内に自然言語コマンドを直接埋め込むことで、表現力とペースをガイド — シーンディレクション：特定のダイアログ指示を定義して、話者間のコンテキストと自然な反応を構築 — スピーカーレベルの特異性：独自のオーディオプロファイルを使用してキャラクターをキャスト Gemini API および @GoogleAIStudio の新しい Playground エクスペリエンスを介して、プレビュー版でモデルの構築を開始してください：https://t.co/vwzYhsZk31</p>
+    <details class="original"><summary>英語原文</summary><p>Introducing Gemini 3.1 Flash TTS, our latest text-to-speech model, providing new levels of control to build audio experiences.
+
+Let’s dig into the new enhancements ↓
+
+— Audio tags: Guide expressivity and pace by directly embedding natural language commands within text
+— Scene direction: Define specific dialogue instructions to build context and natural-sounding reactions between speakers
+— Speaker-level specificity: Use unique audio profiles to cast characters
+
+Start building with the model in preview via the Gemini API and the new Playground experience in @GoogleAIStudio: https://t.co/vwzYhsZk31</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.6%</span>
+      <span>♥ 458</span>
+      <span>↻ 53</span>
+      <span>🔖 147</span>
+      <span>表示 85,838</span>
+      <span>👤 114,758</span>
+      <a href="https://x.com/googleaidevs/status/2044447616860131790" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2044445385926615040/img/6823a6kV0ajLslh7.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="442" data-retweets="48" data-bookmarks="132" data-er="0.1248" data-buzz="864" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#46</div>
+  <div class="content">
+    <div class="meta"><strong>Rowan Cheung</strong>
+      <span class="handle">@rowancheung</span>
+      <span>2025年2月5日</span><span class="discovery">新機能</span></div>
+    <p>新情報：GoogleがGemini 2.0 Pro実験版をリリースしました — 同社がこれまでに開発した中で最も先進的なAIモデルです。 2.0 Pro実験版の機能には以下が含まれます：— 2Mトークンという巨大なコンテキストウィンドウ — Google検索やコード実行などのツールを使用する機能 — 1.5 Proに比べて推論、コーディング、複雑なタスクがアップグレード 2.0 Flash Thinking実験版もGeminiアプリで同時に公開されます — 現在、LM Arenaのモデルリーダーボードのトップに立っています。 Googleはまた、YouTube、Search、Mapsなどのアプリと直接対話できるFlash Thinkingの別バージョンもリリースしています。 さらに、より小型で高速な2.0オプションであるFlashとFlash-Liteも利用可能になりました。 主要なAIラボは引き続き製品を投入しており、リリースの間隔はますます短くなっています。</p>
+    <details class="original"><summary>英語原文</summary><p>NEW: Google just released Gemini 2.0 Pro experimental — the company&#x27;s most advanced AI model yet. 
+
+2.0 Pro Experimental features include:
+
+— a massive 2M token context window
+— the ability to use tools like Google Search and code execution 
+— Upgrades in reasoning, coding, and complex tasks over 1.5 Pro
+
+On the reasoning front, 2.0 Flash Thinking Experimental also goes live in the Gemini app — which currently sits atop the LM Arena&#x27;s model leaderboard. 
+
+Google is also launching a separate version of Flash Thinking that can interact directly with apps like YouTube, Search, and Maps.
+
+Additionally, some smaller, faster 2.0 options are now available: Flash and Flash-Lite.
+
+The major AI labs continue to ship, and the time between releases is only getting shorter.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.1%</span>
+      <span>♥ 442</span>
+      <span>↻ 48</span>
+      <span>🔖 132</span>
+      <span>表示 63,893</span>
+      <span>👤 591,185</span>
+      <a href="https://x.com/rowancheung/status/1887169572911935902" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/GjCNlqhWIAAtC9e.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="429" data-retweets="15" data-bookmarks="41" data-er="4.2420" data-buzz="556" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#47</div>
+  <div class="content">
+    <div class="meta"><strong>can</strong>
+      <span class="handle">@marmaduke091</span>
+      <span>2025年12月13日</span><span class="discovery">新機能</span></div>
+    <p>⚡ Gemini 3 Flash と Gemini 3 Flash Image は、Gemini 3 Pro と Nano Banana Pro よりも速く安価になり、ほとんどのタスクで本当に似たような性能を発揮します。これはとんでもないことです。Google はこれらの Flash モデルを本当に高性能にしています。人々はきっとこれらを気に入るでしょう。しかし、私は Flash モデルにはあまり興味がありません。SOTA をください！</p>
+    <details class="original"><summary>英語原文</summary><p>⚡ Gemini 3 Flash and Gemini 3 Flash Image will be faster and cheaper than Gemini 3 Pro and Nano Banana Pro and they will perform REALLY similar on most tasks, which is insane.
+
+Google is making these flash models REALLY performant. People are going to love them.
+
+However, I am not really interested in Flash models, give me SOTA!</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 4.2%</span>
+      <span>♥ 429</span>
+      <span>↻ 15</span>
+      <span>🔖 41</span>
+      <span>表示 31,225</span>
+      <span>👤 11,834</span>
+      <a href="https://x.com/marmaduke091/status/1999887831410291092" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="381" data-retweets="71" data-bookmarks="98" data-er="0.1212" data-buzz="840" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#48</div>
+  <div class="content">
+    <div class="meta"><strong>Google Japan</strong>
+      <span class="handle">@googlejapan</span>
+      <span>2025年11月21日</span><span class="discovery">新機能</span></div>
+    <p>日本語🇯🇵の性能がアップデートした
+Nano Banana Pro が登場🍌🍌
+
+Gemini で４コマ漫画も作れるようになりました✨️ https://t.co/08IgUN8id4</p>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.1%</span>
+      <span>♥ 381</span>
+      <span>↻ 71</span>
+      <span>🔖 98</span>
+      <span>表示 76,242</span>
+      <span>👤 482,789</span>
+      <a href="https://x.com/googlejapan/status/1991755967307084004" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/G6QjQp-a0AAov9I.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="378" data-retweets="47" data-bookmarks="118" data-er="0.0239" data-buzz="767" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#49</div>
+  <div class="content">
+    <div class="meta"><strong>Google AI</strong>
+      <span class="handle">@GoogleAI</span>
+      <span>2025年11月19日</span><span class="discovery">新機能</span></div>
+    <p>開発者にとって、Gemini 3 ProはGemini 2.5 Proと比較して、主要なすべてのAIベンチマークで比類ない結果を提供します。Gemini 3 Proが今日、あなたのワークフローを改善できる3つの方法をご紹介します。 1. Gemini 3 Proは、既存のプロダクションエージェントおよびコーディングワークフローに完璧にフィットします。また、@GoogleAIStudio、Gemini CLI、Android Studioなどの開発者製品のエコシステム全体で、開発環境体験に統合されています。 2. モデルとIDEが連携する方法を再考した新しいエージェント開発プラットフォームであるGoogle @antigravityを導入しました。これにより、開発者は、エージェントが構築する際に、より高いタスク指向のレベルでエージェントと協力して作業を管理できます。 3. @GoogleAIStudioは、プロンプトからAIネイティブアプリへの最速パスとなるように構築しました。ビルドモードでは、適切なモデルとAPIを自動的に接続することで、これまで以上に迅速にAI機能を追加できます。また、アノテーションなどの機能により、迅速かつ直感的な反復が可能になります。ワンショットプロンプトゲームを構築する場合でも、非構造化音声メモからインタラクティブなランディングページを構築する場合でも、Gemini 3であらゆるアイデアを現実のものにできます。</p>
+    <details class="original"><summary>英語原文</summary><p>For developers, Gemini 3 Pro offers unparalleled results across every major AI benchmark compared to Gemini 2.5 Pro.
+
+Here three ways Gemini 3 Pro can improve your workflow today:
+
+1. Gemini 3 Pro fits right into existing production agent and coding workflows. It is also integrated into development environment experiences across the ecosystem of developer products like @GoogleAIStudio, Gemini CLI, and Android Studio.
+
+2. We introduced Google @antigravity, a new agentic development platform that reimagines how the model and IDE work together. It enables developers to manage agents to work at a higher, task-oriented level collaborating with agents while they build.
+
+3. We’ve built @GoogleAIStudio to be your fastest path from a prompt to an AI-native app. Build mode lets you add AI capabilities faster than ever, automatically wiring up the right models and APIs, while features like annotations enable fast and intuitive iteration.
+
+Whether you’re building a one-shot prompt game or an interactive landing page from unstructured voice notes, you can bring any idea to life with Gemini 3.</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.0%</span>
+      <span>♥ 378</span>
+      <span>↻ 47</span>
+      <span>🔖 118</span>
+      <span>表示 136,597</span>
+      <span>👤 2,418,386</span>
+      <a href="https://x.com/GoogleAI/status/1991241290097230027" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/G6JPZI8WQAAsb_v.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="333" data-retweets="37" data-bookmarks="74" data-er="0.0174" data-buzz="592" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#50</div>
+  <div class="content">
+    <div class="meta"><strong>Google for Developers</strong>
+      <span class="handle">@googledevs</span>
+      <span>2025年8月25日</span><span class="discovery">新機能</span></div>
+    <p>よりスマートに、より楽にコードを書く準備はできていますか？💻 Gemini Code Assist の新しいアップデートを多数リリースしましたので、皆様と共有できることを嬉しく思います。エージェントモードを IDE に導入することから、強化された IDE と Gemini CLI 体験まで、これらの機能はより速く効率的に開発できるように設計されています。今月の新機能の完全な内訳については、ブログ投稿をご覧ください ➡️ https://t.co/T3khEzeahf</p>
+    <details class="original"><summary>英語原文</summary><p>Ready to code smarter, not harder? 💻 We&#x27;ve just shipped a bunch of new updates for Gemini Code Assist, and we&#x27;re excited to share them with you. From bringing agent mode to your IDE to an enhanced IDE and Gemini CLI experience, these features are designed to help you build faster and more efficiently.
+
+Check out our blog post for a full breakdown of what&#x27;s new this month ➡️ https://t.co/T3khEzeahf</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.0%</span>
+      <span>♥ 333</span>
+      <span>↻ 37</span>
+      <span>🔖 74</span>
+      <span>表示 26,982</span>
+      <span>👤 2,573,765</span>
+      <a href="https://x.com/googledevs/status/1960086372066476153" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/GzOgFrRbsAAs_Qo.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="325" data-retweets="40" data-bookmarks="126" data-er="0.2763" data-buzz="743" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#51</div>
+  <div class="content">
+    <div class="meta"><strong>官報ブログ</strong>
+      <span class="handle">@kanpo_blog</span>
+      <span>2026年4月3日</span><span class="discovery">新機能</span></div>
+    <p>GeminiがGoogleスライドで「編集可能なスライド」生成可能に　日本語版も順次対応予定 https://t.co/Zba7J8ukXB
+
+Googleは「Google スライド」の「Gemini」をアップデートし、編集可能なスライドを生成できるようになったと発表した。従来、Geminiが生成するスライドは画像形式だった。</p>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.3%</span>
+      <span>♥ 325</span>
+      <span>↻ 40</span>
+      <span>🔖 126</span>
+      <span>表示 68,755</span>
+      <span>👤 187,128</span>
+      <a href="https://x.com/kanpo_blog/status/2039960872375013656" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="294" data-retweets="36" data-bookmarks="201" data-er="21.8327" data-buzz="830" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#52</div>
+  <div class="content">
+    <div class="meta"><strong>Yuma Sugimura | 杉村 勇馬</strong>
+      <span class="handle">@y_sugi_it</span>
+      <span>2026年4月2日</span><span class="discovery">新機能</span></div>
+    <p>Google スライドの Gemini によるAI生成機能がアップデート。これまでは1枚の画像として生成されていたが、編集可能なスライドとして生成されるように。既存スライドのスタイルと一貫性を持った生成も可能。Google Workspace Business Standard以上で段階的に展開されていく
+
+https://t.co/dkRP2kVt8m</p>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 21.8%</span>
+      <span>♥ 294</span>
+      <span>↻ 36</span>
+      <span>🔖 201</span>
+      <span>表示 40,727</span>
+      <span>👤 2,510</span>
+      <a href="https://x.com/y_sugi_it/status/2039495664149950833" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-likes="280" data-retweets="28" data-bookmarks="81" data-er="2.7915" data-buzz="528" data-discovery="1" data-kind="surprise">
+  <div class="rank">#53</div>
+  <div class="content">
+    <div class="meta"><strong>でべ</strong>
+      <span class="handle">@devemin</span>
+      <span>2026年5月20日</span><span class="discovery">驚き</span></div>
+    <p>新しい Gemini  Omni に、動画作ってもらった。
+
+ワロタｗｗ
+いや音とかエフェクトとかすごいけどさｗｗ https://t.co/76wqAQr0mM</p>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 2.8%</span>
+      <span>♥ 280</span>
+      <span>↻ 28</span>
+      <span>🔖 81</span>
+      <span>表示 42,334</span>
+      <span>👤 14,150</span>
+      <a href="https://x.com/devemin/status/2057248651098169408" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2057248595062272000/img/ldABAmWCUWpPoP9d.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="266" data-retweets="16" data-bookmarks="125" data-er="0.4948" data-buzz="574" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#54</div>
+  <div class="content">
+    <div class="meta"><strong>Ammaar Reshi</strong>
+      <span class="handle">@ammaar</span>
+      <span>2026年4月15日</span><span class="discovery">新機能</span></div>
+    <p>Gemini 3.1 Flash TTSをご紹介します。これは当社のモデルの中で最も表現力豊かで、Artificial Analysisのリーダーボードで品質とコストのトップに立っています🔊 スタイルやペースの制御、複数のスピーカーの追加、オーディオタグによる配信、70以上の言語で文中の表現の切り替えが可能です。チュートリアルはこちら！ https://t.co/Ozam4wdBER</p>
+    <details class="original"><summary>英語原文</summary><p>Introducing Gemini 3.1 Flash TTS, our most expressive model yet, topping quality and cost on the Artificial Analysis leaderboard 🔊
+
+Control style, pace, add multiple speakers, and delivery with audio tags, switch expression mid-sentence in 70+ languages.
+
+Tutorial below! https://t.co/Ozam4wdBER</p></details>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.5%</span>
+      <span>♥ 266</span>
+      <span>↻ 16</span>
+      <span>🔖 125</span>
+      <span>表示 30,070</span>
+      <span>👤 87,314</span>
+      <a href="https://x.com/ammaar/status/2044447352459514072" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/amplify_video_thumb/2044431057101967360/img/TEe9RGMEOjNKLFM0.jpg" loading="lazy" alt="">
+</article>
+<article class="card" data-likes="187" data-retweets="34" data-bookmarks="97" data-er="0.3655" data-buzz="493" data-discovery="1" data-kind="new_feature">
+  <div class="rank">#55</div>
+  <div class="content">
+    <div class="meta"><strong>usutaku</strong>
+      <span class="handle">@usutaku_channel</span>
+      <span>2026年5月19日</span><span class="discovery">新機能</span></div>
+    <p>【Google I/O発表内容の重要点 総まとめ】
+
+・Gemini 3.5 Flash：高速・高性能な推論/コーディングモデル
+→Geminiアプリ、AI Mode、AI Studio、Android Studio、Antigravity、Gemini Enterpriseなどに提供。
+
+・Gemini Omni Flash：テキスト/画像/動画/音声を扱うマルチモーダルモデル
+→Geminiアプリ、Flow、YouTube Shorts、YouTube Createなどに導入。SynthID透かしにも対応。
+
+・Google検索：AI ModeとSearch Agentsを強化
+→複雑な質問、予約、航空券確認、引っ越し準備、継続調査などをAIが代行。
+
+・Geminiアプリ：個人向けAIアシスタントとして刷新
+→新UI、Daily Brief、Gemini Spark、Gemini Omniを統合。
+
+・Gemini Spark：24時間動く個人AIエージェント
+→Gmail、Docs、Slidesなどと連携し、メール確認、資料作成、タスク整理を支援。
+
+・Android Halo：Android上でAIエージェントの作業を確認・操作できる新体験
+→スマホ画面上でエージェントの進行状況を見ながら介入可能。
+
+・Universal Cart：検索/Gemini/Chrome横断の買い物ハブ
+→商品比較、価格通知、複数サイトでの購入を支援。
+
+・Agent Payments Protocol：AIエージェントによる代理決済の仕組み
+→ユーザーが条件や上限を設定し、安全に支払いを任せられる構想。
+
+・Google Workspace：音声AI体験と新機能を追加
+→Gmail、Docs、Keepに音声AIを導入し、AI InboxやGoogle Picsも発表。
+
+・Google Pics：画像生成・編集ツール
+→物体編集、テキスト修正、翻訳、Workspace連携に対応。
+
+・Google Flow / Flow Music：動画・音楽制作向けAIスタジオ
+→自然言語で映像編集、楽曲制作、ミュージックビデオ生成を支援。
+
+・開発者向け機能：Antigravity 2.0、CLI、SDK、Managed Agents API、AI Studio mobile appを発表
+→AIエージェントによるアプリ開発・デプロイ支援を強化。
+
+・Antigravity：AIエージェント型の開発プラットフォーム
+→アイデア出しからアプリ開発、デプロイまでを支援。
+
+・AIコンテンツ透明性：SynthID、C2PA、各Googleサービスで強化
+→Pixel、Chrome、Search、Gemini、YouTubeで生成・編集履歴の確認を拡大。
+
+・Google Cloud：企業向けAI機能を拡充
+→Gemini 3.5、Gemini Omni、Antigravity、Gemini Spark、Managed Agents API、CodeMenderを展開。
+
+・CodeMender：AIコードセキュリティエージェント
+→脆弱性検出、修正提案、パッチ適用まで支援。
+
+・Google AI Ultra：上位サブスクリプションを更新
+→高い利用上限、Antigravity優先アクセス、ストレージ、YouTube Premiumなどを含む。
+
+・Project Genie：実在の場所をもとに3D環境を生成するワールドモデル
+→Street Viewと連携し、インタラクティブな3D空間を生成。
+
+・Ask YouTube：YouTube横断の会話型検索
+→動画内容を要約し、質問しながら深掘りできる。</p>
+    <div class="stats">
+      <span class="er" title="フォロワー数に対する総エンゲージメント率">ER 0.4%</span>
+      <span>♥ 187</span>
+      <span>↻ 34</span>
+      <span>🔖 97</span>
+      <span>表示 24,849</span>
+      <span>👤 89,739</span>
+      <a href="https://x.com/usutaku_channel/status/2056795376129294705" target="_blank" rel="noopener">Xで開く</a>
+    </div>
+  </div><img class="thumb" src="https://pbs.twimg.com/media/HIs0fAxaIAAFwXx.jpg" loading="lazy" alt="">
+</article>
+</div></main>
+<script>
+(function(){
+  var container=document.getElementById("cards");
+  var cards=Array.prototype.slice.call(container.querySelectorAll(".card"));
+  var buttons=document.querySelectorAll(".sortbtn");
+  var filterButtons=document.querySelectorAll(".filterbtn");
+  var currentFilter="all";
+  function applyFilter(){
+    cards.forEach(function(card){
+      card.hidden=currentFilter!=="all" && card.dataset.kind!==currentFilter;
+    });
+    var visible=cards.filter(function(card){return !card.hidden;});
+    visible.forEach(function(card,i){card.querySelector(".rank").textContent="#"+(i+1);});
+  }
+  function sortBy(key){
+    cards.sort(function(a,b){
+      return parseFloat(b.dataset[key])-parseFloat(a.dataset[key]);
+    });
+    cards.forEach(function(card,i){
+      card.querySelector(".rank").textContent="#"+(i+1);
+      container.appendChild(card);
+    });
+    applyFilter();
+  }
+  buttons.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      buttons.forEach(function(b){b.classList.remove("active");});
+      btn.classList.add("active");
+      sortBy(btn.dataset.key);
+    });
+  });
+  filterButtons.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      filterButtons.forEach(function(b){b.classList.remove("active");});
+      btn.classList.add("active");
+      currentFilter=btn.dataset.filter;
+      applyFilter();
+    });
+  });
+  applyFilter();
+})();
+</script>
+<style>
+.incident-mount-wrap { max-width: 960px; margin: 52px auto 0; padding: 0 1rem; width: 100%; box-sizing: border-box; }
+.incident-card { background: var(--inc-bg, rgba(248,113,113,0.12)); border: 1px solid var(--inc-border, #f87171); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.incident-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+.incident-icon { font-size: 1.25rem; }
+.incident-title { font-size: 1.05rem; color: var(--inc-border, #f87171); margin: 0; }
+.incident-dl { margin: 0; font-size: 0.9rem; }
+.incident-dl dt { font-weight: 700; color: var(--text, #e2e8f0); margin-top: 0.65rem; }
+.incident-dl dt:first-of-type { margin-top: 0; }
+.incident-dl dd { margin: 0.2rem 0 0 0; color: var(--muted, #94a3b8); line-height: 1.55; }
+.incident-tech { font-size: 0.78rem; color: var(--muted, #94a3b8); margin: 0.75rem 0 0; word-break: break-word; }
+.incident-tech span { font-weight: 600; color: var(--text, #e2e8f0); }
+.incident-meta { font-size: 0.75rem; color: var(--muted, #94a3b8); margin: 0.35rem 0 0; }
+</style>
+<div id="incidentMount" class="incident-mount-wrap" style="display:none" aria-live="polite"></div>
+<script>
+(function() {
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function cardHtml(inc) {
+    var sev = inc.severity === 'critical';
+    var border = sev ? '#f87171' : '#fbbf24';
+    var bg = sev ? 'rgba(248,113,113,0.12)' : 'rgba(251,191,36,0.12)';
+    var icon = sev ? '🚨' : '⚠️';
+    var impact = esc(inc.impact).replace(/\n/g, '<br>');
+    var diagram = inc.diagram_latest
+      ? '<p class="incident-meta">表示中の最新図解: <strong>' + esc(inc.diagram_latest) + '</strong></p>' : '';
+    return '<div class="incident-card" role="alert" style="--inc-border:' + border + ';--inc-bg:' + bg + '">'
+      + '<div class="incident-head"><span class="incident-icon">' + icon + '</span>'
+      + '<h2 class="incident-title">' + esc(inc.title) + '</h2></div>'
+      + '<dl class="incident-dl"><dt>状況</dt><dd>' + esc(inc.situation) + '</dd>'
+      + '<dt>原因</dt><dd>' + esc(inc.cause) + '</dd>'
+      + '<dt>影響</dt><dd>' + impact + '</dd></dl>' + diagram
+      + '<p class="incident-tech"><span>技術メモ:</span> ' + esc(inc.technical) + '</p>'
+      + '<p class="incident-meta">記録: ' + esc(inc.updated_at) + '</p></div>';
+  }
+  function fallbackIncident(data) {
+    var bad = Object.entries(data.workflows || {}).filter(function(e) { return e[1].status !== 'success'; });
+    if (!bad.length) return null;
+    var lines = bad.map(function(e) { return e[0] + ': ' + (e[1].error || e[1].status); });
+    return {
+      active: true, severity: data.overall === 'error' ? 'critical' : 'warning',
+      title: lines[0].slice(0, 120),
+      situation: '直近の自動実行で warning / error が記録されています。',
+      cause: lines.join(' / '),
+      impact: '該当機能の更新が止まっている可能性があります。詳細はログを確認してください。',
+      technical: '', updated_at: data.updated_at || ''
+    };
+  }
+  fetch('run_status.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .catch(function() { return null; })
+    .then(function(data) {
+      if (!data) return;
+      var mount = document.getElementById('incidentMount');
+      var inc = data.incident;
+      if (!inc || !inc.active) {
+        if (data.overall !== 'success') inc = fallbackIncident(data);
+      }
+      if (inc && (inc.active === true || inc.active === 'true' || inc.active === 1)) {
+        if (mount) {
+          mount.innerHTML = cardHtml(inc);
+          mount.style.display = 'block';
+        }
+      }
+    });
+})();
+</script>
+
+</body></html>

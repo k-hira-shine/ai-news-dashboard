@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini 機能トラッカー</title>
+<style>
+:root {
+  --bg: #0f1419; --card: #1a2236; --border: #2d3748;
+  --text: #e2e8f0; --muted: #94a3b8; --accent: #4285f4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding-top: 48px; }
+
+.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #0a0f1eee; backdrop-filter: blur(8px); border-bottom: 1px solid #2d3748; display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; padding: 6px 12px; }
+.topnav a { display: inline-block; padding: 4px 12px; background: #1a2236; border-radius: 6px; color: #94a3b8; text-decoration: none; font-size: 0.82rem; white-space: nowrap; }
+.topnav a:hover { color: #38bdf8; background: rgba(56,189,248,0.1); }
+.topnav a.active { background: #0284c7; color: #fff; }
+@media (max-width: 640px) {
+  .topnav { gap: 4px; padding: 4px 8px; }
+  .topnav a { font-size: 0.75rem; padding: 3px 8px; }
+}
+
+header { padding: 24px 20px 12px; border-bottom: 1px solid var(--border); }
+header h1 { font-size: 1.4rem; color: var(--text); }
+header .meta { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+.gemini-section { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 10px; background: rgba(26,34,54,0.45); overflow: hidden; }
+.section-toggle { cursor: pointer; padding: 12px 16px; list-style: none; display: flex; align-items: center; gap: 12px; user-select: none; }
+.section-toggle::-webkit-details-marker { display: none; }
+.section-toggle::before { content: '▶'; font-size: 0.65rem; color: var(--muted); transition: transform 0.15s; flex-shrink: 0; margin-top: 2px; }
+.gemini-section[open] > .section-toggle::before { transform: rotate(90deg); }
+.section-head { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.section-title { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.35; }
+.section-desc { font-size: 0.78rem; color: var(--muted); font-weight: normal; line-height: 1.4; }
+.section-toggle .count { font-size: 0.85rem; color: var(--muted); font-weight: normal; flex-shrink: 0; white-space: nowrap; }
+.section-body { padding: 0 16px 16px; }
+.gemini-list { display: flex; flex-direction: column; gap: 10px; }
+.gemini-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+.card-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 0.78rem; }
+.status-badge { font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; border: 1px solid; flex-shrink: 0; }
+.source-type { font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; flex-shrink: 0; }
+.source-detail { color: var(--muted); }
+.date-badge { color: var(--muted); margin-left: auto; flex-shrink: 0; }
+.scheduled-badge { font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 10px; border: 1px solid; flex-shrink: 0; }
+.card-title { font-size: 1rem; margin-bottom: 4px; line-height: 1.45; }
+.card-title a { color: var(--text); text-decoration: none; }
+.card-title a:hover { color: var(--accent); }
+.card-summary { font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--muted); background: var(--card); border-radius: 10px; border: 1px dashed var(--border); }
+.sources-list { list-style: none; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; }
+.sources-list li { padding: 4px 0; font-size: 0.85rem; color: var(--muted); }
+footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 24px; border-top: 1px solid var(--border); }
+@media (max-width: 640px) {
+  .card-meta { gap: 6px; }
+  .date-badge { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="home.html">🏠 ホーム</a>
+  <a href="index.html">📰 ニュース</a>
+  <a href="strategy.html">🎯 施策提案</a>
+  <a href="buzz.html">🔥 バズりランキング</a>
+  <a href="money.html">🎬 マネタイズ</a>
+  <a href="sns_success.html">🧠 SNS成功者</a>
+  <a href="post_generator.html">✍️ 投稿ストック</a>
+  <a href="tools.html">🔧 ツール追跡</a>
+  <a href="reviews.html">📋 使ってみた</a>
+  <a href="gemini.html" class="active">✨ Gemini追跡</a>
+  <a href="gemini-buzz.html">🏆 Gemini活用</a>
+  <a href="gemini-omni.html">🎬 Gemini Omni</a>
+</nav>
+<header>
+  <h1>✨ Gemini 機能トラッカー</h1>
+  <p class="meta">Last updated: 2026-07-05 01:20 JST ｜ 収集 39件（表示 29 / 未分類 10）｜ 今すぐ 25 / もうすぐ 4 / 停止予定 0</p>
+</header>
+<div class="container">
+<details class="gemini-section" open>
+  <summary class="section-toggle">
+    <span class="section-head">
+      <span class="section-title">もうすぐ使えるようになる</span>
+      <span class="section-desc">Googleが「近日公開」と告知した機能（予定日が分かればカードに表示）</span>
+    </span>
+    <span class="count">4件</span>
+  </summary>
+  <div class="section-body"><div class="gemini-list"><article class="gemini-card" data-status="coming_soon">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#f59e0b;color:#f59e0b">もうすぐ公開</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/7/2 6:28</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2072432122175082790" target="_blank" rel="noopener">macOS版GeminiアプリにSpark機能を提供</a></h3>
+  <p class="card-summary">macOS版GeminiアプリにGemini Spark機能が近日中に提供開始され、24時間対応AIエージェントがさらに更新されます。</p>
+</article>
+<article class="gemini-card" data-status="coming_soon">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#f59e0b;color:#f59e0b">もうすぐ公開</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/2 4:57</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2072409250312425824" target="_blank" rel="noopener">macOS版Geminiアプリ向けSparkと連携機能</a></h3>
+  <p class="card-summary">macOS版GeminiアプリにGemini Spark機能が近日提供され、カスタムモデルプロトコルやCanvaなどの連携も追加されます。</p>
+</article>
+<article class="gemini-card" data-status="coming_soon">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#f59e0b;color:#f59e0b">もうすぐ公開</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/2 4:08</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2072397002428514540" target="_blank" rel="noopener">macOS版GeminiアプリSparkの新活用方法</a></h3>
+  <p class="card-summary">macOS版Geminiアプリへの統合やスマートトリガーなど、Gemini Sparkをより便利に使うための新機能が近日登場します。</p>
+</article>
+<article class="gemini-card" data-status="coming_soon">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#f59e0b;color:#f59e0b">もうすぐ公開</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/7/2 4:03</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2072395690345714159" target="_blank" rel="noopener">Gemini Sparkの新たな活用法と機能強化</a></h3>
+  <p class="card-summary">macOS版Geminiアプリへの統合やスマートトリガーなど、Gemini Sparkをより強力なAIエージェントにするための新機能が発表されました。</p>
+</article></div></div>
+</details>
+<details class="gemini-section" open>
+  <summary class="section-toggle">
+    <span class="section-head">
+      <span class="section-title">今すぐ使える</span>
+      <span class="section-desc">すでに公開済みで、今試せる機能</span>
+    </span>
+    <span class="count">25件</span>
+  </summary>
+  <div class="section-body"><div class="gemini-list"><article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google DeepMind Blog</span>
+    
+    <span class="date-badge">2026/7/3</span>
+  </div>
+  <h3 class="card-title"><a href="https://deepmind.google/blog/google-deepmind-and-a24-announce-first-of-its-kind-research-partnership/" target="_blank" rel="noopener">Google DeepMindとA24が研究提携</a></h3>
+  <p class="card-summary">Google DeepMindと映画制作会社A24が、初の研究パートナーシップを発表しました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google DeepMind公式</span>
+    
+    <span class="date-badge">2026/7/3 21:55</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleDeepMind/status/2073027851910050231" target="_blank" rel="noopener">COrigami: 共同設計向けエンドツーエンドパイプライン</a></h3>
+  <p class="card-summary">Google DeepMindのDiscoveryチームが、COrigamiという共同設計のための新しいエンドツーエンドパイプラインを発表しました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/7/2 4:03</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2072395727368761799" target="_blank" rel="noopener">Gemini Spark機能のベータ版提供開始と多国展開</a></h3>
+  <p class="card-summary">米国でGoogle AI Ultra加入者向けにGemini Spark機能のベータ版が提供開始され、今月末には他国への展開も予定されています。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/7/2 3:48</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2072391892629942363" target="_blank" rel="noopener">Gemini Spark機能のベータ版提供開始と多国展開</a></h3>
+  <p class="card-summary">米国でGoogle AI Ultra加入者向けにGemini Spark機能のベータ版が提供開始され、今月末には他国への展開も予定されています。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/2 3:23</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2072385546551247013" target="_blank" rel="noopener">2024年6月の主要AIアップデート（Nano Banana 2 Liteなど）</a></h3>
+  <p class="card-summary">6月に発表された主要AIアップデートには、高速なGemini画像モデルNano Banana 2 LiteやGemma 4 12B、Gemini Omni FlashのAPI公開などが含まれます。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google AI公式</span>
+    
+    <span class="date-badge">2026/7/1 22:58</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleAI/status/2072318809277390940" target="_blank" rel="noopener">SynthID（AI生成コンテンツ透かし技術）の進化と提供</a></h3>
+  <p class="card-summary">AI生成コンテンツの判別を助けるSynthIDは、画像だけでなく動画・音声・テキストに対応し、Google検索やGeminiアプリで検証可能に。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google Gemini Blog</span>
+    
+    <span class="date-badge">2026/7/1</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/" target="_blank" rel="noopener">Gemini SparkがmacOSアプリに対応</a></h3>
+  <p class="card-summary">Gemini SparkがmacOSアプリに対応し、アプリ連携やリアルタイムトピック追跡機能を提供。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 2:07</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2072004130307023046" target="_blank" rel="noopener">Google AI Pro/Ultraのモバイル・ウェブ提供</a></h3>
+  <p class="card-summary">Google AI ProおよびUltraのサブスクリプションがモバイルとウェブで現在利用可能に。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 2:07</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2072004128310476856" target="_blank" rel="noopener">NotebookLMに60秒動画要約機能を追加</a></h3>
+  <p class="card-summary">NotebookLMでノートや学習ガイドから60秒の縦型動画による要約を作成できる機能が追加。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 1:46</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2071998701845774786" target="_blank" rel="noopener">Gemini Omni Flashモデルのリリース</a></h3>
+  <p class="card-summary">動画生成と会話編集向けの高品質でコスト効率の良い「Gemini Omni Flash」モデルが登場。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 1:37</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2071996507608260678" target="_blank" rel="noopener">Nano Banana 2 Lite高速画像生成モデル</a></h3>
+  <p class="card-summary">Nano Banana 2 Liteモデルがテキストから画像を4秒で生成、素早いアイデア出しに対応。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google AI公式</span>
+    
+    <span class="date-badge">2026/7/1 1:07</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleAI/status/2071989058952188054" target="_blank" rel="noopener">画像生成モデル「Nano Banana 2 Lite」と動画生成モデル「Gemini Omni Fl</a></h3>
+  <p class="card-summary">高速・低コストな画像生成モデルがGA、動画生成・編集モデルがパブリックプレビューで利用可能になりました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 1:05</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2071988408914706662" target="_blank" rel="noopener">Nano Banana 2 LiteとGemini Omni Flashの提供開始</a></h3>
+  <p class="card-summary">両モデルがGoogle AI Studio、Gemini API、Gemini Enterprise Agent Platformで利用可能です。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 1:05</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2071988406532309170" target="_blank" rel="noopener">画像生成・動画化連携API「Interactions API」</a></h3>
+  <p class="card-summary">Nano Banana 2 Liteで静止画を生成し、Gemini Omni Flashで動画化する連携APIの利用が可能です。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/1 1:05</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2071988395421900897" target="_blank" rel="noopener">新ジェネレーティブメディアモデル「Nano Banana 2 Lite」「Gemini Omni F</a></h3>
+  <p class="card-summary">高速・高効率な画像モデル「Nano Banana 2 Lite」と、マルチモーダル動画生成モデル「Gemini Omni Flash」が提供開始されました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google DeepMind公式</span>
+    
+    <span class="date-badge">2026/7/1 1:03</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleDeepMind/status/2071988052478615902" target="_blank" rel="noopener">Nano Banana 2 LiteとGemini Omni Flash連携による動画生成</a></h3>
+  <p class="card-summary">Interactions APIにより、Nano Banana 2 Liteで生成した画像をGemini Omni Flashですぐに動画化できます。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google DeepMind公式</span>
+    
+    <span class="date-badge">2026/7/1 1:03</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleDeepMind/status/2071988044878516466" target="_blank" rel="noopener">画像生成モデル「Nano Banana 2 Lite」と動画生成モデル「Gemini Omni Fl</a></h3>
+  <p class="card-summary">高速で安価な画像モデル「Nano Banana 2 Lite」と動画生成・編集モデル「Gemini Omni Flash」が利用可能です。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google DeepMind Blog</span>
+    
+    <span class="date-badge">2026/7/1</span>
+  </div>
+  <h3 class="card-title"><a href="https://deepmind.google/blog/start-building-with-nano-banana-2-lite-and-gemini-omni-flash/" target="_blank" rel="noopener">Nano Banana 2 LiteとGemini Omni Flashの利用開始</a></h3>
+  <p class="card-summary">Nano Banana 2 LiteとGemini Omni Flashを用いた開発を開始できます。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google Gemini Blog</span>
+    
+    <span class="date-badge">2026/7/1</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni-flash-nano-banana-2-lite/" target="_blank" rel="noopener">Gemini Omniの紹介と利用開始</a></h3>
+  <p class="card-summary">あらゆる入力からコンテンツを作成し、会話型言語で自然に編集できるGemini Omniが発表されました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Gemini API Changelog</span>
+    
+    <span class="date-badge">2026/6/30</span>
+  </div>
+  <h3 class="card-title"><a href="https://ai.google.dev/gemini-api/docs/changelog#2026-June-30-3404d720a807" target="_blank" rel="noopener">Gemini Omni FlashとNano Banana Liteのリリース</a></h3>
+  <p class="card-summary">高性能マルチモーダルモデル「Gemini Omni Flash」がパブリックプレビュー、超低遅延画像生成モデル「Nano Banana Lite」が一般提供されました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Gemini Release Notes</span>
+    
+    <span class="date-badge">2026/6/30</span>
+  </div>
+  <h3 class="card-title"><a href="https://gemini.google/release-notes/#2026.06.30-e6a6eeabaa37" target="_blank" rel="noopener">Gemini SparkのmacOSアプリ提供開始</a></h3>
+  <p class="card-summary">Gemini SparkがmacOSアプリで提供開始。Google AI Ultra加入者向けにタスク自動化を実現。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/6/30 4:06</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2071671578178236770" target="_blank" rel="noopener">Geminiでパーソナライズされた画像を生成（米国向け）</a></h3>
+  <p class="card-summary">米国のGeminiユーザーがGoogleアプリ連携でパーソナライズされた画像を無料で生成できるようになりました。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/6/30 2:55</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2071653811110998226" target="_blank" rel="noopener">Geminiでの画像生成にGoogleアプリ連携を導入（米国向け）</a></h3>
+  <p class="card-summary">GeminiにGoogleアプリを連携させると、よりユーザーの好みを理解し、パーソナライズされた画像を生成できます。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google Gemini Blog</span>
+    
+    <span class="date-badge">2026/6/30</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/personal-intelligence-nano-banana-us-expansion/" target="_blank" rel="noopener">Geminiアプリのパーソナライズ画像生成機能が対象拡大</a></h3>
+  <p class="card-summary">Geminiアプリのパーソナライズされた画像生成機能が、より多くのユーザーに提供されます。</p>
+</article>
+<article class="gemini-card" data-status="available_now">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#10b981;color:#10b981">今すぐ使える</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google Gemini Blog</span>
+    
+    <span class="date-badge">2026/6/30</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/products-and-platforms/products/workspace/take-notes-for-me/" target="_blank" rel="noopener">Google Meetでのメモ作成機能</a></h3>
+  <p class="card-summary">Google AI Pro/Ultraの購読者は、GeminiがGoogle Meetの議事録を自動で作成できるようになりました。</p>
+</article></div></div>
+</details>
+<details class="gemini-section" open>
+  <summary class="section-toggle">
+    <span class="section-head">
+      <span class="section-title">廃止・停止予定</span>
+      <span class="section-desc">モデル停止やDeprecationの告知</span>
+    </span>
+    <span class="count">0件</span>
+  </summary>
+  <div class="section-body"><div class="empty-state"><p>直近1週間で停止予定の告知はまだありません。</p></div></div>
+</details>
+<details class="gemini-section">
+  <summary class="section-toggle">
+    <span class="section-head">
+      <span class="section-title">その他（未分類）</span>
+      <span class="section-desc">自動分類できなかった情報</span>
+    </span>
+    <span class="count">10件</span>
+  </summary>
+  <div class="section-body"><div class="gemini-list"><article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/7/3 3:55</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2072756005013017075" target="_blank" rel="noopener">McLaren F1 Paddockイベント（Gemini App関連）</a></h3>
+  <p class="card-summary">McLaren F1がGeminiアプリ関連のPaddockイベントを7月2日〜5日に開催することを告知しています。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google本体公式</span>
+    
+    <span class="date-badge">2026/7/2 4:57</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/Google/status/2072409252417708218" target="_blank" rel="noopener">Gemini Spark is available in Beta for Google AI Ultra subscribers aged 18+ in th</a></h3>
+  <p class="card-summary">Gemini Spark is available in Beta for Google AI Ultra subscribers aged 18+ in th</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google Gemini Blog</span>
+    
+    <span class="date-badge">2026/7/2</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-june-2026/" target="_blank" rel="noopener">2026年6月のGoogle AI最新ニュース</a></h3>
+  <p class="card-summary">Googleが2026年6月に発表したAIに関する最新情報をまとめた記事です。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google AI / Innovation</span>
+    
+    <span class="date-badge">2026/7/2</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/products-and-platforms/products/education/nyc-ai-summit/" target="_blank" rel="noopener">ニューヨーク市教育者と業界リーダーがAI教育を議論</a></h3>
+  <p class="card-summary">ニューヨーク市の教育者と業界リーダーがGoogleオフィスに集まり、教室でのAIの未来について議論しました。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Gemini App公式</span>
+    
+    <span class="date-badge">2026/7/1 3:14</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GeminiApp/status/2072020956164526349" target="_blank" rel="noopener">マクラーレンF1とGeminiアプリのコラボ</a></h3>
+  <p class="card-summary">マクラーレンF1がGeminiアプリにF1マシンのカラーリングについて意見を求めるツイート。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google DeepMind公式</span>
+    
+    <span class="date-badge">2026/7/1 1:17</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleDeepMind/status/2071991461642395649" target="_blank" rel="noopener">AI企業における倫理学者・哲学者の役割</a></h3>
+  <p class="card-summary">AI企業における倫理学者や哲学者が探求する質問や役割についての議論。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google AI公式</span>
+    
+    <span class="date-badge">2026/7/1 1:07</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleAI/status/2071989060483113405" target="_blank" rel="noopener">アイデア探索とビジュアルコンセプトの拡大</a></h3>
+  <p class="card-summary">アイデアを探り、ビジュアルコンセプトを拡大し、創造を始めることを促す短い投稿です。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#1d9bf022;color:#1d9bf0">𝕏</span>
+    <span class="source-detail">Google DeepMind公式</span>
+    
+    <span class="date-badge">2026/7/1 1:03</span>
+  </div>
+  <h3 class="card-title"><a href="https://x.com/GoogleDeepMind/status/2071988054814773713" target="_blank" rel="noopener">詳細情報リンク</a></h3>
+  <p class="card-summary">詳細情報へのリンクを提供する短い投稿です。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google AI / Innovation</span>
+    
+    <span class="date-badge">2026/6/30</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/united-kingdom/unlocking-britains-next-era-of-productivity-building-a-nation-of-ai-trailblazers/" target="_blank" rel="noopener">英国のAI活用と生産性向上</a></h3>
+  <p class="card-summary">Google UKがAI技術による英国の生産性向上に関する経済影響レポートと人材育成について共有しました。</p>
+</article>
+<article class="gemini-card" data-status="unknown">
+  <div class="card-meta">
+    <span class="status-badge" style="border-color:#64748b;color:#64748b">未分類</span>
+    <span class="source-type" style="background:#34d39922;color:#34d399">Web</span>
+    <span class="source-detail">Google AI / Innovation</span>
+    
+    <span class="date-badge">2026/6/30</span>
+  </div>
+  <h3 class="card-title"><a href="https://blog.google/innovation-and-ai/technology/ai/full-stack-ai-explainer/" target="_blank" rel="noopener">AIのフルスタックアプローチとは</a></h3>
+  <p class="card-summary">Googleの専門家が、AIにおけるフルスタックアプローチの意味とその重要性を解説する記事です。</p>
+</article></div></div>
+</details>
+<section class="gemini-section sources-section">
+  <h2>チェックした情報源</h2>
+  <ul class="sources-list"><li><strong>Google本体公式</strong>: 12件</li><li><strong>Gemini App公式</strong>: 7件</li><li><strong>Google DeepMind公式</strong>: 5件</li><li><strong>Google Gemini Blog</strong>: 5件</li><li><strong>Google AI / Innovation</strong>: 3件</li><li><strong>Google AI公式</strong>: 3件</li><li><strong>Google DeepMind Blog</strong>: 2件</li><li><strong>Gemini API Changelog</strong>: 1件</li><li><strong>Gemini Release Notes</strong>: 1件</li></ul>
+</section>
+</div>
+<footer>Gemini公式RSS・Release Notes・API Changelog・公式Xアカウントを毎日自動チェック</footer>
+<style>
+.incident-mount-wrap { max-width: 960px; margin: 52px auto 0; padding: 0 1rem; width: 100%; box-sizing: border-box; }
+.incident-card { background: var(--inc-bg, rgba(248,113,113,0.12)); border: 1px solid var(--inc-border, #f87171); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.incident-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+.incident-icon { font-size: 1.25rem; }
+.incident-title { font-size: 1.05rem; color: var(--inc-border, #f87171); margin: 0; }
+.incident-dl { margin: 0; font-size: 0.9rem; }
+.incident-dl dt { font-weight: 700; color: var(--text, #e2e8f0); margin-top: 0.65rem; }
+.incident-dl dt:first-of-type { margin-top: 0; }
+.incident-dl dd { margin: 0.2rem 0 0 0; color: var(--muted, #94a3b8); line-height: 1.55; }
+.incident-tech { font-size: 0.78rem; color: var(--muted, #94a3b8); margin: 0.75rem 0 0; word-break: break-word; }
+.incident-tech span { font-weight: 600; color: var(--text, #e2e8f0); }
+.incident-meta { font-size: 0.75rem; color: var(--muted, #94a3b8); margin: 0.35rem 0 0; }
+</style>
+<div id="incidentMount" class="incident-mount-wrap" style="display:none" aria-live="polite"></div>
+<script>
+(function() {
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function cardHtml(inc) {
+    var sev = inc.severity === 'critical';
+    var border = sev ? '#f87171' : '#fbbf24';
+    var bg = sev ? 'rgba(248,113,113,0.12)' : 'rgba(251,191,36,0.12)';
+    var icon = sev ? '🚨' : '⚠️';
+    var impact = esc(inc.impact).replace(/\n/g, '<br>');
+    var diagram = inc.diagram_latest
+      ? '<p class="incident-meta">表示中の最新図解: <strong>' + esc(inc.diagram_latest) + '</strong></p>' : '';
+    return '<div class="incident-card" role="alert" style="--inc-border:' + border + ';--inc-bg:' + bg + '">'
+      + '<div class="incident-head"><span class="incident-icon">' + icon + '</span>'
+      + '<h2 class="incident-title">' + esc(inc.title) + '</h2></div>'
+      + '<dl class="incident-dl"><dt>状況</dt><dd>' + esc(inc.situation) + '</dd>'
+      + '<dt>原因</dt><dd>' + esc(inc.cause) + '</dd>'
+      + '<dt>影響</dt><dd>' + impact + '</dd></dl>' + diagram
+      + '<p class="incident-tech"><span>技術メモ:</span> ' + esc(inc.technical) + '</p>'
+      + '<p class="incident-meta">記録: ' + esc(inc.updated_at) + '</p></div>';
+  }
+  function fallbackIncident(data) {
+    var bad = Object.entries(data.workflows || {}).filter(function(e) { return e[1].status !== 'success'; });
+    if (!bad.length) return null;
+    var lines = bad.map(function(e) { return e[0] + ': ' + (e[1].error || e[1].status); });
+    return {
+      active: true, severity: data.overall === 'error' ? 'critical' : 'warning',
+      title: lines[0].slice(0, 120),
+      situation: '直近の自動実行で warning / error が記録されています。',
+      cause: lines.join(' / '),
+      impact: '該当機能の更新が止まっている可能性があります。詳細はログを確認してください。',
+      technical: '', updated_at: data.updated_at || ''
+    };
+  }
+  fetch('run_status.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .catch(function() { return null; })
+    .then(function(data) {
+      if (!data) return;
+      var mount = document.getElementById('incidentMount');
+      var inc = data.incident;
+      if (!inc || !inc.active) {
+        if (data.overall !== 'success') inc = fallbackIncident(data);
+      }
+      if (inc && (inc.active === true || inc.active === 'true' || inc.active === 1)) {
+        if (mount) {
+          mount.innerHTML = cardHtml(inc);
+          mount.style.display = 'block';
+        }
+      }
+    });
+})();
+</script>
+
+</body>
+</html>
