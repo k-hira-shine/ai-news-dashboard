@@ -4,13 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <meta http-equiv="refresh" content="0; url=https://k-hira-shine.github.io/ai-news-collector/">
-  <link rel="canonical" href="https://k-hira-shine.github.io/ai-news-collector/">
   <title>Redirecting to AI News Collector</title>
   <script>
     (function () {
-      var target = "https://k-hira-shine.github.io/ai-news-collector/";
-      window.location.replace(target + window.location.search + window.location.hash);
+      var canonicalBase = "https://k-hira-shine.github.io/ai-news-collector/";
+      var prefix = "/ai-news-dashboard/";
+      var path = window.location.pathname || prefix;
+      var suffix = path.indexOf(prefix) === 0 ? path.slice(prefix.length) : "";
+      var target = canonicalBase + suffix + window.location.search + window.location.hash;
+      window.location.replace(target);
     }());
   </script>
 </head>
